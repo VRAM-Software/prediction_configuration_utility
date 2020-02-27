@@ -37,19 +37,19 @@ export default class FileChooser extends React.Component {
             obj = this.getFileInfo(e.target.files[0]);
 
         if (obj) {
-            switch(obj.type) {
+            switch (obj.type) {
                 case "application/json":
                     this.setState({
                         jsonFile: obj
                     })
-                break;
+                    break;
                 case "text/csv":
                     this.setState({
                         csvFile: obj
                     })
-                break;
+                    break;
                 default:
-                    throw console.error("Il file selezionato non è del tipo corretto"); 
+                    throw console.error("Il file selezionato non è del tipo corretto");
             }
         } else {
             console.log("il file è nullo!!!")
@@ -60,7 +60,6 @@ export default class FileChooser extends React.Component {
         return (
             <div className="fileChooserContainer">
                 <form className="fileChooserForm" onSubmit={this.sendInfo}>
-
                     <div>
                         <Chooser
                             type="json"
@@ -68,19 +67,19 @@ export default class FileChooser extends React.Component {
                             isFileChosen={this.state.jsonFile ? true : false}
                         />
                         <span>
-                            { this.state.jsonFile ? this.state.jsonFile.name : "Nessun file selezionato" } 
+                            {this.state.jsonFile ? this.state.jsonFile.name : "Nessun file selezionato"}
                         </span>
                     </div>
-                    
+
                     <div>
                         <Chooser
                             type="csv"
                             onChange={this.onChange}
                             isFileChosen={this.state.csvFile ? true : false}
                         />
-                        <span> { this.state.csvFile ? this.state.csvFile.name : "Nessun file selezionato" }  </span>
+                        <span> {this.state.csvFile ? this.state.csvFile.name : "Nessun file selezionato"}  </span>
                     </div>
-      
+
                     <button className="customButton" type="submit">Inizia Addestramento</button>
                 </form>
             </div>
