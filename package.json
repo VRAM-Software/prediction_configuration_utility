@@ -1,21 +1,22 @@
 {
-  "name": "react-electron-boilerplate",
+  "name": "prediction_configuration_utility",
   "productName": "VRAM Software - POC1",
   "version": "0.0.1",
-  "author": "VRAM Software",
+  "author": "VRAM-Software",
   "private": true,
   "description": "Applicativo Esterno Gruppo VRAM",
   "homepage": "./",
   "main": "main.js",
   "build": {
+    "appId": "com.vramsoftware.prediction_configuration_utility",
     "files": [
       "build/**/*",
       "node_modules/**/*"
     ],
     "publish": {
       "provider": "github",
-      "repo": "mrampazz/react-electron-boilerplate",
-      "owner": "VRAM Software"
+      "repo": "https://github.com/VRAM-Software/prediction_configuration_utility/",
+      "owner": "VRAM-Software"
     }
   },
   "dependencies": {
@@ -36,11 +37,21 @@
     "electron": "electron .",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false --coverage --coverageReporters=text-lcov | coveralls",
     "eject": "react-scripts eject",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
     "package-win": "electron-packager . electron-tutorial-app --overwrite --asar --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",
     "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    }
   },
   "eslintConfig": {
     "extends": "react-app"

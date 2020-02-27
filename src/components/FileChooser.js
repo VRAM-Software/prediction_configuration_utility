@@ -2,7 +2,7 @@ import React from 'react';
 import './FileChooser.css';
 import Chooser from './Chooser';
 // ipcRenderer => comunica con ipcMain in main.js
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer, remote } = require('electron'); 
 
 // Il primo form serve a copiare il file originale json in una directory
 // pensavo di copiare il file in modo da non lavorare sul file originale 
