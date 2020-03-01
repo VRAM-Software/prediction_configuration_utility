@@ -41,5 +41,5 @@ app.on('activate', () => {
 })
 
 ipcMain.on("async-msg", (event, arg) => {
-  event.reply("async-reply", 'ok');
+  event.reply("async-reply", "ok");
 })
