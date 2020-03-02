@@ -12,6 +12,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            trainedJson: null,
             dataSet: null,
             jsonFile: null,
             csvFile: null,
@@ -35,7 +36,12 @@ export default class App extends React.Component {
 
     handleSaveJson = e => {
         e.preventDefault();
-        ipcRenderer.send('save-to-disk', this.state.fileName);
+        let obj = {
+            name: this.state.fileName,
+            json: this.state.trainedJson,
+            notes: this.state.notes
+        }
+        ipcRenderer.send('save-to-disk', obj);
     }
 
     handleStartTraining = e => {
@@ -50,6 +56,7 @@ export default class App extends React.Component {
                 isTrainingDone: true
             })
         })
+        console.log(this.state.trainedJson);
     }
 
     csvToJson = (file) => {

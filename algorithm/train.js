@@ -14,15 +14,13 @@ class SvmTrainer {
         };
     }
 
-    train = (data, notes) => {
+    train = (data) => {
         let svm = new SVM();
         this.translateData(data);
         svm.train(this.data, this.labels, this.options);
-        console.log("started training");
         this.trainedJson = svm.toJSON();
-        console.log(this.trainedJson);
-        this.buildJson(this.trainedJson, notes);
         this.printPrediction(svm);
+        return this.trainedJson;
     }
 
     translateData = (json) => {
@@ -39,38 +37,6 @@ class SvmTrainer {
         this.labels = labels;
         console.log(this.data);
         console.log(this.labels);
-    }
-
-    getDate = () => {
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = today.getFullYear();
-        today = yyyy + '/' + mm + '/' + dd;
-        return today;
-    }
-
-    getTime = () => {
-        let today = new Date();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        return String(time);
-    }
-
-    buildJson = (json, notes) => {
-        let file = {
-            author: "VRAMSoftware",
-            version: "1.0.0",
-            pluginAim: "svm",
-            date: this.getDate(),
-            time: this.getTime(),
-            N: json.N,
-            D: json.D,
-            b: json.b,
-            kernelType: json.kernelType,
-            w: json.w,
-            notes: notes
-        };
-        this.outputJson = JSON.stringify(file);
     }
 
     printPrediction = (svmOld) => {
