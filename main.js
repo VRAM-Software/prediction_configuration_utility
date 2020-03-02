@@ -4,7 +4,29 @@ const isDev = require('electron-is-dev');
 const fs = require('fs');
 var childProcess = require('child_process');
 
+const Trainer = require('./algorithm/train');
+
 let window;
+var OUTPUT;
+
+function startTraining(data, notes) {
+  let trainer = new Trainer();
+  console.log(data);
+  console.log(notes);
+  trainer.train(data, notes);
+  OUTPUT = trainer.getOutputJson();
+}
+
+writeToDisk = (json, fileName) => {
+  fs.writeFile(
+    'algorithm/output/' + fileName + '.json',
+    json,
+    function (err) {
+      if (err) return console.error(err);
+      console.log("ciao file");
+    }
+  );
+}
 
 function runScript(scriptPath, callback) {
   var invoked = false;
@@ -58,10 +80,22 @@ app.on('activate', () => {
   }
 })
 
-ipcMain.on("async-msg", (event, arg) => {
-  runScript('algorithm/trainsvm.js', function (err) {
-    if (err) throw err;
-    console.log('Training finito');
-  });
-  event.reply("async-reply", "ok");
+ipcMain.on("save-to-disk", (event, arg) => {
+  writeToDisk(OUTPUT, arg);
 })
+
+ipcMain.on("start-training", (event, arg) => {
+  startTraining(arg.data, arg.notes, (err) => {
+    if (err) throw err;
+    console.log('Finished training');
+  });
+  event.reply("Yup, finished");
+})
+
+// ipcMain.on("async-msg", (event, arg) => {
+//   runScript('algorithm/trainsvm.js', function (err) {
+//     if (err) throw err;
+//     console.log('Training finito');
+//   });
+//   event.reply("async-reply", "ok");
+// })

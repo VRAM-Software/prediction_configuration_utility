@@ -2,20 +2,8 @@ const modules = require("ml-modules");
 const fs = require('fs');
 const SVM = modules.SVM;
 
-/* code snippet
-
-let trainer = new SvmTrainer();
-trainer.train(data, notes);
-trainer.printPrediction();
-
-trainer.writeToDisk(fileName);
-
-
-*/
-
-export class SvmTrainer {
+class SvmTrainer {
     constructor() {
-        super();
         this.trainedJson = null;
         this.outputJson = null;
         this.data = [];
@@ -32,19 +20,25 @@ export class SvmTrainer {
         svm.train(this.data, this.labels, this.options);
         console.log("started training");
         this.trainedJson = svm.toJSON();
-        this.buildJson(this.JSON, notes);
+        console.log(this.trainedJson);
+        this.buildJson(this.trainedJson, notes);
+        this.printPrediction(svm);
     }
 
     translateData = (json) => {
         let data = [];
         let labels = [];
         for (let i = 0; i < json.length; i++) {
-            data[i].push(json[i].weight);
-            data[i].push(json[i].size);
-            labels[i].push(json[i].labels);
+            data.push([
+                parseFloat(json[i].weight), 
+                parseFloat(json[i].size)
+            ]);
+            labels.push(json[i].label);
         }
         this.data = data;
         this.labels = labels;
+        console.log(this.data);
+        console.log(this.labels);
     }
 
     buildJson = (json, notes) => {
@@ -54,11 +48,11 @@ export class SvmTrainer {
             pluginAim: "svm",
             date: "",
             time: "",
-            N: json["N"],
-            D: json["D"],
-            b: json["b"],
-            kernelType: json["kernelType"],
-            w: json["w"],
+            N: json.N,
+            D: json.D,
+            b: json.b,
+            kernelType: json.kernelType,
+            w: json.w,
             notes: notes
         };
         this.outputJson = JSON.stringify(file);
@@ -74,14 +68,13 @@ export class SvmTrainer {
         })
     }
 
-    writeToDisk = (fileName) => {
-        fs.writeFile(
-            'algorithm/output/' + fileName + '.json',
-            this.outputJson,
-            function (err) {
-                if (err) return console.error(err);
-                console.log("wrote file");
-            }
-        );
+    getOutputJson = () => {
+        return this.outputJson;
+    }
+
+    getTrainedJson = () => {
+        return this.trainedJson;
     }
 }
+
+module.exports = SvmTrainer;

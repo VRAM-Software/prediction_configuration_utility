@@ -15,10 +15,18 @@ export default class App extends React.Component {
     }
   }
 
-  sendInfo = e => {
+  handleSaveJson = e => {
     e.preventDefault();
-    console.log(this.state.dataSet);
-    ipcRenderer.send('async-msg', this.state.dataSet);
+    ipcRenderer.send('save-to-disk', "fileName");
+  }
+
+  handleStartTraining = e => {
+    e.preventDefault();
+    let obj = {
+        data: this.state.dataSet,
+        notes: "asdasd"
+    };
+    ipcRenderer.send('start-training', obj);
   }
 
   csvToJson = (file) => {
@@ -90,6 +98,14 @@ export default class App extends React.Component {
           <form className="fileChooserForm" onSubmit={this.sendInfo}>
             <div>
               <Chooser
+                type="csv"
+                onChange={this.onChange}
+                isFileChosen={this.state.csvFile ? true : false}
+              />
+              <span> {this.state.csvFile ? this.state.csvFile.name : "Nessun file selezionato"}  </span>
+            </div>
+            <div>
+              <Chooser
                 type="json"
                 onChange={this.onChange}
                 isFileChosen={this.state.jsonFile ? true : false}
@@ -99,16 +115,10 @@ export default class App extends React.Component {
               </span>
             </div>
 
-            <div>
-              <Chooser
-                type="csv"
-                onChange={this.onChange}
-                isFileChosen={this.state.csvFile ? true : false}
-              />
-              <span> {this.state.csvFile ? this.state.csvFile.name : "Nessun file selezionato"}  </span>
-            </div>
+            
 
-            <button className="customButton" type="submit">Inizia Addestramento</button>
+            <button className="customButton" onClick={this.handleStartTraining}>Inizia Addestramento</button>
+            <button className="customButton" onClick={this.handleSaveJson}>Salva json</button>
           </form>
         </div>
       </div>
