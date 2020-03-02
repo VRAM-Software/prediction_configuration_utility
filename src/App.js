@@ -2,8 +2,8 @@ import React from 'react';
 import * as csv from "csvtojson";
 import Chooser from './components/Chooser';
 import LinearGraph from './components/Graph';
-
 import './App.css';
+const { ipcRenderer } = window.require('electron');
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class App extends React.Component {
   sendInfo = e => {
     e.preventDefault();
     console.log(this.state.dataSet);
-    // window.ipcRenderer.send('async-msg', this.state.csvFile);
+    ipcRenderer.send('async-msg', this.state.dataSet);
   }
 
   csvToJson = (file) => {

@@ -2,8 +2,26 @@ const { app, BrowserWindow } = require('electron');
 const ipcMain = require('electron').ipcMain;
 const isDev = require('electron-is-dev');
 const fs = require('fs');
+var childProcess = require('child_process');
 
 let window;
+
+function runScript(scriptPath, callback) {
+  var invoked = false;
+  var process = childProcess.fork(scriptPath);
+  process.on('error', function (err) {
+    if (invoked) return;
+    invoked = true;
+    callback(err);
+  });
+
+  process.on('exit', function (code) {
+    if (invoked) return;
+    invoked = true;
+    var err = code === 0 ? null : new Error('exit code ' + code);
+    callback(err);
+  });
+}
 
 function createWindow() {
   var mainWindow = new BrowserWindow({
@@ -18,7 +36,7 @@ function createWindow() {
   mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
-      : 'file:///'+app.getAppPath()+'/build/index.html'
+      : 'file:///' + app.getAppPath() + '/build/index.html'
   )
 
   mainWindow.on('closed', () => {
@@ -41,5 +59,9 @@ app.on('activate', () => {
 })
 
 ipcMain.on("async-msg", (event, arg) => {
+  runScript('algorithm/trainsvm.js', function (err) {
+    if (err) throw err;
+    console.log('Training finito');
+  });
   event.reply("async-reply", "ok");
 })
