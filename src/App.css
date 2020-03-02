@@ -1,5 +1,9 @@
 .App {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .fileChooserInput {
@@ -32,7 +36,6 @@
   background-color: #09BC8A;
 }
 
-
 .btn-3:hover {
   background-color: rgb(13, 144, 107);
 }
@@ -45,7 +48,6 @@
 }
 
 .fileChooserForm div {
-  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -56,13 +58,9 @@
 /* #F9DC5C - yellow */
 /* #ED254E - red */
 
-.fileChooserLabel {
-  margin-right: 50px;
-}
-
 .customButton {
-  margin-left: 50px;
-  width: 250px;
+  margin-left: 25px;
+  width: 180px;
   height: 50px;
   background-color: #09BC8A;
   border: none;
@@ -71,6 +69,19 @@
   color: black;
   cursor: pointer;
   transition: all .2s ease-in-out;
+}
+
+.customButtonDisabled {
+  margin-left: 25px;
+  width: 180;
+  height: 50px;
+  background-color: #09BC8A;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  transition: all .2s ease-in-out;
+  opacity: 0.5;
 }
 
 .customButton:hover {
@@ -85,4 +96,45 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.contentContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+}
+
+.infoContainer input {
+  width: 40%;
+  padding: .4em;
+}
+
+.infoContainer textarea {
+  width: 80%;
+  height: 100px;
+}
+
+.infoContainer input, 
+.infoContainer textarea {
+  border: none;
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+.graphContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:#1b1a25;
 }

@@ -10,9 +10,7 @@ let window;
 var OUTPUT;
 
 function startTraining(data, notes) {
-  let trainer = new Trainer();
-  console.log(data);
-  console.log(notes);
+  const trainer = new Trainer();
   trainer.train(data, notes);
   OUTPUT = trainer.getOutputJson();
 }
@@ -89,13 +87,5 @@ ipcMain.on("start-training", (event, arg) => {
     if (err) throw err;
     console.log('Finished training');
   });
-  event.reply("Yup, finished");
+  event.reply("finished-training");
 })
-
-// ipcMain.on("async-msg", (event, arg) => {
-//   runScript('algorithm/trainsvm.js', function (err) {
-//     if (err) throw err;
-//     console.log('Training finito');
-//   });
-//   event.reply("async-reply", "ok");
-// })

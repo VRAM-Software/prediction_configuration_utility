@@ -48,7 +48,6 @@ filejson.author = "VRAMSoftware";
 filejson.version = "1.0.0";
 filejson.pluginAim = "";
 filejson.date = "";
-filejson.time = "";
 filejson.N = jsonAddestrato["N"];
 filejson.D = jsonAddestrato["D"];
 filejson.b = jsonAddestrato["b"];

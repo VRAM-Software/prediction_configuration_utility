@@ -30,7 +30,7 @@ class SvmTrainer {
         let labels = [];
         for (let i = 0; i < json.length; i++) {
             data.push([
-                parseFloat(json[i].weight), 
+                parseFloat(json[i].weight),
                 parseFloat(json[i].size)
             ]);
             labels.push(json[i].label);
@@ -41,13 +41,28 @@ class SvmTrainer {
         console.log(this.labels);
     }
 
+    getDate = () => {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+        today = yyyy + '/' + mm + '/' + dd;
+        return today;
+    }
+
+    getTime = () => {
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        return String(time);
+    }
+
     buildJson = (json, notes) => {
         let file = {
             author: "VRAMSoftware",
             version: "1.0.0",
             pluginAim: "svm",
-            date: "",
-            time: "",
+            date: this.getDate(),
+            time: this.getTime(),
             N: json.N,
             D: json.D,
             b: json.b,
