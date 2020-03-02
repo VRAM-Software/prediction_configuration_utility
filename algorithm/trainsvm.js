@@ -46,19 +46,20 @@ let jsonAddestrato = svm.toJSON();
 let filejson = {};
 filejson.author = "VRAMSoftware";
 filejson.version = "1.0.0";
+filejson.pluginAim = "";
+filejson.date = "";
+filejson.time = "";
 filejson.N = jsonAddestrato["N"];
 filejson.D = jsonAddestrato["D"];
 filejson.b = jsonAddestrato["b"];
 filejson.kernelType = jsonAddestrato["kernelType"];
 filejson.w = jsonAddestrato["w"];
+filejson.notes = "";
 
 let stringjson = JSON.stringify(filejson);
 
 // fs.existsSync('output/prova.json');
-fs.writeFile('algorithm/output/prova.json', stringjson, function (err) {
-  if (err) return console.error(err);
-  console.log("wrote file");
-});
+
 
 
 let svm2 = new SVM();
