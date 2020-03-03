@@ -1,5 +1,4 @@
 const modules = require("ml-modules");
-const fs = require('fs');
 const SVM = modules.SVM;
 
 class SvmTrainer {
@@ -21,7 +20,7 @@ class SvmTrainer {
         this.trainedJson = svm.toJSON();
         this.printPrediction(svm);
         return this.trainedJson;
-    }
+    };
 
     translateData = (json) => {
         let data = [];
@@ -35,27 +34,25 @@ class SvmTrainer {
         }
         this.data = data;
         this.labels = labels;
-        console.log(this.data);
-        console.log(this.labels);
-    }
+    };
 
     printPrediction = (svmOld) => {
         let svm = new SVM();
         svm.fromJSON(this.trainedJson);
 
-        this.data.forEach((point) => {
-            console.log("Prediction_1: " + svmOld.predict(point));
-            console.log("Prediction_2: " + svm.predictClass(point));
-        })
-    }
+        // this.data.forEach((point) => {
+        //     console.log("Prediction_1: " + svmOld.predict(point));
+        //     console.log("Prediction_2: " + svm.predictClass(point));
+        // })
+    };
 
     getOutputJson = () => {
         return this.outputJson;
-    }
+    };
 
     getTrainedJson = () => {
         return this.trainedJson;
-    }
+    };
 }
 
 module.exports = SvmTrainer;

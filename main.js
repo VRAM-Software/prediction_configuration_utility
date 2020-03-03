@@ -15,7 +15,7 @@ function startTraining(data, notes) {
   jsonTrained = trainer.getTrainedJson();
 }
 
-getDate = () => {
+function getDate() {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
   let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -24,13 +24,13 @@ getDate = () => {
   return today;
 }
 
-getTime = () => {
+function getTime() {
   let today = new Date();
   let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   return String(time);
 }
 
-buildJson = (notes) => {
+function buildJson(notes) {
   let file = {
     author: "VRAMSoftware",
     version: "1.0.0",
@@ -47,7 +47,7 @@ buildJson = (notes) => {
   return JSON.stringify(file);
 }
 
-writeToDisk = (obj) => {
+function writeToDisk(obj) {
   let file = buildJson(obj.notes)
   fs.writeFile(
     'algorithm/output/' + obj.name + '.json',

@@ -26,13 +26,13 @@ export default class App extends React.Component {
         this.setState({
             notes: e.target.value
         })
-    }
+    };
 
     handleChangeFileName = e => {
         this.setState({
             fileName: e.target.value
         })
-    }
+    };
 
     handleSaveJson = e => {
         e.preventDefault();
@@ -40,9 +40,9 @@ export default class App extends React.Component {
             name: this.state.fileName,
             json: this.state.trainedJson,
             notes: this.state.notes
-        }
+        };
         ipcRenderer.send('save-to-disk', obj);
-    }
+    };
 
     handleStartTraining = e => {
         e.preventDefault();
@@ -55,13 +55,12 @@ export default class App extends React.Component {
             this.setState({
                 isTrainingDone: true
             })
-        })
-        console.log(this.state.trainedJson);
-    }
+        });
+    };
 
     csvToJson = (file) => {
         let reader = new FileReader();
-        var app = this;
+        let app = this;
         reader.onload = function (e) {
             let txt = reader.result;
             csv({
@@ -71,12 +70,11 @@ export default class App extends React.Component {
                 .then((jsonObj) => {
                     app.setState({
                         dataSet: jsonObj
-                    })
-                    console.log(jsonObj);
+                    });
                 })
-        }
+        };
         reader.readAsText(file);
-    }
+    };
 
     onChange = e => {
         let obj = null;
@@ -88,21 +86,21 @@ export default class App extends React.Component {
                 case "application/json":
                     this.setState({
                         jsonFile: obj
-                    })
+                    });
                     break;
                 case "text/csv":
                     this.csvToJson(e.target.files[0]);
                     this.setState({
                         csvFile: obj
-                    })
+                    });
                     break;
                 default:
                     throw console.error("Il file selezionato non è del tipo corretto");
             }
         } else {
-            console.log("il file è nullo!!!")
+            console.log("Il file è nullo")
         }
-    }
+    };
 
     getFileInfo = file => {
         return {
@@ -110,7 +108,7 @@ export default class App extends React.Component {
             path: file.path,
             type: file.type
         };
-    }
+    };
 
     render() {
 
@@ -134,7 +132,7 @@ export default class App extends React.Component {
 
         return (
             <div className="App">
-                VRAM Software Applicativo Esterno - PoC 1
+                VRAM Software Applicativo Esterno - PoC 3
                 <div className="contentContainer">
                     {
                         this.state.dataSet !== null ?
@@ -149,7 +147,7 @@ export default class App extends React.Component {
                             <Chooser
                                 type="csv"
                                 onChange={this.onChange}
-                                isFileChosen={this.state.csvFile ? true : false}
+                                isFileChosen={!!this.state.csvFile}
                             />
                             <span> {this.state.csvFile ? this.state.csvFile.name : "Nessun file selezionato"}  </span>
                         </div>
@@ -157,7 +155,7 @@ export default class App extends React.Component {
                             <Chooser
                                 type="json"
                                 onChange={this.onChange}
-                                isFileChosen={this.state.jsonFile ? true : false}
+                                isFileChosen={!!this.state.jsonFile}
                             />
                             <span>
                                 {this.state.jsonFile ? this.state.jsonFile.name : "Nessun file selezionato"}
@@ -165,9 +163,9 @@ export default class App extends React.Component {
                         </div>
                         {
                             this.state.csvFile ?
-                                <button className="customButton" onClick={this.handleStartTraining} >Inizia Addestramento</button>
+                                <button className="customButton" onClick={this.handleStartTraining} >Inizia addestramento</button>
                                 :
-                                <button className="customButtonDisabled" onClick={this.handleStartTraining} disabled>Inizia Addestramento</button>
+                                <button className="customButtonDisabled" onClick={this.handleStartTraining} disabled>Inizia addestramento</button>
                         }
                         {
                             this.state.isTrainingDone ?
@@ -175,7 +173,6 @@ export default class App extends React.Component {
                                 :
                                 <button className="customButtonDisabled" onClick={this.handleSaveJson} disabled>Salva json</button>
                         }
-
                     </form>
                 </div>
             </div>

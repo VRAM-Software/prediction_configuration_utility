@@ -15,7 +15,6 @@ export default class ScatterPlot extends React.Component {
         const width = 500 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
         const data = this.props.data;
-        console.log(data);
 
         if (this.props.graph === "svm") {
             let max_x = Math.max.apply(Math, data.map((o) => {
