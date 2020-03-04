@@ -17,4 +17,3 @@ export default class Chooser extends React.Component {
         );
     }
 }
-

@@ -4,7 +4,6 @@ const SVM = modules.SVM;
 class SvmTrainer {
     constructor() {
         this.trainedJson = null;
-        this.outputJson = null;
         this.data = [];
         this.labels = [];
         this.options = {
@@ -44,10 +43,6 @@ class SvmTrainer {
         //     console.log("Prediction_1: " + svmOld.predict(point));
         //     console.log("Prediction_2: " + svm.predictClass(point));
         // })
-    };
-
-    getOutputJson = () => {
-        return this.outputJson;
     };
 
     getTrainedJson = () => {
