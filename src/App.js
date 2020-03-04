@@ -1,7 +1,7 @@
 import React from 'react';
 import * as csv from "csvtojson";
 import Chooser from './components/Chooser';
-import LinearGraph from './components/Graph';
+import Graph from './components/Graph';
 import UserNotes from './components/UserNotes';
 import SaveFileName from './components/SaveFileName';
 import './App.css';
@@ -22,21 +22,21 @@ export default class App extends React.Component {
         }
     }
 
-    handleChangeNotes = e => {
+    handleChangeNotes = (e) => {
         this.setState({
             notes: e.target.value
         })
     };
 
-    handleChangeFileName = e => {
+    handleChangeFileName = (e) => {
         this.setState({
             fileName: e.target.value
         })
     };
 
-    handleSaveJson = e => {
+    handleSaveJson = (e) => {
         e.preventDefault();
-        let obj = {
+        const obj = {
             name: this.state.fileName,
             json: this.state.trainedJson,
             notes: this.state.notes
@@ -44,9 +44,9 @@ export default class App extends React.Component {
         ipcRenderer.send('save-to-disk', obj);
     };
 
-    handleStartTraining = e => {
+    handleStartTraining = (e) => {
         e.preventDefault();
-        let obj = {
+        const obj = {
             data: this.state.dataSet,
             notes: this.state.notes
         };
@@ -59,10 +59,10 @@ export default class App extends React.Component {
     };
 
     csvToJson = (file) => {
-        let reader = new FileReader();
-        let app = this;
+        const reader = new FileReader();
+        const app = this;
         reader.onload = function (e) {
-            let txt = reader.result;
+            const txt = reader.result;
             csv({
                 delimiter: 'auto'
             })
@@ -76,10 +76,11 @@ export default class App extends React.Component {
         reader.readAsText(file);
     };
 
-    onChange = e => {
+    onChange = (e) => {
         let obj = null;
-        if (e.target.files[0])
+        if (e.target.files[0]) {
             obj = this.getFileInfo(e.target.files[0]);
+        }
 
         if (obj) {
             switch (obj.type) {
@@ -102,7 +103,7 @@ export default class App extends React.Component {
         }
     };
 
-    getFileInfo = file => {
+    getFileInfo = (file) => {
         return {
             name: file.name,
             path: file.path,
@@ -115,11 +116,11 @@ export default class App extends React.Component {
         const group =
             <>
                 <div className="graphContainer">
-                    <LinearGraph 
-                        data={this.state.dataSet} 
+                    <Graph
+                        data={this.state.dataSet}
                     />
                 </div>
-                
+
                 <div className="infoContainer">
                     <UserNotes
                         handleChange={this.handleChangeNotes}
@@ -142,7 +143,7 @@ export default class App extends React.Component {
                     }
                 </div>
                 <div className="fileChooserContainer">
-                    <form className="fileChooserForm" onSubmit={this.sendInfo}>
+                    <form className="fileChooserForm">
                         <div>
                             <Chooser
                                 type="csv"

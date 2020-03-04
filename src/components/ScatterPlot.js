@@ -15,23 +15,24 @@ export default class ScatterPlot extends React.Component {
         const width = 500 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
         const data = this.props.data;
+        let x, y = null;
 
         if (this.props.graph === "svm") {
-            let max_x = Math.max.apply(Math, data.map((o) => {
+            const max_x = Math.max.apply(Math, data.map((o) => {
                 return o.weight;
             }));
-            let max_y = Math.max.apply(Math, data.map((o) => {
+            const max_y = Math.max.apply(Math, data.map((o) => {
                 return o.size;
             }));
-            var x = scaleLinear()
+            x = scaleLinear()
                 .range([0, width])
                 .domain([-max_x - 2, max_x + 2]);
-            var y = scaleLinear()
+            y = scaleLinear()
                 .range([0, height])
                 .domain([max_y + 2, -max_y - 2]);
         } else {
-            var x = scaleLinear().range([0, width]).domain([-300, 300]);
-            var y = scaleLinear().range([0, height]).domain([300, -300]);
+            x = scaleLinear().range([0, width]).domain([-300, 300]);
+            y = scaleLinear().range([0, height]).domain([300, -300]);
         }
 
         return (
@@ -68,8 +69,8 @@ export default class ScatterPlot extends React.Component {
 
 class Axis extends React.Component {
     componentDidMount() {
-        const node = this.refs[this.props.axis]
-        select(node).call(this.props.scale)
+        const node = this.refs[this.props.axis];
+        select(node).call(this.props.scale);
     }
 
     render() {
@@ -86,7 +87,7 @@ class Axis extends React.Component {
 
 class RenderCircles extends React.Component {
     render() {
-        let renderCircles = this.props.data.map((item, index) => (
+        const renderCircles = this.props.data.map((item, index) => (
             <circle
                 cx={this.props.scale.x(item.weight)}
                 cy={this.props.scale.y(item.size)}
@@ -94,24 +95,24 @@ class RenderCircles extends React.Component {
                 style={item.label !== "1" ? {fill: "red"} : {fill: "green"}}
                 key={index}
             />
-        ))
+        ));
         return <g>{renderCircles}</g>
     }
 }
 
 class TrendLine extends React.Component {
     render() {
-        let x_coords = this.props.data.map(n => {
+        const x_coords = this.props.data.map(n => {
             return n[0]
-        })
-        let y_coords = this.props.data.map(n => {
+        });
+        const y_coords = this.props.data.map(n => {
             return n[1]
-        })
-        const trendline = linearRegression(y_coords, x_coords)
+        });
+        const trendline = linearRegression(y_coords, x_coords);
 
         // Lowest and highest x coordinates to draw a plot line
-        const lowest_x = x_coords.sort(sortNumber)[0]
-        const hightest_x = x_coords.sort(sortNumber)[x_coords.length - 1]
+        const lowest_x = x_coords.sort(sortNumber)[0];
+        const hightest_x = x_coords.sort(sortNumber)[x_coords.length - 1];
         const trendline_points = [
             [lowest_x, trendline(lowest_x)],
             [hightest_x, trendline(hightest_x)]
@@ -131,31 +132,31 @@ class TrendLine extends React.Component {
 
 
 function linearRegression(y, x) {
-    var lr = {}
-    var n = y.length
-    var sum_x = 0
-    var sum_y = 0
-    var sum_xy = 0
-    var sum_xx = 0
-    var sum_yy = 0
+    let lr = {};
+    let n = y.length;
+    let sum_x = 0;
+    let sum_y = 0;
+    let sum_xy = 0;
+    let sum_xx = 0;
+    let sum_yy = 0;
 
-    for (var i = 0; i < y.length; i++) {
-        sum_x += x[i]
-        sum_y += y[i]
-        sum_xy += x[i] * y[i]
-        sum_xx += x[i] * x[i]
-        sum_yy += y[i] * y[i]
+    for (let i = 0; i < y.length; i++) {
+        sum_x += x[i];
+        sum_y += y[i];
+        sum_xy += x[i] * y[i];
+        sum_xx += x[i] * x[i];
+        sum_yy += y[i] * y[i];
     }
 
-    lr["slope"] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)
-    lr["intercept"] = (sum_y - lr.slope * sum_x) / n
+    lr["slope"] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+    lr["intercept"] = (sum_y - lr.slope * sum_x) / n;
     lr["r2"] = Math.pow(
         (n * sum_xy - sum_x * sum_y) /
         Math.sqrt((n * sum_xx - sum_x * sum_x) * (n * sum_yy - sum_y * sum_y)),
         2
-    )
+    );
 
-    return x => {
-        return lr.slope * x + lr.intercept
-    }
+    return num => {
+        return lr.slope * num + lr.intercept
+    };
 }
