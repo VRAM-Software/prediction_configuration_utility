@@ -1,0 +1,16 @@
+import React from 'react';
+
+export default class UserNotes extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <textarea
+                placeholder="Scrivi alcune note..."
+                onChange={this.props.handleChange}
+            />
+        );
+    }
+}
