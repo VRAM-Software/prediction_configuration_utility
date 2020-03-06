@@ -3,7 +3,7 @@ import * as csv from "csvtojson";
 import Chooser from './components/Chooser';
 import Graph from './components/Graph';
 import UserNotes from './components/UserNotes';
-import SaveFileName from './components/SaveFileName';
+import Modal from './components/Modal';
 import './App.css';
 
 const { ipcRenderer } = window.require('electron');
@@ -12,6 +12,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            showModal: false,
             trainedJson: null,
             dataSet: null,
             jsonFile: null,
@@ -22,16 +23,30 @@ export default class App extends React.Component {
         }
     }
 
+    handleOpenModal = (e) => {
+        e.preventDefault();
+        this.setState({
+            showModal: true
+        });
+    }
+
+    handleCloseModal = (e) => {
+        e.preventDefault();
+        this.setState({
+            showModal: false
+        });
+    }
+
     handleChangeNotes = (e) => {
         this.setState({
             notes: e.target.value
-        })
+        });
     };
 
     handleChangeFileName = (e) => {
         this.setState({
             fileName: e.target.value
-        })
+        });
     };
 
     handleSaveJson = (e) => {
@@ -42,6 +57,7 @@ export default class App extends React.Component {
             notes: this.state.notes
         };
         ipcRenderer.send('save-to-disk', obj);
+        this.handleCloseModal(e);
     };
 
     handleStartTraining = (e) => {
@@ -81,7 +97,6 @@ export default class App extends React.Component {
         if (e.target.files[0]) {
             obj = this.getFileInfo(e.target.files[0]);
         }
-
         if (obj) {
             switch (obj.type) {
                 case "application/json":
@@ -125,9 +140,6 @@ export default class App extends React.Component {
                     <UserNotes
                         handleChange={this.handleChangeNotes}
                     />
-                    <SaveFileName
-                        handleChange={this.handleChangeFileName}
-                    />
                 </div>
             </>
 
@@ -166,16 +178,26 @@ export default class App extends React.Component {
                             this.state.csvFile ?
                                 <button className="customButton" onClick={this.handleStartTraining} >Inizia addestramento</button>
                                 :
-                                <button className="customButtonDisabled" onClick={this.handleStartTraining} disabled>Inizia addestramento</button>
+                                <button className="customButtonDisabled" disabled>Inizia addestramento</button>
                         }
                         {
                             this.state.isTrainingDone ?
-                                <button className="customButton" onClick={this.handleSaveJson}>Salva json</button>
+                                <button className="customButton" onClick={this.handleOpenModal}>Salva json</button>
                                 :
-                                <button className="customButtonDisabled" onClick={this.handleSaveJson} disabled>Salva json</button>
+                                <button className="customButtonDisabled" disabled>Salva json</button>
                         }
                     </form>
                 </div>
+                {
+                    this.state.showModal ?
+                        <Modal 
+                            close={this.handleCloseModal}
+                            change={this.handleChangeFileName}
+                            save={this.handleSaveJson}
+                        />
+                        :
+                        null
+                }
             </div>
         );
     }

@@ -2,11 +2,13 @@ const { app, BrowserWindow } = require('electron');
 const ipcMain = require('electron').ipcMain;
 const isDev = require('electron-is-dev');
 const fs = require('fs');
-
 const Trainer = require('./algorithm/train');
 
 let window;
 var jsonTrained;
+const meta = {
+  version: "1.0.0"
+}
 
 function startTraining(data, notes, callback) {
   const trainer = new Trainer();
@@ -35,7 +37,7 @@ function getTime() {
 function buildJson(notes) {
   let file = {
     author: "VRAMSoftware",
-    version: "1.0.0",
+    version: meta.version,
     pluginAim: "svm",
     date: getDate(),
     time: getTime(),
