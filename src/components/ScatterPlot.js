@@ -6,10 +6,6 @@ function sortNumber(a, b) {
 }
 
 export default class ScatterPlot extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         const margin = { top: 20, right: 20, bottom: 20, left: 20 };
         const width = 500 - margin.left - margin.right;
@@ -92,7 +88,7 @@ class RenderCircles extends React.Component {
                 cx={this.props.scale.x(item.weight)}
                 cy={this.props.scale.y(item.size)}
                 r="4"
-                style={item.label !== "1" ? {fill: "red"} : {fill: "green"}}
+                style={item.label !== "1" ? { fill: "red" } : { fill: "green" }}
                 key={index}
             />
         ));
