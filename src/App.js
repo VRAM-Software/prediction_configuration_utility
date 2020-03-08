@@ -84,9 +84,7 @@ export default class App extends React.Component {
             })
                 .fromString(txt)
                 .then((jsonObj) => {
-                    app.setState({
-                        dataSet: jsonObj
-                    });
+                    return jsonObj;
                 })
         };
         reader.readAsText(file);
@@ -105,9 +103,10 @@ export default class App extends React.Component {
                     });
                     break;
                 case "text/csv":
-                    this.csvToJson(e.target.files[0]);
+                    let csv = this.csvToJson(e.target.files[0]);
                     this.setState({
-                        csvFile: obj
+                        csvFile: obj,
+                        dataSet: csv
                     });
                     break;
                 default:
@@ -139,6 +138,7 @@ export default class App extends React.Component {
                 <div className="infoContainer">
                     <UserNotes
                         handleChange={this.handleChangeNotes}
+                        value={this.state.notes}
                     />
                 </div>
             </>
@@ -194,6 +194,7 @@ export default class App extends React.Component {
                             close={this.handleCloseModal}
                             change={this.handleChangeFileName}
                             save={this.handleSaveJson}
+                            value={this.state.fileName}
                         />
                         :
                         null

@@ -6,6 +6,7 @@ export default class SaveFileName extends React.Component {
             <input
                 placeholder="Scrivi nome file .json"
                 onChange={this.props.handleChange}
+                value={this.props.value}
             />
         );
     }
