@@ -6,6 +6,7 @@ export default class UserNotes extends React.Component {
             <textarea
                 placeholder="Scrivi alcune note..."
                 onChange={this.props.handleChange}
+                value={this.props.value}
             />
         );
     }
