@@ -1,16 +1,12 @@
 import React from "react";
 import "./mockFile";
-import App from "./App";
-import Chooser from "./components/Chooser";
-import Graph from "./components/Graph";
-import UserNotes from "./components/UserNotes";
+import App from "../App";
+import Chooser from "../components/Chooser";
+import Graph from "../components/Graph";
+import UserNotes from "../components/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
-import { shallow, configure } from "enzyme";
-import Modal from "./components/Modal";
-
-// Things to test
-// 1) Correct rendering of all states
-// 2) Correct funcion calls for all events + functions
+import { shallow, configure, mount } from "enzyme";
+import Modal from "../components/Modal";
 
 configure({
   adapter: new Adapter()
@@ -70,7 +66,7 @@ describe("Tests for <App /> component", () => {
 
   test("button 'Inizia addestramento' should be enabled when csvFile exists", () => {
     component.setState({
-      csvFile: 'test'
+      csvFile: "test"
     });
     expect(
       component.find("button[children='Inizia addestramento']").is("[disabled]")
@@ -93,20 +89,26 @@ describe("Tests for <App /> component", () => {
   });
 
   test("should not render file paths if csv and json file are not selected", () => {
-    expect(component.find("span[children='Nessun file selezionato']").length).toEqual(2);
+    expect(
+      component.find("span[children='Nessun file selezionato']").length
+    ).toEqual(2);
   });
 
   test("should render csv file name if csv file is selected", () => {
     component.setState({
-      csvFile: { name: 'test.csv' }
+      csvFile: { name: "test.csv" }
     });
-    expect(component.containsMatchingElement(<span>test.csv</span>)).toBeTruthy();
+    expect(
+      component.containsMatchingElement(<span>test.csv</span>)
+    ).toBeTruthy();
   });
 
   test("should render json file name if json file is selected", () => {
     component.setState({
-      jsonFile: { name: 'test.json' }
+      jsonFile: { name: "test.json" }
     });
-    expect(component.containsMatchingElement(<span>test.json</span>)).toBeTruthy();
+    expect(
+      component.containsMatchingElement(<span>test.json</span>)
+    ).toBeTruthy();
   });
 });
