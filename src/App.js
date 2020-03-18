@@ -84,7 +84,9 @@ export default class App extends React.Component {
       })
         .fromString(txt)
         .then(jsonObj => {
-          return jsonObj;
+          app.setState({
+            dataSet: jsonObj
+          });
         });
     };
     reader.readAsText(file);
@@ -102,15 +104,14 @@ export default class App extends React.Component {
             jsonFile: obj
           });
           break;
-        case "text/csv":
-          let csv = this.csvToJson(e.target.files[0]);
+        default:
+          this.csvToJson(e.target.files[0]);
           this.setState({
-            csvFile: obj,
-            dataSet: csv
+            csvFile: obj
           });
           break;
-        default:
-          throw console.error("Il file selezionato non è del tipo corretto");
+        // default:
+        //   throw console.error("Il file selezionato non è del tipo corretto");
       }
     } else {
       console.log("Il file è nullo");
