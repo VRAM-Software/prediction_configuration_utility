@@ -2,52 +2,49 @@ const modules = require("ml-modules");
 const SVM = modules.SVM;
 
 class SvmTrainer {
-    constructor() {
-        this.trainedJson = null;
-        this.data = [];
-        this.labels = [];
-        this.options = {
-            kernel: "linear",
-            karpathy: true
-        };
+  constructor() {
+    this.trainedJson = null;
+    this.data = [];
+    this.labels = [];
+    this.options = {
+      kernel: "linear",
+      karpathy: true
+    };
+  }
+
+  train = data => {
+    let svm = new SVM();
+    this.translateData(data);
+    svm.train(this.data, this.labels, this.options);
+    this.trainedJson = svm.toJSON();
+    this.printPrediction(svm);
+    return this.trainedJson;
+  };
+
+  translateData = json => {
+    let data = [];
+    let labels = [];
+    for (let i = 0; i < json.length; i++) {
+      data.push([parseFloat(json[i].weight), parseFloat(json[i].size)]);
+      labels.push(json[i].label);
     }
+    this.data = data;
+    this.labels = labels;
+  };
 
-    train = (data) => {
-        let svm = new SVM();
-        this.translateData(data);
-        svm.train(this.data, this.labels, this.options);
-        this.trainedJson = svm.toJSON();
-        this.printPrediction(svm);
-        return this.trainedJson;
-    };
+  printPrediction = svmOld => {
+    let svm = new SVM();
+    svm.fromJSON(this.trainedJson);
 
-    translateData = (json) => {
-        let data = [];
-        let labels = [];
-        for (let i = 0; i < json.length; i++) {
-            data.push([
-                parseFloat(json[i].weight),
-                parseFloat(json[i].size)
-            ]);
-            labels.push(json[i].label);
-        }
-        this.data = data;
-        this.labels = labels;
-    };
+    // this.data.forEach((point) => {
+    //     console.log("Prediction_1: " + svmOld.predict(point));
+    //     console.log("Prediction_2: " + svm.predictClass(point));
+    // })
+  };
 
-    printPrediction = (svmOld) => {
-        let svm = new SVM();
-        svm.fromJSON(this.trainedJson);
-
-        // this.data.forEach((point) => {
-        //     console.log("Prediction_1: " + svmOld.predict(point));
-        //     console.log("Prediction_2: " + svm.predictClass(point));
-        // })
-    };
-
-    getTrainedJson = () => {
-        return this.trainedJson;
-    };
+  getTrainedJson = () => {
+    return this.trainedJson;
+  };
 }
 
 module.exports = SvmTrainer;
