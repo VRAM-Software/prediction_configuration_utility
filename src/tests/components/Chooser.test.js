@@ -1,5 +1,5 @@
 import React from "react";
-import Chooser from "../components/Chooser";
+import Chooser from "../../components/Chooser";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

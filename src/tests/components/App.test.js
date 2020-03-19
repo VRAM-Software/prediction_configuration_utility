@@ -1,12 +1,12 @@
 import React from "react";
-import "./mockFile";
-import App from "../App";
-import Chooser from "../components/Chooser";
-import Graph from "../components/Graph";
-import UserNotes from "../components/UserNotes";
+import "../mockFile";
+import App from "../../components/App";
+import Chooser from "../../components/Chooser";
+import Graph from "../../components/Graph";
+import UserNotes from "../../components/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure, mount } from "enzyme";
-import Modal from "../components/Modal";
+import Modal from "../../components/Modal";
 
 configure({
   adapter: new Adapter()

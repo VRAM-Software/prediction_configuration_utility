@@ -1,5 +1,5 @@
 import React from "react";
-import UserNotes from "../components/UserNotes";
+import SaveFileName from "../../components/SaveFileName";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
@@ -7,19 +7,19 @@ configure({
   adapter: new Adapter()
 });
 
-describe("Tests for <UserNotes /> component", () => {
+describe("Tests for <SaveFileName /> component", () => {
   let component;
   const func = jest.fn();
   beforeEach(() => {
-    component = shallow(<UserNotes handleChange={func} />);
+    component = shallow(<SaveFileName handleChange={func} />);
   });
 
-  test("should render textarea", () => {
-    expect(component.find("textarea").exists()).toBeTruthy();
+  test("should render input", () => {
+    expect(component.find("input").exists()).toBeTruthy();
   });
 
   test("should call function passed as prop on change", () => {
-    component.find("textarea").simulate('change');
+    component.find("input").simulate('change');
     expect(func).toHaveBeenCalled();
   });
 });

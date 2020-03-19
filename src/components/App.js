@@ -1,10 +1,10 @@
 import React from "react";
 import * as csv from "csvtojson";
-import Chooser from "./components/Chooser";
-import Graph from "./components/Graph";
-import UserNotes from "./components/UserNotes";
-import Modal from "./components/Modal";
-import "./App.css";
+import Chooser from "./Chooser";
+import Graph from "./Graph";
+import UserNotes from "./UserNotes";
+import Modal from "./Modal";
+import "../assets/App.css";
 
 const { ipcRenderer } = window.require("electron");
 
