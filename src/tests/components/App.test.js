@@ -5,8 +5,9 @@ import Chooser from "../../components/Chooser";
 import Graph from "../../components/Graph";
 import UserNotes from "../../components/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
-import { shallow, configure, mount } from "enzyme";
+import { configure, shallow, mount } from "enzyme";
 import Modal from "../../components/Modal";
+
 
 configure({
   adapter: new Adapter()
@@ -111,4 +112,82 @@ describe("Tests for <App /> component", () => {
       component.containsMatchingElement(<span>test.json</span>)
     ).toBeTruthy();
   });
+
+  test("button 'Salva json' should open modal", () => {
+    component.setState({
+      isTrainingDone: true
+    });
+    component.find("button[children='Salva json']").simulate('click', {
+      preventDefault: () => {}});
+    expect(component.state('isModalEnabled')).toEqual(true);
+  });
+
+  test("button 'Chiudi' in modal should close modal", () => {
+    let component = mount(<App />);
+    component.setState({
+      isModalEnabled: true
+    });
+    component.find("button[children='Chiudi']").simulate('click', {
+      preventDefault: () => {}});
+    expect(component.state('isModalEnabled')).toEqual(false);
+  });
+
+  test("when modal is open clicking the background should close modal", () => {
+    let component = mount(<App />);
+    component.setState({
+      isModalEnabled: true
+    });
+    component.find(".modalBackground").simulate('click', { preventDefault: () => {} });
+    expect(component.state('isModalEnabled')).toEqual(false);
+  });
+
+  // test("when modal is open clicking 'Salva Json' should trigger state change", () => {
+  //   let component = mount(<App />);
+  //   component.setState({
+  //     isModalEnabled: true
+  //   });
+  //   component.find("button[children='Salva Json']").simulate('click', { preventDefault: () => {} });
+  //   expect(component.state('isModalEnabled')).toEqual(false);
+  // });
+
+  // test("when modal is open clicking 'Salva Json' should send signal to main process", () => {
+  //   let component = mount(<App />);
+  //   component.setState({
+  //     isModalEnabled: true
+  //   });
+  //   const events = {};
+   
+  //   component.setState({
+  //     fileName: 'test',
+  //     trainedJson: {a:1,b:2},
+  //     notes: 'notes'
+  //   });
+
+  //   let obj = {
+  //     name: component.state('fileName'),
+  //     json: component.state('trainedJson'),
+  //     notes: component.state('userNotes')
+  //   }
+    
+  //   component.find("button[children='Salva Json']").simulate('click', { preventDefault: () => {} });
+  //   expect(ipcRenderer.send).toBeCalledWith('save-to-disk', obj);
+  // });
+
+  test("when modal is open changing input should trigger state change", () => {
+    let component = mount(<App />);
+    component.setState({
+      isModalEnabled: true
+    });
+    component.find("#inputSaveName").simulate('change', {target: {value: 'test'}})
+    expect(component.state('fileName')).toEqual('test');
+  });
+
+  test("changing text in textarea should trigger state change", () => {
+    let component = mount(<App />);
+    component.setState({
+      userData: [1, 2, 3, 4]
+    });
+    component.find('textarea').simulate('change', {target: {value: 'test text'}});
+    expect(component.state('userNotes')).toEqual('test text');
+  })
 });

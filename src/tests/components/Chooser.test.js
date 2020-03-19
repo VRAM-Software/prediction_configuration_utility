@@ -28,4 +28,9 @@ describe("Tests for <Chooser /> component", () => {
     component.find("input").simulate("change");
     expect(func).toHaveBeenCalled();
   });
+
+  test("button should change color if file is chosen", () => {
+    let componentFileChosen = shallow(<Chooser type="test" onChange={func} isFileChosen={true} />)
+   expect(componentFileChosen.find(".file-chosen").exists()).toBeTruthy();
+  });
 });
