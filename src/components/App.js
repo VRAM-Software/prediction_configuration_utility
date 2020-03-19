@@ -12,34 +12,34 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false,
-      trainedJson: null,
-      dataSet: null,
-      jsonFile: null,
-      csvFile: null,
-      notes: "No notes",
-      fileName: "std_json_file",
-      isTrainingDone: false
+      userData: null,
+      userNotes: "No notes",
+      fileName: "addestramento",
+      isTrainingDone: false,
+      isModalEnabled: false,
+      jsonFileInfo: null,
+      csvFileInfo: null,
+      trainedJson: null
     };
   }
 
   handleOpenModal = e => {
     e.preventDefault();
     this.setState({
-      showModal: true
+      isModalEnabled: true
     });
   };
 
   handleCloseModal = e => {
     e.preventDefault();
     this.setState({
-      showModal: false
+      isModalEnabled: false
     });
   };
 
   handleChangeNotes = e => {
     this.setState({
-      notes: e.target.value
+      userNotes: e.target.value
     });
   };
 
@@ -51,22 +51,20 @@ export default class App extends React.Component {
 
   handleSaveJson = e => {
     e.preventDefault();
-    const obj = {
+    ipcRenderer.send("save-to-disk", {
       name: this.state.fileName,
       json: this.state.trainedJson,
-      notes: this.state.notes
-    };
-    ipcRenderer.send("save-to-disk", obj);
+      notes: this.state.userNotes
+    });
     this.handleCloseModal(e);
   };
 
   handleStartTraining = e => {
     e.preventDefault();
-    const obj = {
-      data: this.state.dataSet,
-      notes: this.state.notes
-    };
-    ipcRenderer.send("start-training", obj);
+    ipcRenderer.send("start-training", {
+      data: this.state.userData,
+      notes: this.state.userNotes
+    });
     ipcRenderer.on("finished-training", () => {
       this.setState({
         isTrainingDone: true
@@ -83,9 +81,9 @@ export default class App extends React.Component {
         delimiter: "auto"
       })
         .fromString(txt)
-        .then(jsonObj => {
+        .then(res => {
           app.setState({
-            dataSet: jsonObj
+            userData: res
           });
         });
     };
@@ -101,17 +99,15 @@ export default class App extends React.Component {
       switch (obj.type) {
         case "application/json":
           this.setState({
-            jsonFile: obj
+            jsonFileInfo: obj
           });
           break;
         default:
           this.csvToJson(e.target.files[0]);
           this.setState({
-            csvFile: obj
+            csvFileInfo: obj
           });
           break;
-        // default:
-        //   throw console.error("Il file selezionato non è del tipo corretto");
       }
     } else {
       console.log("Il file è nullo");
@@ -130,13 +126,13 @@ export default class App extends React.Component {
     const group = (
       <>
         <div className="graphContainer">
-          <Graph data={this.state.dataSet} />
+          <Graph data={this.state.userData} />
         </div>
 
         <div className="infoContainer">
           <UserNotes
             handleChange={this.handleChangeNotes}
-            value={this.state.notes}
+            value={this.state.userNotes}
           />
         </div>
       </>
@@ -146,7 +142,7 @@ export default class App extends React.Component {
       <div className="App">
         <span>VRAM Software Applicativo Esterno - PoC 3</span>
         <div className="contentContainer">
-          {this.state.dataSet !== null ? group : null}
+          {this.state.userData !== null ? group : null}
         </div>
         <div className="fileChooserContainer">
           <form className="fileChooserForm">
@@ -157,8 +153,8 @@ export default class App extends React.Component {
                 isFileChosen={!!this.state.csvFile}
               />
               <span>
-                {this.state.csvFile
-                  ? this.state.csvFile.name
+                {this.state.csvFileInfo
+                  ? this.state.csvFileInfo.name
                   : "Nessun file selezionato"}
               </span>
             </div>
@@ -169,12 +165,12 @@ export default class App extends React.Component {
                 isFileChosen={!!this.state.jsonFile}
               />
               <span>
-                {this.state.jsonFile
-                  ? this.state.jsonFile.name
+                {this.state.jsonFileInfo
+                  ? this.state.jsonFileInfo.name
                   : "Nessun file selezionato"}
               </span>
             </div>
-            {this.state.csvFile ? (
+            {this.state.csvFileInfo ? (
               <button
                 className="customButton"
                 onClick={this.handleStartTraining}
@@ -197,7 +193,7 @@ export default class App extends React.Component {
             )}
           </form>
         </div>
-        {this.state.showModal ? (
+        {this.state.isModalEnabled ? (
           <Modal
             close={this.handleCloseModal}
             change={this.handleChangeFileName}

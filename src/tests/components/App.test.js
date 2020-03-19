@@ -32,9 +32,9 @@ describe("Tests for <App /> component", () => {
     ).toBeTruthy();
   });
 
-  test("should render <Graph/> and <UserNotes/> if dataSet exists", () => {
+  test("should render <Graph/> and <UserNotes/> if userData exists", () => {
     component.setState({
-      dataSet: [1, 2, 3, 4]
+      userData: [1, 2, 3, 4]
     });
     expect(
       component.containsAllMatchingElements([<Graph />, <UserNotes />])
@@ -49,7 +49,7 @@ describe("Tests for <App /> component", () => {
 
   test("component <Modal/> should be displayed if showModal state is true", () => {
     component.setState({
-      showModal: true
+      isModalEnabled: true
     });
     expect(component.containsMatchingElement(<Modal />)).toBeTruthy();
   });
@@ -66,7 +66,7 @@ describe("Tests for <App /> component", () => {
 
   test("button 'Inizia addestramento' should be enabled when csvFile exists", () => {
     component.setState({
-      csvFile: "test"
+      csvFileInfo: "test"
     });
     expect(
       component.find("button[children='Inizia addestramento']").is("[disabled]")
@@ -96,7 +96,7 @@ describe("Tests for <App /> component", () => {
 
   test("should render csv file name if csv file is selected", () => {
     component.setState({
-      csvFile: { name: "test.csv" }
+      csvFileInfo: { name: "test.csv" }
     });
     expect(
       component.containsMatchingElement(<span>test.csv</span>)
@@ -105,7 +105,7 @@ describe("Tests for <App /> component", () => {
 
   test("should render json file name if json file is selected", () => {
     component.setState({
-      jsonFile: { name: "test.json" }
+      jsonFileInfo: { name: "test.json" }
     });
     expect(
       component.containsMatchingElement(<span>test.json</span>)

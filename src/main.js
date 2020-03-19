@@ -53,6 +53,7 @@ app.on("activate", () => {
 
 ipcMain.on("save-to-disk", (event, arg) => {
   IO.writeToDisk(arg.name, Utils.buildJson(jsonTrained, arg.notes, meta));
+  event.reply("File correctly written");
 });
 
 ipcMain.on("start-training", (event, arg) => {
@@ -61,4 +62,12 @@ ipcMain.on("start-training", (event, arg) => {
     console.log("Finished training");
   });
   event.reply("finished-training");
+});
+
+ipcMain.on("get-json-from-csv", (event, arg) => {
+  console.log(arg);
+  let file = IO.readCsvFile(arg);
+  if (file) {
+    event.reply("csv-converted", file);
+  }
 });
