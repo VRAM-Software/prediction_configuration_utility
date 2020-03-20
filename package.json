@@ -6,7 +6,7 @@
   "private": true,
   "description": "Applicativo Esterno Gruppo VRAM",
   "homepage": "./",
-  "main": "main.js",
+  "main": "src/main.js",
   "build": {
     "appId": "com.vramsoftware.prediction_configuration_utility",
     "files": [
@@ -51,7 +51,8 @@
         "functions": 80,
         "lines": 80
       }
-    }
+    },
+    "coveragePathIgnorePatterns": ["src/index.js"]
   },
   "eslintConfig": {
     "extends": "react-app"

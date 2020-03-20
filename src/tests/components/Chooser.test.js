@@ -1,5 +1,5 @@
 import React from "react";
-import Chooser from "../components/Chooser";
+import Chooser from "../../components/Chooser";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
@@ -27,5 +27,10 @@ describe("Tests for <Chooser /> component", () => {
   test("function passed as prop should be called on event change", () => {
     component.find("input").simulate("change");
     expect(func).toHaveBeenCalled();
+  });
+
+  test("button should change color if file is chosen", () => {
+    let componentFileChosen = shallow(<Chooser type="test" onChange={func} isFileChosen={true} />)
+   expect(componentFileChosen.find(".file-chosen").exists()).toBeTruthy();
   });
 });
