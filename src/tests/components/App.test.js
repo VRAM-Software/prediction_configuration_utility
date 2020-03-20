@@ -141,6 +141,8 @@ describe("Tests for <App /> component", () => {
     expect(component.state('isModalEnabled')).toEqual(false);
   });
 
+  // These tests are commented out because we do not have a way to mock ipcRenderer and Electron functions in react yet
+
   // test("when modal is open clicking 'Salva Json' should trigger state change", () => {
   //   let component = mount(<App />);
   //   component.setState({

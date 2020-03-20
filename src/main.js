@@ -5,7 +5,7 @@ const fs = require("fs");
 const Trainer = require("./algorithm/train");
 const Utils = require("./classes/Utils");
 const IO = require("./classes/IO");
-let meta = require("./config/config");
+const meta =  require("./config/config");
 let window;
 var jsonTrained;
 
