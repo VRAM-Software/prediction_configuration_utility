@@ -51,7 +51,8 @@
         "functions": 80,
         "lines": 80
       }
-    }
+    },
+    "coveragePathIgnorePatterns": ["src/index.js"]
   },
   "eslintConfig": {
     "extends": "react-app"
