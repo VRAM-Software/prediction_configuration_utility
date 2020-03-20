@@ -12,7 +12,7 @@ let electronPath = path.join(
 );
 const appPath = path.join(__dirname, "..", "..");
 
-jest.setTimeout(8000);
+jest.setTimeout(50000);
 describe("Application launch", () => {
     const app = new Application({
         path: electronPath,
