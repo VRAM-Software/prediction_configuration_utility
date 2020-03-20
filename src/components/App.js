@@ -140,7 +140,7 @@ export default class App extends React.Component {
 
     return (
       <div className="App">
-        <span>VRAM Software Applicativo Esterno - PoC 3</span>
+        <span id="metaText">VRAM Software Applicativo Esterno - PoC 3</span>
         <div className="contentContainer">
           {this.state.userData !== null ? group : null}
         </div>
