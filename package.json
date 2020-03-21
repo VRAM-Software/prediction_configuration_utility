@@ -53,7 +53,8 @@
       }
     },
     "coveragePathIgnorePatterns": [
-      "src/index.js"
+      "src/index.js",
+      "src/tests/mocks/mockFile.js"
     ]
   },
   "eslintConfig": {

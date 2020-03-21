@@ -1,5 +1,5 @@
 import React from "react";
-import "../mockFile";
+import "../mocks/mockFile";
 
 import { ipcRenderer } from "electron";
 import App from "../../components/App";
