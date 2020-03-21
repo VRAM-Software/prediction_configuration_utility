@@ -255,22 +255,10 @@ describe("Method tests for <App/> component", () => {
         });
         file.name = "test.json";
         file.path = "/path/to/json";
-        // const readAsText = jest.fn();
-        // const addEventListener = jest.fn((_, evtHandler) => {
-        //     evtHandler();
-        // });
-        // const dummyFileReader = {
-        //     addEventListener,
-        //     readAsText,
-        //     result: fileContents
-        // };
-        // window.FileReader = jest.fn(() => dummyFileReader);
         component
             .find("#fileChooser")
             .at(1)
             .simulate("change", { target: { files: [file] } });
-        // expect(FileReader).toHaveBeenCalled();
-        // expect(readAsText).toHaveBeenCalledWith(file);
         expect(component.state("jsonFileInfo")).toEqual({
             name: "test.json",
             path: "/path/to/json",
@@ -290,8 +278,6 @@ describe("Method tests for <App/> component", () => {
             .find("#fileChooser")
             .at(0)
             .simulate("change", { target: { files: [file] } });
-        // expect(FileReader).toHaveBeenCalled();
-        // expect(readAsText).toHaveBeenCalledWith(file);
         expect(component.state("csvFileInfo")).toEqual({
             name: "test.csv",
             path: "/path/to/csv",

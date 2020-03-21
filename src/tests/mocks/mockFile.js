@@ -1,4 +1,4 @@
-Object.defineProperty(window, 'require', {
+Object.defineProperty(window, "require", {
     writable: true,
     value: jest.fn().mockImplementation(query => ({
         matches: false,
@@ -6,6 +6,6 @@ Object.defineProperty(window, 'require', {
         onchange: null,
         addEventListener: jest.fn(),
         removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-    })),
+        dispatchEvent: jest.fn()
+    }))
 });
