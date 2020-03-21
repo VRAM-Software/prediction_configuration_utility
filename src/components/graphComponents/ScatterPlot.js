@@ -1,6 +1,7 @@
 import React from "react";
 import { scaleLinear, axisLeft, axisBottom } from "d3";
 import Axis from './Axis';
+import TrendLine from './TrendLine';
 import RenderCircles from './RenderCircles';
 
 export default class ScatterPlot extends React.Component {
