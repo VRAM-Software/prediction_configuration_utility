@@ -11,14 +11,19 @@ import { configure, shallow, mount } from "enzyme";
 import Modal from "../../components/Modal";
 
 jest.mock("electron", () => ({
-    ipcRenderer: { on: jest.fn(), send: jest.fn() }
+    ipcRenderer: {
+        on: jest.fn().mockImplementation(string => {
+            return string;
+        }),
+        send: jest.fn()
+    }
 }));
 
 configure({
     adapter: new Adapter()
 });
 
-describe("Tests for <App /> component", () => {
+describe("Rendering tests for <App /> component", () => {
     let component;
     beforeEach(() => {
         component = shallow(<App />);
@@ -121,6 +126,15 @@ describe("Tests for <App /> component", () => {
             component.containsMatchingElement(<span>test.json</span>)
         ).toBeTruthy();
     });
+});
+
+describe("Method tests for <App/> component", () => {
+    let component;
+    beforeEach(() => {
+        component = shallow(<App />);
+        ipcRenderer.send.mockRestore();
+        ipcRenderer.on.mockRestore();
+    });
 
     test("button 'Salva json' should open modal", () => {
         component.setState({
@@ -155,12 +169,36 @@ describe("Tests for <App /> component", () => {
     });
 
     test("when modal is open clicking 'Salva Json' should trigger state change", () => {
-      let component = mount(<App />);
-      component.setState({
-        isModalEnabled: true
-      });
-      component.find("button[children='Salva Json']").simulate('click', { preventDefault: () => {} });
-      expect(component.state('isModalEnabled')).toEqual(false);
+        let component = mount(<App />);
+        component.setState({
+            isModalEnabled: true
+        });
+        component
+            .find("button[children='Salva Json']")
+            .simulate("click", { preventDefault: () => {} });
+        expect(component.state("isModalEnabled")).toEqual(false);
+    });
+
+    test("when modal is open changing input should trigger state change", () => {
+        let component = mount(<App />);
+        component.setState({
+            isModalEnabled: true
+        });
+        component
+            .find("#inputSaveName")
+            .simulate("change", { target: { value: "test" } });
+        expect(component.state("fileName")).toEqual("test");
+    });
+
+    test("changing text in textarea should trigger state change", () => {
+        let component = mount(<App />);
+        component.setState({
+            userData: [1, 2, 3, 4]
+        });
+        component
+            .find("textarea")
+            .simulate("change", { target: { value: "test text" } });
+        expect(component.state("userNotes")).toEqual("test text");
     });
 
     test("when modal is open clicking 'Salva Json' should send signal to main process", () => {
@@ -188,25 +226,107 @@ describe("Tests for <App /> component", () => {
         expect(ipcRenderer.send).toBeCalledWith("save-to-disk", obj);
     });
 
-    test("when modal is open changing input should trigger state change", () => {
-        let component = mount(<App />);
+    test("button 'Inizia addestramento' should send signal to main process", () => {
         component.setState({
-            isModalEnabled: true
+            userData: [1, 2, 3, 4],
+            userNotes: "test",
+            csvFileInfo: { name: "test" }
         });
+        let obj = {
+            data: component.state("userData"),
+            notes: component.state("userNotes")
+        };
         component
-            .find("#inputSaveName")
-            .simulate("change", { target: { value: "test" } });
-        expect(component.state("fileName")).toEqual("test");
+            .find("button[children='Inizia addestramento']")
+            .simulate("click", { preventDefault: () => {} });
+        expect(ipcRenderer.send).toBeCalledWith("start-training", obj);
+        expect(ipcRenderer.on).toBeCalledWith(
+            "finished-training",
+            expect.any(Function)
+        );
+        // expect(component.state("isTrainingDone")).toEqual(true);
     });
 
-    test("changing text in textarea should trigger state change", () => {
+    test("onChange function should deal with json files properly", () => {
         let component = mount(<App />);
-        component.setState({
-            userData: [1, 2, 3, 4]
+        const fileContents = { a: 1, b: 2, c: 3 };
+        const file = new Blob([fileContents], {
+            type: "application/json"
         });
+        file.name = "test.json";
+        file.path = "/path/to/json";
+        // const readAsText = jest.fn();
+        // const addEventListener = jest.fn((_, evtHandler) => {
+        //     evtHandler();
+        // });
+        // const dummyFileReader = {
+        //     addEventListener,
+        //     readAsText,
+        //     result: fileContents
+        // };
+        // window.FileReader = jest.fn(() => dummyFileReader);
         component
-            .find("textarea")
-            .simulate("change", { target: { value: "test text" } });
-        expect(component.state("userNotes")).toEqual("test text");
+            .find("#fileChooser")
+            .at(1)
+            .simulate("change", { target: { files: [file] } });
+        // expect(FileReader).toHaveBeenCalled();
+        // expect(readAsText).toHaveBeenCalledWith(file);
+        expect(component.state("jsonFileInfo")).toEqual({
+            name: "test.json",
+            path: "/path/to/json",
+            type: "application/json"
+        });
+    });
+
+    test("onChange function should deal with csv files properly", () => {
+        let component = mount(<App />);
+        const fileContents = "a,b,c\n1,2,3";
+        const file = new Blob([fileContents], {
+            type: "text/csv"
+        });
+        file.name = "test.csv";
+        file.path = "/path/to/csv";
+        component
+            .find("#fileChooser")
+            .at(0)
+            .simulate("change", { target: { files: [file] } });
+        // expect(FileReader).toHaveBeenCalled();
+        // expect(readAsText).toHaveBeenCalledWith(file);
+        expect(component.state("csvFileInfo")).toEqual({
+            name: "test.csv",
+            path: "/path/to/csv",
+            type: "text/csv"
+        });
+    });
+
+    test("onChange function should callCsvToJson function", () => {
+        let component = mount(<App />);
+        const fileContents = "a,b,c\n1,2,3";
+        const file = new Blob([fileContents], {
+            type: "text/csv"
+        });
+        const readAsText = jest.fn();
+        const addEventListener = jest.fn((_, evtHandler) => {
+            evtHandler();
+        });
+        const dummyFileReader = {
+            addEventListener,
+            readAsText,
+            result: fileContents
+        };
+        window.FileReader = jest.fn(() => dummyFileReader);
+        file.name = "test.csv";
+        file.path = "/path/to/csv";
+        component
+            .find("#fileChooser")
+            .at(0)
+            .simulate("change", { target: { files: [file] } });
+        expect(FileReader).toHaveBeenCalled();
+        expect(readAsText).toHaveBeenCalledWith(file);
+        expect(component.state("csvFileInfo")).toEqual({
+            name: "test.csv",
+            path: "/path/to/csv",
+            type: "text/csv"
+        });
     });
 });
