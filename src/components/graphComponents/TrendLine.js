@@ -37,16 +37,16 @@ export default class TrendLine extends React.Component {
 
   render() {
     const coordsX = this.props.data.map(n => {
-      return n[0];
+      return n.weight;
     });
     const coordsY = this.props.data.map(n => {
-      return n[1];
+      return n.size;
     });
-    const trendline = linearRegression(coordsY, coordsX);
+    const trendline = this.linearRegression(coordsY, coordsX);
 
     // Lowest and highest x coordinates to draw a plot line
-    const lowestX = coordsX.sort(sortNumber)[0];
-    const hightestX = coordsX.sort(sortNumber)[coordsX.length - 1];
+    const lowestX = coordsX.sort(this.sortNumber)[0];
+    const hightestX = coordsX.sort(this.sortNumber)[coordsX.length - 1];
     const trendlinePoints = [
       [lowestX, trendline(lowestX)],
       [hightestX, trendline(hightestX)]
