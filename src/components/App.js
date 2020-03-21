@@ -6,7 +6,7 @@ import UserNotes from "./UserNotes";
 import Modal from "./Modal";
 import "../assets/App.css";
 
-const { ipcRenderer } = require("electron");
+const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
     constructor(props) {
