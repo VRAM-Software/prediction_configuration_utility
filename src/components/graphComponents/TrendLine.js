@@ -1,39 +1,41 @@
 import React from "react";
 
 export default class TrendLine extends React.Component {
-  sortNumber = (a, b) => {
-    return a - b;
-  };
-
-  linearRegression = (x, y) => {
-    const lr = {};
-    const n = y.length;
-    let sumX = 0;
-    let sumY = 0;
-    let sumXy = 0;
-    let sumXx = 0;
-    let sumYy = 0;
-
-    for (let i = 0; i < y.length; i++) {
-      sumX += x[i];
-      sumY += y[i];
-      sumXy += x[i] * y[i];
-      sumXx += x[i] * x[i];
-      sumYy += y[i] * y[i];
-    }
-
-    lr["slope"] = (n * sumXy - sumX * sumY) / (n * sumXx - sumX * sumX);
-    lr["intercept"] = (sumY - lr.slope * sumX) / n;
-    lr["r2"] = Math.pow(
-      (n * sumXy - sumX * sumY) /
-        Math.sqrt((n * sumXx - sumX * sumX) * (n * sumYy - sumY * sumY)),
-      2
-    );
-
-    return num => {
-      return lr.slope * num + lr.intercept;
+    sortNumber = (a, b) => {
+        return a - b;
     };
-  };
+
+    linearRegression = (x, y) => {
+        const lr = {};
+        const n = y.length;
+        let sumX = 0;
+        let sumY = 0;
+        let sumXy = 0;
+        let sumXx = 0;
+        let sumYy = 0;
+
+        for (let i = 0; i < y.length; i++) {
+            sumX += x[i];
+            sumY += y[i];
+            sumXy += x[i] * y[i];
+            sumXx += x[i] * x[i];
+            sumYy += y[i] * y[i];
+        }
+
+        lr["slope"] = (n * sumXy - sumX * sumY) / (n * sumXx - sumX * sumX);
+        lr["intercept"] = (sumY - lr.slope * sumX) / n;
+        lr["r2"] = Math.pow(
+            (n * sumXy - sumX * sumY) /
+                Math.sqrt(
+                    (n * sumXx - sumX * sumX) * (n * sumYy - sumY * sumY)
+                ),
+            2
+        );
+
+        return num => {
+            return lr.slope * num + lr.intercept;
+        };
+    };
 
   render() {
     const coordsX = this.props.data.map(n => {
@@ -52,14 +54,14 @@ export default class TrendLine extends React.Component {
       [hightestX, trendline(hightestX)]
     ];
 
-    return (
-      <line
-        x1={this.props.scale.x(trendlinePoints[0][0])}
-        y1={this.props.scale.y(trendlinePoints[0][1])}
-        x2={this.props.scale.x(trendlinePoints[1][0])}
-        y2={this.props.scale.y(trendlinePoints[1][1])}
-        style={{ stroke: "black", strokeWidth: "2" }}
-      />
-    );
-  }
+        return (
+            <line
+                x1={this.props.scale.x(trendlinePoints[0][0])}
+                y1={this.props.scale.y(trendlinePoints[0][1])}
+                x2={this.props.scale.x(trendlinePoints[1][0])}
+                y2={this.props.scale.y(trendlinePoints[1][1])}
+                style={{ stroke: "black", strokeWidth: "2" }}
+            />
+        );
+    }
 }

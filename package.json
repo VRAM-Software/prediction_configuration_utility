@@ -52,7 +52,10 @@
         "lines": 80
       }
     },
-    "coveragePathIgnorePatterns": ["src/index.js"]
+    "coveragePathIgnorePatterns": [
+      "src/index.js",
+      "src/tests/mocks/mockFile.js"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -74,6 +77,7 @@
     "electron": "^8.0.2",
     "electron-packager": "^14.2.1",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2"
+    "enzyme-adapter-react-16": "^1.15.2",
+    "spectron": "^10.0.1"
   }
 }

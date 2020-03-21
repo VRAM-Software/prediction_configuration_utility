@@ -2,7 +2,6 @@ const modules = require("ml-modules");
 const SVM = modules.SVM;
 
 class SvmTrainer {
-    // tested 100%
     constructor() {
         this.trainedJson = null;
         this.data = [];
@@ -13,8 +12,6 @@ class SvmTrainer {
         };
     }
 
-    // not tested
-    // need to test wether svm.train is called with the right arguments
     train = data => {
         let svm = new SVM();
         this.translateData(data);
@@ -24,7 +21,6 @@ class SvmTrainer {
         return this.trainedJson;
     };
 
-    // tested 100%
     translateData = json => {
         let data = [];
         let labels = [];

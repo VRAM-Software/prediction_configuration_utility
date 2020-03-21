@@ -4,33 +4,35 @@ import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
 configure({
-  adapter: new Adapter()
+    adapter: new Adapter()
 });
 
 describe("Tests for <Chooser /> component", () => {
-  let component;
-  const func = jest.fn();
-  beforeEach(() => {
-    component = shallow(<Chooser type="test" onChange={func} />);
-  });
+    let component;
+    const func = jest.fn();
+    beforeEach(() => {
+        component = shallow(<Chooser type="test" onChange={func} />);
+    });
 
-  test("should render type button correctly", () => {
-    expect(
-      component.containsMatchingElement(<div>Seleziona un file test</div>)
-    ).toBeTruthy();
-  });
+    test("should render type button correctly", () => {
+        expect(
+            component.containsMatchingElement(<div>Seleziona un file test</div>)
+        ).toBeTruthy();
+    });
 
-  test("should render input element correctly", () => {
-    expect(component.find("input").prop("accept")).toEqual(".test");
-  });
+    test("should render input element correctly", () => {
+        expect(component.find("input").prop("accept")).toEqual(".test");
+    });
 
-  test("function passed as prop should be called on event change", () => {
-    component.find("input").simulate("change");
-    expect(func).toHaveBeenCalled();
-  });
+    test("function passed as prop should be called on event change", () => {
+        component.find("input").simulate("change");
+        expect(func).toHaveBeenCalled();
+    });
 
-  test("button should change color if file is chosen", () => {
-    let componentFileChosen = shallow(<Chooser type="test" onChange={func} isFileChosen={true} />)
-   expect(componentFileChosen.find(".file-chosen").exists()).toBeTruthy();
-  });
+    test("button should change color if file is chosen", () => {
+        let componentFileChosen = shallow(
+            <Chooser type="test" onChange={func} isFileChosen={true} />
+        );
+        expect(componentFileChosen.find(".file-chosen").exists()).toBeTruthy();
+    });
 });

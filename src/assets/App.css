@@ -1,169 +1,169 @@
 .App {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .fileChooserInput {
-  width: 0;
-  height: 0;
-  overflow: hidden;
+    width: 0;
+    height: 0;
+    overflow: hidden;
 }
 
 .fileChooserLabel {
-  height: 50px;
-  cursor: pointer;
+    height: 50px;
+    cursor: pointer;
 }
 
 .fileChooserLabel div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  color: black;
-  font-weight: bold;
-  font-size: 16px;
-  width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    width: 250px;
 }
 
 .file-chosen {
-  background-color: #F9DC5C;
+    background-color: #f9dc5c;
 }
 
 .no-file {
-  background-color: #09BC8A;
+    background-color: #09bc8a;
 }
 
 .btn-3:hover {
-  background-color: rgb(13, 144, 107);
+    background-color: rgb(13, 144, 107);
 }
 
 .fileChooserForm {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .fileChooserForm div {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .btn-3 span {
-  height: 50px;
+    height: 50px;
 }
 
 /* #F9DC5C - yellow */
 /* #ED254E - red */
 
 .customButton {
-  margin-left: 25px;
-  width: 180px;
-  height: 50px;
-  background-color: #09BC8A;
-  border: none;
-  font-size: 16px;
-  font-weight: bold;
-  color: black;
-  cursor: pointer;
-  transition: all .2s ease-in-out;
+    margin-left: 25px;
+    width: 180px;
+    height: 50px;
+    background-color: #09bc8a;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
 .customButtonDisabled {
-  margin-left: 25px;
-  width: 180;
-  height: 50px;
-  background-color: #09BC8A;
-  border: none;
-  font-size: 16px;
-  font-weight: bold;
-  color: black;
-  transition: all .2s ease-in-out;
-  opacity: 0.5;
+    margin-left: 25px;
+    width: 180;
+    height: 50px;
+    background-color: #09bc8a;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.5;
 }
 
 .customButton:hover {
-  background-color: rgb(13, 144, 107);
+    background-color: rgb(13, 144, 107);
 }
 
 .fileChooserContainer {
-  height: 10%;
-  width: 100%;
-  position: absolute;
-  bottom: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 10%;
+    width: 100%;
+    position: absolute;
+    bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .contentContainer {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: row;
-  margin-top: 30px;
-  width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 30px;
+    width: 100%;
 }
 
 .infoContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
 }
 
 .infoContainer input {
-  width: 40%;
-  padding: .4em;
+    width: 40%;
+    padding: 0.4em;
 }
 
 .infoContainer textarea {
-  width: 80%;
-  height: 100px;
+    width: 80%;
+    height: 100px;
 }
 
-.infoContainer input, 
+.infoContainer input,
 .infoContainer textarea {
-  border: none;
-  font-size: 1.2em;
-  margin-top: 10px;
+    border: none;
+    font-size: 1.2em;
+    margin-top: 10px;
 }
 
 .graphContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color:#1b1a25;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1b1a25;
 }
 
 .saveJsonModal {
-  width: 200px;
-  height: 100px;
-  background-color: greenyellow;
-  position: absolute;
-  top: 45%;
-  left: 45%;
-  z-index: 99;
+    width: 200px;
+    height: 100px;
+    background-color: greenyellow;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    z-index: 99;
 }
 
 .modalContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .modalBackground {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.5;
-  z-index: 98;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 98;
 }
