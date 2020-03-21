@@ -58,6 +58,13 @@ describe("Rendering tests for <App /> component", () => {
         ).toBeFalsy();
     });
 
+    test("component <Modal/> should be displayed if showModal state is true", () => {
+        component.setState({
+            isModalEnabled: true
+        });
+        expect(component.containsMatchingElement(<Modal />)).toBeTruthy();
+    });
+
     test("should not render <Modal/> when component is rendered", () => {
         expect(component.containsMatchingElement(<Modal />)).toBeFalsy();
     });
