@@ -6,6 +6,7 @@ import UserNotes from "./UserNotes";
 import Modal from "./Modal";
 import "../assets/App.css";
 import CheckBox from "./CheckBox";
+import config from '../config/config';
 
 const { ipcRenderer } = window.require("electron");
 
@@ -14,7 +15,8 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             userData: null,
-            userNotes: "No notes",
+            userNotes: "",
+            notesPredittore: "",
             fileName: "addestramento",
             isTrainingDone: false,
             isModalEnabled: false,
@@ -44,6 +46,12 @@ export default class App extends React.Component {
             userNotes: e.target.value
         });
     };
+
+    handleChangeNotesPredittore = e => {
+        this.setState({
+            notesPredittore: e.target.value
+        });
+    }
 
     handleChangeFileName = e => {
         this.setState({
@@ -147,6 +155,7 @@ export default class App extends React.Component {
 
                 <div className="infoContainer">
                     <CheckBox
+                        algorithms = {config.algorithms}
                         handleCheckBox={this.handleChangeAlgorithm}
                         algorithm={this.state.algorithm}
                     />
@@ -154,8 +163,8 @@ export default class App extends React.Component {
                         Inserisci note del predittore
                     </h3>
                     <UserNotes
-                        handleChange={this.handleChangeNotes}
-                        value={this.state.userNotes}
+                        handleChange={this.handleChangeNotesPredittore}
+                        value={this.state.notesPredittore}
                     />
                     <h3 className="margin-top-medium">
                         Inserisci note al file di configurazione

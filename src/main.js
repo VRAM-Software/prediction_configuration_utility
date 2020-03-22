@@ -22,7 +22,7 @@ function startTraining(data, notes, callback) {
 function createWindow() {
     let mainWindow = new BrowserWindow({
         width: 1024,
-        height: 788,
+        height: 768,
         webPreferences: {
             nodeIntegration: true
         }

@@ -1,17 +1,12 @@
 import React from "react";
 import "../assets/App.css";
 
-let algorithm = [
-    { name: "svm", desc: "Support Vector Machine" },
-    { name: "rl", desc: "Regressione Lineare" }
-];
-
 export default class CheckBox extends React.Component {
     render() {
-        let list = algorithm.map((item, index) => (
+        let list = this.props.algorithms.map((item, index) => (
             <div key={index} className="checkBoxContainer">
                 <div className={item.name === this.props.algorithm ? "checkSelected" : "checkNotSelected"} id="checkBox" onClick={() => this.props.handleCheckBox(item.name)}></div>
-                <span>{item.desc}</span>
+                <span onClick={() => this.props.handleCheckBox(item.name)}>{item.desc}</span>
             </div>
         ));
         return (

@@ -9,6 +9,7 @@ import Adapter from "enzyme-adapter-react-16";
 import { configure, shallow, mount } from "enzyme";
 import Modal from "../../components/Modal";
 import {ipcRenderer} from 'electron';
+import CheckBox from "../../components/CheckBox";
 
 jest.mock("electron", () => ({
     ipcRenderer: {
@@ -41,18 +42,18 @@ describe("Rendering tests for <App /> component", () => {
         ).toBeTruthy();
     });
 
-    test("should render <Graph/> and <UserNotes/> if userData exists", () => {
+    test("should render <Graph/> and two <UserNotes/> if userData exists", () => {
         component.setState({
             userData: [1, 2, 3, 4]
         });
         expect(
-            component.containsAllMatchingElements([<Graph />, <UserNotes />])
+            component.containsAllMatchingElements([<Graph />, <UserNotes />], <UserNotes />)
         ).toBeTruthy();
     });
 
-    test("should not render render <Graph/> and <UserNotes/> when component is rendered", () => {
+    test("should not render render <Graph/> and two <UserNotes/> when component is rendered", () => {
         expect(
-            component.containsAllMatchingElements([<Graph />, <UserNotes />])
+            component.containsAllMatchingElements([<Graph />, <UserNotes />, <UserNotes />])
         ).toBeFalsy();
     });
 
@@ -124,6 +125,17 @@ describe("Rendering tests for <App /> component", () => {
             component.containsMatchingElement(<span>test.json</span>)
         ).toBeTruthy();
     });
+
+    test("should not render component <CheckBox />", () => {
+        expect(component.containsMatchingElement(<CheckBox />)).toBeFalsy();
+    });
+
+    test("should render component <CheckBox /> after having userData", () => {
+        component.setState({
+            userData: [1, 2, 3, 4]
+        });
+        expect(component.containsMatchingElement(<CheckBox />)).toBeTruthy();
+    });
 });
 
 describe("Method tests for <App/> component", () => {
@@ -186,15 +198,44 @@ describe("Method tests for <App/> component", () => {
         expect(component.state("fileName")).toEqual("test");
     });
 
-    test("changing text in textarea should trigger state change", () => {
+    test("changing text in userNotes textarea should trigger state change", () => {
         let component = mount(<App />);
         component.setState({
             userData: [1, 2, 3, 4]
         });
         component
-            .find("textarea")
+            .find("textarea").at(1)
             .simulate("change", { target: { value: "test text" } });
         expect(component.state("userNotes")).toEqual("test text");
+    });
+
+    test("changing text in notesPredittore textarea should trigger state change", () => {
+        let component = mount(<App />);
+        component.setState({
+            userData: [1, 2, 3, 4]
+        });
+        component
+            .find("textarea").at(0)
+            .simulate("change", { target: { value: "test text" } });
+        expect(component.state("notesPredittore")).toEqual("test text");
+    });
+
+    test("changing current algorithm with button should trigger state change in App", () => {
+        let component = mount(<App />);
+        component.setState({
+            userData: [1, 2, 3, 4]
+        });
+        component.find(".checkNotSelected").simulate("click");
+        expect(component.state("algorithm")).toEqual("rl");
+    });
+
+    test("changing current algorithm with text should trigger state change in App", () => {
+        let component = mount(<App />);
+        component.setState({
+            userData: [1, 2, 3, 4]
+        });
+        component.find("span[children='Regressione Lineare']").simulate("click");
+        expect(component.state("algorithm")).toEqual("rl");
     });
 
     test("onChange function should deal with json files properly", () => {
