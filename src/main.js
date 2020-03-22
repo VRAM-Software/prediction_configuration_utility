@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
+const remote = require("electron").remote;
 const isDev = require("electron-is-dev");
 const fs = require("fs");
 const Trainer = require("./algorithm/train");
@@ -16,6 +17,7 @@ function startTraining(data, notes, callback) {
 
     if (typeof callback === "function") callback();
 }
+
 
 function createWindow() {
     let mainWindow = new BrowserWindow({

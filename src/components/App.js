@@ -5,6 +5,8 @@ import Graph from "./Graph";
 import UserNotes from "./UserNotes";
 import Modal from "./Modal";
 import "../assets/App.css";
+import CheckBox from "./CheckBox";
+import config from '../config/config';
 
 const { ipcRenderer } = window.require("electron");
 
@@ -13,13 +15,15 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             userData: null,
-            userNotes: "No notes",
+            userNotes: "",
+            notesPredittore: "",
             fileName: "addestramento",
             isTrainingDone: false,
             isModalEnabled: false,
             jsonFileInfo: null,
             csvFileInfo: null,
-            trainedJson: null
+            trainedJson: null,
+            algorithm: "svm"
         };
     }
 
@@ -42,6 +46,12 @@ export default class App extends React.Component {
             userNotes: e.target.value
         });
     };
+
+    handleChangeNotesPredittore = e => {
+        this.setState({
+            notesPredittore: e.target.value
+        });
+    }
 
     handleChangeFileName = e => {
         this.setState({
@@ -122,8 +132,21 @@ export default class App extends React.Component {
         };
     };
 
-    render() {
+    handleChangeAlgorithm = algorithm => {
+        console.log(algorithm);
+        if (algorithm !== this.state.algorithm) {
+            this.setState(
+                {
+                    algorithm: algorithm
+                },
+                () => {
+                    console.log(this.state);
+                }
+            );
+        }
+    };
 
+    render() {
         const group = (
             <>
                 <div className="graphContainer">
@@ -131,6 +154,21 @@ export default class App extends React.Component {
                 </div>
 
                 <div className="infoContainer">
+                    <CheckBox
+                        algorithms = {config.algorithms}
+                        handleCheckBox={this.handleChangeAlgorithm}
+                        algorithm={this.state.algorithm}
+                    />
+                    <h3 className="margin-top-medium">
+                        Inserisci note del predittore
+                    </h3>
+                    <UserNotes
+                        handleChange={this.handleChangeNotesPredittore}
+                        value={this.state.notesPredittore}
+                    />
+                    <h3 className="margin-top-medium">
+                        Inserisci note al file di configurazione
+                    </h3>
                     <UserNotes
                         handleChange={this.handleChangeNotes}
                         value={this.state.userNotes}
@@ -148,31 +186,31 @@ export default class App extends React.Component {
                     {this.state.userData !== null ? group : null}
                 </div>
                 <div className="fileChooserContainer">
-                    <form className="fileChooserForm">
-                        <div>
-                            <Chooser
-                                type="csv"
-                                onChange={this.onChange}
-                                isFileChosen={!!this.state.csvFile}
-                            />
-                            <span>
-                                {this.state.csvFileInfo
-                                    ? this.state.csvFileInfo.name
-                                    : "Nessun file selezionato"}
-                            </span>
-                        </div>
-                        <div>
-                            <Chooser
-                                type="json"
-                                onChange={this.onChange}
-                                isFileChosen={!!this.state.jsonFile}
-                            />
-                            <span>
-                                {this.state.jsonFileInfo
-                                    ? this.state.jsonFileInfo.name
-                                    : "Nessun file selezionato"}
-                            </span>
-                        </div>
+                    <div>
+                        <Chooser
+                            type="csv"
+                            onChange={this.onChange}
+                            isFileChosen={!!this.state.csvFile}
+                        />
+                        <span>
+                            {this.state.csvFileInfo
+                                ? this.state.csvFileInfo.name
+                                : "Nessun file selezionato"}
+                        </span>
+                    </div>
+                    <div>
+                        <Chooser
+                            type="json"
+                            onChange={this.onChange}
+                            isFileChosen={!!this.state.jsonFile}
+                        />
+                        <span>
+                            {this.state.jsonFileInfo
+                                ? this.state.jsonFileInfo.name
+                                : "Nessun file selezionato"}
+                        </span>
+                    </div>
+                    <div>
                         {this.state.csvFileInfo ? (
                             <button
                                 className="customButton"
@@ -185,6 +223,8 @@ export default class App extends React.Component {
                                 Inizia addestramento
                             </button>
                         )}
+                    </div>
+                    <div>
                         {this.state.isTrainingDone ? (
                             <button
                                 className="customButton"
@@ -197,7 +237,7 @@ export default class App extends React.Component {
                                 Salva json
                             </button>
                         )}
-                    </form>
+                    </div>
                 </div>
                 {this.state.isModalEnabled ? (
                     <Modal
