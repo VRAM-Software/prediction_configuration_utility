@@ -6,12 +6,12 @@ import { shallow, configure, mount } from "enzyme";
 // ================ UTILS ================
 configure({ adapter: new Adapter() });
 
-let propData = [
+const propData = [
     { weight: 1,  size: 1, label: 1},
     { weight: 1,  size: 1, label: -1}
 ];
 
-let propScale = {
+const propScale = {
     x: jest.fn(),
     y: jest.fn()
 };
@@ -30,12 +30,12 @@ describe("<RenderCircles /> component", () => {
     });
 
     test("renders green circle if label is 1", () => {
-        let component = mount(<RenderCircles data={[propData[0]]} scale={propScale} />);
+        const component = mount(<RenderCircles data={[propData[0]]} scale={propScale} />);
         expect(component.find("circle").prop("style")).toHaveProperty("fill", "green");
     });
 
     test("renders red circle if label label is different from 1", () => {
-        let component = mount(<RenderCircles data={[propData[1]]} scale={propScale} />);
+        const component = mount(<RenderCircles data={[propData[1]]} scale={propScale} />);
         expect(component.find("circle").prop("style")).toHaveProperty("fill", "red");
     });
 

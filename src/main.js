@@ -15,9 +15,10 @@ function startTraining(data, notes, callback) {
     trainer.train(data, notes);
     jsonTrained = trainer.getTrainedJson();
 
-    if (typeof callback === "function") callback();
+    if (typeof callback === "function") {
+        callback();
+    }
 }
-
 
 function createWindow() {
     let mainWindow = new BrowserWindow({
@@ -60,7 +61,9 @@ ipcMain.on("save-to-disk", (event, arg) => {
 
 ipcMain.on("start-training", (event, arg) => {
     startTraining(arg.data, arg.notes, err => {
-        if (err) throw err;
+        if (err) {
+            throw err;
+        }
         console.log("Finished training");
     });
     event.reply("finished-training");
@@ -68,7 +71,7 @@ ipcMain.on("start-training", (event, arg) => {
 
 ipcMain.on("get-json-from-csv", (event, arg) => {
     console.log(arg);
-    let file = IO.readCsvFile(arg);
+    const file = IO.readCsvFile(arg);
     if (file) {
         event.reply("csv-converted", file);
     }

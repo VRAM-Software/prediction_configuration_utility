@@ -30,7 +30,7 @@ describe("Tests for <Chooser /> component", () => {
     });
 
     test("button should change color if file is chosen", () => {
-        let componentFileChosen = shallow(
+        const componentFileChosen = shallow(
             <Chooser type="test" onChange={func} isFileChosen={true} />
         );
         expect(componentFileChosen.find(".file-chosen").exists()).toBeTruthy();

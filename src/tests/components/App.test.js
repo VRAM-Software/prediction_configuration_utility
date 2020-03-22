@@ -155,7 +155,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("button 'Chiudi' in modal should close modal", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             isModalEnabled: true
         });
@@ -166,7 +166,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("when modal is open clicking the background should close modal", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             isModalEnabled: true
         });
@@ -177,7 +177,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("when modal is open clicking 'Salva Json' should trigger state change", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             isModalEnabled: true
         });
@@ -188,7 +188,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("when modal is open changing input should trigger state change", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             isModalEnabled: true
         });
@@ -199,7 +199,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("changing text in userNotes textarea should trigger state change", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             userData: [1, 2, 3, 4]
         });
@@ -210,7 +210,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("changing text in notesPredittore textarea should trigger state change", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             userData: [1, 2, 3, 4]
         });
@@ -221,7 +221,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("changing current algorithm with button should trigger state change in App", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             userData: [1, 2, 3, 4]
         });
@@ -230,7 +230,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("changing current algorithm with text should trigger state change in App", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         component.setState({
             userData: [1, 2, 3, 4]
         });
@@ -239,7 +239,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("onChange function should deal with json files properly", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         const fileContents = { a: 1, b: 2, c: 3 };
         const file = new Blob([fileContents], {
             type: "application/json"
@@ -258,7 +258,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("onChange function should deal with csv files properly", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         const fileContents = "a,b,c\n1,2,3";
         const file = new Blob([fileContents], {
             type: "text/csv"
@@ -277,7 +277,7 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("onChange function should callCsvToJson function", () => {
-        let component = mount(<App />);
+        const component = mount(<App />);
         const fileContents = "a,b,c\n1,2,3";
         const file = new Blob([fileContents], {
             type: "text/csv"
