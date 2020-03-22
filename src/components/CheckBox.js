@@ -2,24 +2,24 @@ import React from "react";
 import "../assets/App.css";
 
 let algorithm = [
-    { name: "svm", desc: "Support Vector Machine", selected: true },
-    { name: "rl", desc: "Regressione Lineare", selected: false }
+    { name: "svm", desc: "Support Vector Machine" },
+    { name: "rl", desc: "Regressione Lineare" }
 ];
 
 export default class CheckBox extends React.Component {
     render() {
         let list = algorithm.map((item, index) => (
             <div key={index} className="checkBoxContainer">
-                <div className={item.selected ? "checkSelected" : "checkNotSelected"} id="checkBox" onClick={this.props.handleCheckBox}></div>
+                <div className={item.name === this.props.algorithm ? "checkSelected" : "checkNotSelected"} id="checkBox" onClick={() => this.props.handleCheckBox(item.name)}></div>
                 <span>{item.desc}</span>
             </div>
         ));
         return (
             <div id="checkContainer">
-                <span id="checkBoxInfo">
+                <h3 id="checkBoxInfo">
                     Scegliere l'algoritmo di predizione da utilizzare per
                     l'addestramento
-                </span>
+                </h3>
                 <div>{list}</div>
             </div>
         );

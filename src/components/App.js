@@ -20,7 +20,8 @@ export default class App extends React.Component {
             isModalEnabled: false,
             jsonFileInfo: null,
             csvFileInfo: null,
-            trainedJson: null
+            trainedJson: null,
+            algorithm: "svm"
         };
     }
 
@@ -123,6 +124,20 @@ export default class App extends React.Component {
         };
     };
 
+    handleChangeAlgorithm = algorithm => {
+        console.log(algorithm);
+        if (algorithm !== this.state.algorithm) {
+            this.setState(
+                {
+                    algorithm: algorithm
+                },
+                () => {
+                    console.log(this.state);
+                }
+            );
+        }
+    };
+
     render() {
         const group = (
             <>
@@ -131,7 +146,20 @@ export default class App extends React.Component {
                 </div>
 
                 <div className="infoContainer">
-                    <CheckBox />
+                    <CheckBox
+                        handleCheckBox={this.handleChangeAlgorithm}
+                        algorithm={this.state.algorithm}
+                    />
+                    <h3 className="margin-top-medium">
+                        Inserisci note del predittore
+                    </h3>
+                    <UserNotes
+                        handleChange={this.handleChangeNotes}
+                        value={this.state.userNotes}
+                    />
+                    <h3 className="margin-top-medium">
+                        Inserisci note al file di configurazione
+                    </h3>
                     <UserNotes
                         handleChange={this.handleChangeNotes}
                         value={this.state.userNotes}
