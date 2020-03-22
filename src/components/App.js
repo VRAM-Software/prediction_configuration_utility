@@ -5,6 +5,7 @@ import Graph from "./Graph";
 import UserNotes from "./UserNotes";
 import Modal from "./Modal";
 import "../assets/App.css";
+import CheckBox from "./CheckBox";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -123,7 +124,6 @@ export default class App extends React.Component {
     };
 
     render() {
-
         const group = (
             <>
                 <div className="graphContainer">
@@ -131,6 +131,7 @@ export default class App extends React.Component {
                 </div>
 
                 <div className="infoContainer">
+                    <CheckBox />
                     <UserNotes
                         handleChange={this.handleChangeNotes}
                         value={this.state.userNotes}
@@ -148,31 +149,31 @@ export default class App extends React.Component {
                     {this.state.userData !== null ? group : null}
                 </div>
                 <div className="fileChooserContainer">
-                    <form className="fileChooserForm">
-                        <div>
-                            <Chooser
-                                type="csv"
-                                onChange={this.onChange}
-                                isFileChosen={!!this.state.csvFile}
-                            />
-                            <span>
-                                {this.state.csvFileInfo
-                                    ? this.state.csvFileInfo.name
-                                    : "Nessun file selezionato"}
-                            </span>
-                        </div>
-                        <div>
-                            <Chooser
-                                type="json"
-                                onChange={this.onChange}
-                                isFileChosen={!!this.state.jsonFile}
-                            />
-                            <span>
-                                {this.state.jsonFileInfo
-                                    ? this.state.jsonFileInfo.name
-                                    : "Nessun file selezionato"}
-                            </span>
-                        </div>
+                    <div>
+                        <Chooser
+                            type="csv"
+                            onChange={this.onChange}
+                            isFileChosen={!!this.state.csvFile}
+                        />
+                        <span>
+                            {this.state.csvFileInfo
+                                ? this.state.csvFileInfo.name
+                                : "Nessun file selezionato"}
+                        </span>
+                    </div>
+                    <div>
+                        <Chooser
+                            type="json"
+                            onChange={this.onChange}
+                            isFileChosen={!!this.state.jsonFile}
+                        />
+                        <span>
+                            {this.state.jsonFileInfo
+                                ? this.state.jsonFileInfo.name
+                                : "Nessun file selezionato"}
+                        </span>
+                    </div>
+                    <div>
                         {this.state.csvFileInfo ? (
                             <button
                                 className="customButton"
@@ -185,6 +186,8 @@ export default class App extends React.Component {
                                 Inizia addestramento
                             </button>
                         )}
+                    </div>
+                    <div>
                         {this.state.isTrainingDone ? (
                             <button
                                 className="customButton"
@@ -197,7 +200,7 @@ export default class App extends React.Component {
                                 Salva json
                             </button>
                         )}
-                    </form>
+                    </div>
                 </div>
                 {this.state.isModalEnabled ? (
                     <Modal

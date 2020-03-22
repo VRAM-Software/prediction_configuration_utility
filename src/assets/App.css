@@ -25,7 +25,7 @@
     color: black;
     font-weight: bold;
     font-size: 16px;
-    width: 250px;
+    width: 220px;
 }
 
 .file-chosen {
@@ -40,17 +40,6 @@
     background-color: rgb(13, 144, 107);
 }
 
-.fileChooserForm {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.fileChooserForm div {
-    margin-right: 10px;
-}
-
 .btn-3 span {
     height: 50px;
 }
@@ -59,8 +48,7 @@
 /* #ED254E - red */
 
 .customButton {
-    margin-left: 25px;
-    width: 180px;
+    width: 220px;
     height: 50px;
     background-color: #09bc8a;
     border: none;
@@ -72,8 +60,7 @@
 }
 
 .customButtonDisabled {
-    margin-left: 25px;
-    width: 180;
+    width: 220px;
     height: 50px;
     background-color: #09bc8a;
     border: none;
@@ -98,46 +85,104 @@
     align-items: center;
 }
 
+.fileChooserContainer > div {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
 .contentContainer {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex-direction: row;
     margin-top: 30px;
     width: 100%;
 }
 
-.infoContainer {
+
+.graphContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    margin-left: 24px;
+    background-color: #1b1a25;
 }
 
-.infoContainer input {
-    width: 40%;
-    padding: 0.4em;
+.infoContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    flex-direction: column;
+    height: 460px;
+}
+
+.checkBoxContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.checkBoxContainer span {
+    margin-left: 10px;
+}
+
+#checkContainer {
+    width: 80%;
+}
+
+#checkBoxInfo {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#checkBox {
+    width: 20px;
+    height: 20px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+.checkSelected {
+    background-color: chartreuse;
+}
+
+.checkNotSelected:hover {
+    background-color: chartreuse;
+}
+
+.checkNotSelected {
+    background-color: white;
 }
 
 .infoContainer textarea {
-    width: 80%;
+    width: 77%;
     height: 100px;
+    resize: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 .infoContainer input,
 .infoContainer textarea {
     border: none;
     font-size: 1.2em;
+    padding: 0.5em;
     margin-top: 10px;
 }
 
-.graphContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #1b1a25;
-}
+
 
 .saveJsonModal {
     width: 200px;
