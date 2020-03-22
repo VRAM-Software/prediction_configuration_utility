@@ -54,6 +54,7 @@
     },
     "coveragePathIgnorePatterns": [
       "src/index.js",
+      "src/main.js",
       "src/tests/mocks/mockFile.js"
     ]
   },
@@ -74,7 +75,7 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.9",
-    "electron": "^8.0.2",
+    "electron": "^8.1.1",
     "electron-packager": "^14.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",

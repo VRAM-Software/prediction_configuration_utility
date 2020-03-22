@@ -1,7 +1,6 @@
 import React from "react";
 import "../mocks/mockFile";
 
-import { ipcRenderer } from "electron";
 import App from "../../components/App";
 import Chooser from "../../components/Chooser";
 import Graph from "../../components/Graph";
@@ -9,12 +8,11 @@ import UserNotes from "../../components/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, shallow, mount } from "enzyme";
 import Modal from "../../components/Modal";
+import {ipcRenderer} from 'electron';
 
 jest.mock("electron", () => ({
     ipcRenderer: {
-        on: jest.fn().mockImplementation(string => {
-            return string;
-        }),
+        on: jest.fn(),
         send: jest.fn()
     }
 }));
@@ -132,8 +130,6 @@ describe("Method tests for <App/> component", () => {
     let component;
     beforeEach(() => {
         component = shallow(<App />);
-        ipcRenderer.send.mockRestore();
-        ipcRenderer.on.mockRestore();
     });
 
     test("button 'Salva json' should open modal", () => {
@@ -199,52 +195,6 @@ describe("Method tests for <App/> component", () => {
             .find("textarea")
             .simulate("change", { target: { value: "test text" } });
         expect(component.state("userNotes")).toEqual("test text");
-    });
-
-    test("when modal is open clicking 'Salva Json' should send signal to main process", () => {
-        let component = mount(<App />);
-        component.setState({
-            isModalEnabled: true
-        });
-        const events = {};
-
-        component.setState({
-            fileName: "test",
-            trainedJson: { a: 1, b: 2 },
-            notes: "notes"
-        });
-
-        let obj = {
-            name: component.state("fileName"),
-            json: component.state("trainedJson"),
-            notes: component.state("userNotes")
-        };
-
-        component
-            .find("button[children='Salva Json']")
-            .simulate("click", { preventDefault: () => {} });
-        expect(ipcRenderer.send).toBeCalledWith("save-to-disk", obj);
-    });
-
-    test("button 'Inizia addestramento' should send signal to main process", () => {
-        component.setState({
-            userData: [1, 2, 3, 4],
-            userNotes: "test",
-            csvFileInfo: { name: "test" }
-        });
-        let obj = {
-            data: component.state("userData"),
-            notes: component.state("userNotes")
-        };
-        component
-            .find("button[children='Inizia addestramento']")
-            .simulate("click", { preventDefault: () => {} });
-        expect(ipcRenderer.send).toBeCalledWith("start-training", obj);
-        expect(ipcRenderer.on).toBeCalledWith(
-            "finished-training",
-            expect.any(Function)
-        );
-        // expect(component.state("isTrainingDone")).toEqual(true);
     });
 
     test("onChange function should deal with json files properly", () => {

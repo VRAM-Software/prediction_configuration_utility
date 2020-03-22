@@ -6,6 +6,10 @@ Object.defineProperty(window, "require", {
         onchange: null,
         addEventListener: jest.fn(),
         removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn()
+        dispatchEvent: jest.fn(),
+        ipcRenderer: {
+            on: jest.fn(),
+            send: jest.fn()
+        }
     }))
 });
