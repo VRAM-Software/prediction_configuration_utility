@@ -172,6 +172,19 @@ describe("Method tests for <App/> component", () => {
         mountedComponent = mount(<App />);
     });
 
+    test("button 'Inizia addestramento' should trigger state change when clicked", () => {
+        component.setState({
+            userData: [1, 2, 3, 4],
+            csvFileInfo: "csv"
+        });
+        component
+            .find("button[children='Inizia addestramento']")
+            .simulate("click", {
+                preventDefault: () => {}
+            });
+        expect(component.state("isTraining")).toEqual(true);
+    });
+
     test("button 'Salva json' should open modal", () => {
         component.setState({
             isTrainingDone: true
@@ -314,7 +327,7 @@ describe("Method tests for <App/> component", () => {
             .at(0)
             .simulate("change", { target: { files: [file] } });
         expect(console.log).toHaveBeenCalledWith("Il file non è corretto");
-    })
+    });
 
     test("onChange function should callCsvToJson function", () => {
         const fileContents = "a,b,c\n1,2,3";
@@ -353,7 +366,7 @@ describe("Method tests for <App/> component", () => {
             .find("#fileChooser")
             .at(0)
             .simulate("change", { target: { files: [null] } });
-        
+
         expect(console.log).toHaveBeenCalledWith("Il file è nullo");
     });
 
@@ -363,7 +376,9 @@ describe("Method tests for <App/> component", () => {
             userData: [1, 2, 3, 4]
         });
         mountedComponent.find(".checkSelected").simulate("click");
-        
-        expect(console.log).toHaveBeenCalledWith("Algoritmo scelto è già inizializzato");
+
+        expect(console.log).toHaveBeenCalledWith(
+            "Algoritmo scelto è già inizializzato"
+        );
     });
 });
