@@ -157,10 +157,10 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("button 'Chiudi' in modal should close modal", () => {
-        component.setState({
+        mountedComponent.setState({
             isModalEnabled: true
         });
-        component.find("button[children='Chiudi']").simulate("click", {
+        mountedComponent.find("button[children='Chiudi']").simulate("click", {
             preventDefault: () => {}
         });
         expect(component.state("isModalEnabled")).toEqual(false);
