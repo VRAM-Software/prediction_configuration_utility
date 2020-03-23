@@ -13,17 +13,16 @@ class SvmTrainer {
     }
 
     train = data => {
-        let svm = new SVM();
+        const svm = new SVM();
         this.translateData(data);
         svm.train(this.data, this.labels, this.options);
         this.trainedJson = svm.toJSON();
-        // this.printPrediction(svm);
         return this.trainedJson;
     };
 
     translateData = json => {
-        let data = [];
-        let labels = [];
+        const data = [];
+        const labels = [];
         for (let i = 0; i < json.length; i++) {
             data.push([parseFloat(json[i].weight), parseFloat(json[i].size)]);
             labels.push(json[i].label);
@@ -31,17 +30,6 @@ class SvmTrainer {
         this.data = data;
         this.labels = labels;
     };
-
-    // commented out 'cause unused
-    // printPrediction = svmOld => {
-    //   let svm = new SVM();
-    //   svm.fromJSON(this.trainedJson);
-
-    //   this.data.forEach((point) => {
-    //       console.log("Prediction_1: " + svmOld.predict(point));
-    //       console.log("Prediction_2: " + svm.predictClass(point));
-    //   })
-    // };
 
     // useless to test a getter
     getTrainedJson = () => {

@@ -3,7 +3,7 @@ import "../assets/App.css";
 
 export default class CheckBox extends React.Component {
     render() {
-        let list = this.props.algorithms.map((item, index) => (
+        const list = this.props.algorithms.map((item, index) => (
             <div key={index} className="checkBoxContainer">
                 <div className={item.name === this.props.algorithm ? "checkSelected" : "checkNotSelected"} id="checkBox" onClick={() => this.props.handleCheckBox(item.name)}></div>
                 <span onClick={() => this.props.handleCheckBox(item.name)}>{item.desc}</span>

@@ -140,8 +140,10 @@ describe("Rendering tests for <App /> component", () => {
 
 describe("Method tests for <App/> component", () => {
     let component;
+    let mountedComponent;
     beforeEach(() => {
         component = shallow(<App />);
+        mountedComponent = mount(<App />);
     });
 
     test("button 'Salva json' should open modal", () => {
@@ -155,102 +157,94 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("button 'Chiudi' in modal should close modal", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent.setState({
             isModalEnabled: true
         });
-        component.find("button[children='Chiudi']").simulate("click", {
+        mountedComponent.find("button[children='Chiudi']").simulate("click", {
             preventDefault: () => {}
         });
         expect(component.state("isModalEnabled")).toEqual(false);
     });
 
     test("when modal is open clicking the background should close modal", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent.setState({
             isModalEnabled: true
         });
-        component
+        mountedComponent
             .find(".modalBackground")
             .simulate("click", { preventDefault: () => {} });
-        expect(component.state("isModalEnabled")).toEqual(false);
+        expect(mountedComponent.state("isModalEnabled")).toEqual(false);
     });
 
     test("when modal is open clicking 'Salva Json' should trigger state change", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent.setState({
             isModalEnabled: true
         });
-        component
+        mountedComponent
             .find("button[children='Salva Json']")
             .simulate("click", { preventDefault: () => {} });
-        expect(component.state("isModalEnabled")).toEqual(false);
+        expect(mountedComponent.state("isModalEnabled")).toEqual(false);
     });
 
     test("when modal is open changing input should trigger state change", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent.setState({
             isModalEnabled: true
         });
-        component
+        mountedComponent
             .find("#inputSaveName")
             .simulate("change", { target: { value: "test" } });
-        expect(component.state("fileName")).toEqual("test");
+        expect(mountedComponent.state("fileName")).toEqual("test");
     });
 
     test("changing text in userNotes textarea should trigger state change", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent.setState({
             userData: [1, 2, 3, 4]
         });
-        component
+        mountedComponent
             .find("textarea").at(1)
             .simulate("change", { target: { value: "test text" } });
-        expect(component.state("userNotes")).toEqual("test text");
+        expect(mountedComponent.state("userNotes")).toEqual("test text");
     });
 
     test("changing text in notesPredittore textarea should trigger state change", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent.setState({
             userData: [1, 2, 3, 4]
         });
-        component
+        mountedComponent
             .find("textarea").at(0)
             .simulate("change", { target: { value: "test text" } });
-        expect(component.state("notesPredittore")).toEqual("test text");
+        expect(mountedComponent.state("notesPredittore")).toEqual("test text");
     });
 
     test("changing current algorithm with button should trigger state change in App", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent.setState({
             userData: [1, 2, 3, 4]
         });
-        component.find(".checkNotSelected").simulate("click");
-        expect(component.state("algorithm")).toEqual("rl");
+        mountedComponent.find(".checkNotSelected").simulate("click");
+        expect(mountedComponent.state("algorithm")).toEqual("rl");
     });
 
     test("changing current algorithm with text should trigger state change in App", () => {
-        let component = mount(<App />);
-        component.setState({
+        mountedComponent = mount(<App />);
+        mountedComponent.setState({
             userData: [1, 2, 3, 4]
         });
-        component.find("span[children='Regressione Lineare']").simulate("click");
-        expect(component.state("algorithm")).toEqual("rl");
+        mountedComponent.find("span[children='Regressione Lineare']").simulate("click");
+        expect(mountedComponent.state("algorithm")).toEqual("rl");
     });
 
     test("onChange function should deal with json files properly", () => {
-        let component = mount(<App />);
         const fileContents = { a: 1, b: 2, c: 3 };
         const file = new Blob([fileContents], {
             type: "application/json"
         });
         file.name = "test.json";
         file.path = "/path/to/json";
-        component
+        mountedComponent
             .find("#fileChooser")
             .at(1)
             .simulate("change", { target: { files: [file] } });
-        expect(component.state("jsonFileInfo")).toEqual({
+        expect(mountedComponent.state("jsonFileInfo")).toEqual({
             name: "test.json",
             path: "/path/to/json",
             type: "application/json"
@@ -258,18 +252,17 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("onChange function should deal with csv files properly", () => {
-        let component = mount(<App />);
         const fileContents = "a,b,c\n1,2,3";
         const file = new Blob([fileContents], {
             type: "text/csv"
         });
         file.name = "test.csv";
         file.path = "/path/to/csv";
-        component
+        mountedComponent
             .find("#fileChooser")
             .at(0)
             .simulate("change", { target: { files: [file] } });
-        expect(component.state("csvFileInfo")).toEqual({
+        expect(mountedComponent.state("csvFileInfo")).toEqual({
             name: "test.csv",
             path: "/path/to/csv",
             type: "text/csv"
@@ -277,7 +270,6 @@ describe("Method tests for <App/> component", () => {
     });
 
     test("onChange function should callCsvToJson function", () => {
-        let component = mount(<App />);
         const fileContents = "a,b,c\n1,2,3";
         const file = new Blob([fileContents], {
             type: "text/csv"
@@ -294,13 +286,13 @@ describe("Method tests for <App/> component", () => {
         window.FileReader = jest.fn(() => dummyFileReader);
         file.name = "test.csv";
         file.path = "/path/to/csv";
-        component
+        mountedComponent
             .find("#fileChooser")
             .at(0)
             .simulate("change", { target: { files: [file] } });
         expect(FileReader).toHaveBeenCalled();
         expect(readAsText).toHaveBeenCalledWith(file);
-        expect(component.state("csvFileInfo")).toEqual({
+        expect(mountedComponent.state("csvFileInfo")).toEqual({
             name: "test.csv",
             path: "/path/to/csv",
             type: "text/csv"
