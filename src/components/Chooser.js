@@ -10,7 +10,6 @@ export default class Chooser extends React.Component {
                     id="fileChooser"
                     type="file"
                     name="file"
-                    accept={"." + this.props.type}
                     onChange={this.props.onChange}
                 />
                 <label htmlFor="fileChooser" className="fileChooserLabel">

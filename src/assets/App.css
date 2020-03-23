@@ -71,6 +71,22 @@
     transition: all 0.2s ease-in-out;
 }
 
+.customButtonSmaller {
+    width: 100px;
+    height: 40px;
+    background-color: #4392f1;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.customButtonSmaller:hover {
+    background-color: #5FBFF9;
+}
+
 .customButtonDisabled {
     width: 220px;
     height: 50px;
@@ -202,11 +218,25 @@
     transition: 0.2s all ease-in-out;
 }
 
-textarea:focus,
-input:focus {
+
+
+#inputSaveName {
+    font-size: 1.2em;
+    width: 85%;
+    padding: 0.5em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    border: 1px solid #D7DEDC;
+    background-color: #D7DEDC;
+    transition: 0.2s all ease-in-out;
+}
+
+#inputSaveName:focus {
     outline: none !important;
     border: 1px solid #4392f1;
 }
+
 
 .infoContainer input,
 .infoContainer textarea {
@@ -221,13 +251,31 @@ h3 {
 }
 
 .saveJsonModal {
-    width: 200px;
-    height: 100px;
-    background-color: greenyellow;
+    width: 300px;
+    height: 180px;
+    background-color: whitesmoke;
     position: absolute;
-    top: 45%;
-    left: 45%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-150px, -90px);
     z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.saveJsonModal h3 {
+    width: 90%;
+}
+
+.saveJsonModal div {
+    flex-basis: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .modalContainer {
@@ -247,4 +295,10 @@ h3 {
     background-color: black;
     opacity: 0.5;
     z-index: 98;
+}
+
+textarea:focus,
+input:focus {
+    outline: none !important;
+    border: 1px solid #4392f1;
 }

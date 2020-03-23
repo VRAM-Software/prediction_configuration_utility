@@ -136,6 +136,13 @@ describe("Rendering tests for <App /> component", () => {
         });
         expect(component.containsMatchingElement(<CheckBox />)).toBeTruthy();
     });
+
+    test("should render button with 'Addestrando...' when component is busy training", () => {
+        component.setState({
+            isTraining: true
+        });
+        expect(component.find("button[children='Addestrando...']")).toBeTruthy();
+    });
 });
 
 describe("Method tests for <App/> component", () => {
@@ -247,7 +254,8 @@ describe("Method tests for <App/> component", () => {
         expect(mountedComponent.state("jsonFileInfo")).toEqual({
             name: "test.json",
             path: "/path/to/json",
-            type: "application/json"
+            type: "application/json",
+            extension: "json"
         });
     });
 
@@ -265,7 +273,8 @@ describe("Method tests for <App/> component", () => {
         expect(mountedComponent.state("csvFileInfo")).toEqual({
             name: "test.csv",
             path: "/path/to/csv",
-            type: "text/csv"
+            type: "text/csv",
+            extension: "csv"
         });
     });
 
@@ -295,7 +304,8 @@ describe("Method tests for <App/> component", () => {
         expect(mountedComponent.state("csvFileInfo")).toEqual({
             name: "test.csv",
             path: "/path/to/csv",
-            type: "text/csv"
+            type: "text/csv",
+            extension: "csv"
         });
     });
 });
