@@ -6,7 +6,7 @@ import UserNotes from "./UserNotes";
 import Modal from "./Modal";
 import "../assets/App.css";
 import CheckBox from "./CheckBox";
-import config from '../config/config';
+import config from "../config/config";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -23,7 +23,8 @@ export default class App extends React.Component {
             jsonFileInfo: null,
             csvFileInfo: null,
             trainedJson: null,
-            algorithm: "svm"
+            algorithm: "svm",
+            isTraining: false
         };
     }
 
@@ -51,7 +52,7 @@ export default class App extends React.Component {
         this.setState({
             notesPredittore: e.target.value
         });
-    }
+    };
 
     handleChangeFileName = e => {
         this.setState({
@@ -71,17 +72,22 @@ export default class App extends React.Component {
 
     handleStartTraining = e => {
         e.preventDefault();
+        this.setState({
+            isTraining: true
+        });
         ipcRenderer.send("start-training", {
             data: this.state.userData,
             notes: this.state.userNotes
         });
         ipcRenderer.on("finished-training", () => {
             this.setState({
-                isTrainingDone: true
+                isTrainingDone: true,
+                isTraining: false
             });
         });
     };
 
+    // translate this method to a call to main Process
     csvToJson = file => {
         const reader = new FileReader();
         const app = this;
@@ -101,23 +107,19 @@ export default class App extends React.Component {
     };
 
     onChange = e => {
-        let obj = null;
         if (e.target.files[0]) {
-            obj = this.getFileInfo(e.target.files[0]);
-        }
-        if (obj) {
-            switch (obj.type) {
-                case "application/json":
-                    this.setState({
-                        jsonFileInfo: obj
-                    });
-                    break;
-                default:
-                    this.csvToJson(e.target.files[0]);
-                    this.setState({
-                        csvFileInfo: obj
-                    });
-                    break;
+            const obj = this.getFileInfo(e.target.files[0]);
+            if (obj.extension === "json") {
+                this.setState({
+                    jsonFileInfo: obj
+                });
+            } else if (obj.extension === "csv") {
+                this.csvToJson(e.target.files[0]);
+                this.setState({
+                    csvFileInfo: obj
+                });
+            } else {
+                console.log("Il file non è corretto");
             }
         } else {
             console.log("Il file è nullo");
@@ -128,12 +130,12 @@ export default class App extends React.Component {
         return {
             name: file.name,
             path: file.path,
-            type: file.type
+            type: file.type,
+            extension: file.name.split(".").pop()
         };
     };
 
     handleChangeAlgorithm = algorithm => {
-        console.log(algorithm);
         if (algorithm !== this.state.algorithm) {
             this.setState(
                 {
@@ -143,6 +145,8 @@ export default class App extends React.Component {
                     console.log(this.state);
                 }
             );
+        } else {
+            console.log("Algoritmo scelto è già inizializzato");
         }
     };
 
@@ -155,7 +159,7 @@ export default class App extends React.Component {
 
                 <div className="infoContainer">
                     <CheckBox
-                        algorithms = {config.algorithms}
+                        algorithms={config.algorithms}
                         handleCheckBox={this.handleChangeAlgorithm}
                         algorithm={this.state.algorithm}
                     />
@@ -190,7 +194,7 @@ export default class App extends React.Component {
                         <Chooser
                             type="csv"
                             onChange={this.onChange}
-                            isFileChosen={!!this.state.csvFile}
+                            isFileChosen={!!this.state.csvFileInfo}
                         />
                         <span>
                             {this.state.csvFileInfo
@@ -202,7 +206,7 @@ export default class App extends React.Component {
                         <Chooser
                             type="json"
                             onChange={this.onChange}
-                            isFileChosen={!!this.state.jsonFile}
+                            isFileChosen={!!this.state.jsonFileInfo}
                         />
                         <span>
                             {this.state.jsonFileInfo
@@ -213,13 +217,13 @@ export default class App extends React.Component {
                     <div>
                         {this.state.csvFileInfo ? (
                             <button
-                                className="customButton"
+                                className="customButton buttonNormal"
                                 onClick={this.handleStartTraining}
                             >
-                                Inizia addestramento
+                                {this.state.isTraining ? "Addestrando..." : "Inizia addestramento"}
                             </button>
                         ) : (
-                            <button className="customButtonDisabled" disabled>
+                            <button className="customButtonDisabled buttonNormal" disabled>
                                 Inizia addestramento
                             </button>
                         )}
@@ -227,13 +231,13 @@ export default class App extends React.Component {
                     <div>
                         {this.state.isTrainingDone ? (
                             <button
-                                className="customButton"
+                                className="customButton buttonNormal"
                                 onClick={this.handleOpenModal}
                             >
                                 Salva json
                             </button>
                         ) : (
-                            <button className="customButtonDisabled" disabled>
+                            <button className="customButtonDisabled buttonNormal" disabled>
                                 Salva json
                             </button>
                         )}

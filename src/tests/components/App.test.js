@@ -8,7 +8,7 @@ import UserNotes from "../../components/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, shallow, mount } from "enzyme";
 import Modal from "../../components/Modal";
-import {ipcRenderer} from 'electron';
+import { ipcRenderer } from "electron";
 import CheckBox from "../../components/CheckBox";
 
 jest.mock("electron", () => ({
@@ -47,13 +47,20 @@ describe("Rendering tests for <App /> component", () => {
             userData: [1, 2, 3, 4]
         });
         expect(
-            component.containsAllMatchingElements([<Graph />, <UserNotes />], <UserNotes />)
+            component.containsAllMatchingElements(
+                [<Graph />, <UserNotes />],
+                <UserNotes />
+            )
         ).toBeTruthy();
     });
 
     test("should not render render <Graph/> and two <UserNotes/> when component is rendered", () => {
         expect(
-            component.containsAllMatchingElements([<Graph />, <UserNotes />, <UserNotes />])
+            component.containsAllMatchingElements([
+                <Graph />,
+                <UserNotes />,
+                <UserNotes />
+            ])
         ).toBeFalsy();
     });
 
@@ -136,14 +143,46 @@ describe("Rendering tests for <App /> component", () => {
         });
         expect(component.containsMatchingElement(<CheckBox />)).toBeTruthy();
     });
+
+    test("should render button with 'Addestrando...' when component is busy training", () => {
+        component.setState({
+            isTraining: true
+        });
+        expect(
+            component.find("button[children='Addestrando...']")
+        ).toBeTruthy();
+    });
+
+    test("should not render button with 'Addestrando...' when component is not training", () => {
+        component.setState({
+            isTraining: false
+        });
+        expect(
+            component.find("button[children='Inizia addestramento']")
+        ).toBeTruthy();
+    });
 });
 
 describe("Method tests for <App/> component", () => {
     let component;
     let mountedComponent;
+    const log = logMsg => console.log(logMsg);
     beforeEach(() => {
         component = shallow(<App />);
         mountedComponent = mount(<App />);
+    });
+
+    test("button 'Inizia addestramento' should trigger state change when clicked", () => {
+        component.setState({
+            userData: [1, 2, 3, 4],
+            csvFileInfo: "csv"
+        });
+        component
+            .find("button[children='Inizia addestramento']")
+            .simulate("click", {
+                preventDefault: () => {}
+            });
+        expect(component.state("isTraining")).toEqual(true);
     });
 
     test("button 'Salva json' should open modal", () => {
@@ -201,7 +240,8 @@ describe("Method tests for <App/> component", () => {
             userData: [1, 2, 3, 4]
         });
         mountedComponent
-            .find("textarea").at(1)
+            .find("textarea")
+            .at(1)
             .simulate("change", { target: { value: "test text" } });
         expect(mountedComponent.state("userNotes")).toEqual("test text");
     });
@@ -211,7 +251,8 @@ describe("Method tests for <App/> component", () => {
             userData: [1, 2, 3, 4]
         });
         mountedComponent
-            .find("textarea").at(0)
+            .find("textarea")
+            .at(0)
             .simulate("change", { target: { value: "test text" } });
         expect(mountedComponent.state("notesPredittore")).toEqual("test text");
     });
@@ -229,7 +270,9 @@ describe("Method tests for <App/> component", () => {
         mountedComponent.setState({
             userData: [1, 2, 3, 4]
         });
-        mountedComponent.find("span[children='Regressione Lineare']").simulate("click");
+        mountedComponent
+            .find("span[children='Regressione Lineare']")
+            .simulate("click");
         expect(mountedComponent.state("algorithm")).toEqual("rl");
     });
 
@@ -247,7 +290,8 @@ describe("Method tests for <App/> component", () => {
         expect(mountedComponent.state("jsonFileInfo")).toEqual({
             name: "test.json",
             path: "/path/to/json",
-            type: "application/json"
+            type: "application/json",
+            extension: "json"
         });
     });
 
@@ -265,8 +309,24 @@ describe("Method tests for <App/> component", () => {
         expect(mountedComponent.state("csvFileInfo")).toEqual({
             name: "test.csv",
             path: "/path/to/csv",
-            type: "text/csv"
+            type: "text/csv",
+            extension: "csv"
         });
+    });
+
+    test("onChange function should deal with non csv,json files correctly", () => {
+        const fileContents = "a,b,c\n1,2,3";
+        console.log = jest.fn();
+        const file = new Blob([fileContents], {
+            type: "text"
+        });
+        file.name = "test.txt";
+        file.path = "/path/to/txt";
+        mountedComponent
+            .find("#fileChooser")
+            .at(0)
+            .simulate("change", { target: { files: [file] } });
+        expect(console.log).toHaveBeenCalledWith("Il file non è corretto");
     });
 
     test("onChange function should callCsvToJson function", () => {
@@ -295,7 +355,30 @@ describe("Method tests for <App/> component", () => {
         expect(mountedComponent.state("csvFileInfo")).toEqual({
             name: "test.csv",
             path: "/path/to/csv",
-            type: "text/csv"
+            type: "text/csv",
+            extension: "csv"
         });
+    });
+
+    test("onChange function should deal with null files correctly", () => {
+        console.log = jest.fn();
+        mountedComponent
+            .find("#fileChooser")
+            .at(0)
+            .simulate("change", { target: { files: [null] } });
+
+        expect(console.log).toHaveBeenCalledWith("Il file è nullo");
+    });
+
+    test("handleChangeAlgorithm should output to console if algorithm chosen is already chosen", () => {
+        console.log = jest.fn();
+        mountedComponent.setState({
+            userData: [1, 2, 3, 4]
+        });
+        mountedComponent.find(".checkSelected").simulate("click");
+
+        expect(console.log).toHaveBeenCalledWith(
+            "Algoritmo scelto è già inizializzato"
+        );
     });
 });
