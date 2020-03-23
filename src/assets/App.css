@@ -1,23 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
+}
+
 .App {
     text-align: left;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.frameContainer {
-    width: 100%;
-    height: 32px;
-    background-color: #4392f1;
-    border-radius: 0;
-    -webkit-app-region: drag;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    border-radius: 4px;
 }
 
 .fileChooserInput {
@@ -55,25 +47,17 @@
     background-color: #4392f1;
 }
 
-
-/* #F9DC5C - yellow */
-/* #ED254E - red */
-
-.customButton {
+.buttonNormal {
     width: 220px;
     height: 50px;
-    background-color: #4392f1;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    color: black;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
 }
 
-.customButtonSmaller {
+.buttonSmaller {
     width: 100px;
     height: 40px;
+}
+
+.customButton {
     background-color: #4392f1;
     border: none;
     font-size: 16px;
@@ -81,15 +65,9 @@
     color: black;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-}
-
-.customButtonSmaller:hover {
-    background-color: #5FBFF9;
 }
 
 .customButtonDisabled {
-    width: 220px;
-    height: 50px;
     background-color: #4392f1;
     border: none;
     font-size: 16px;

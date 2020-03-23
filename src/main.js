@@ -1,8 +1,6 @@
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
-const remote = require("electron").remote;
 const isDev = require("electron-is-dev");
-const fs = require("fs");
 const Trainer = require("./algorithm/train");
 const Utils = require("./classes/Utils");
 const IO = require("./classes/IO");

@@ -215,13 +215,13 @@ export default class App extends React.Component {
                     <div>
                         {this.state.csvFileInfo ? (
                             <button
-                                className="customButton"
+                                className="customButton buttonNormal"
                                 onClick={this.handleStartTraining}
                             >
                                 {this.state.isTraining ? "Addestrando..." : "Inizia addestramento"}
                             </button>
                         ) : (
-                            <button className="customButtonDisabled" disabled>
+                            <button className="customButtonDisabled buttonNormal" disabled>
                                 Inizia addestramento
                             </button>
                         )}
@@ -229,13 +229,13 @@ export default class App extends React.Component {
                     <div>
                         {this.state.isTrainingDone ? (
                             <button
-                                className="customButton"
+                                className="customButton buttonNormal"
                                 onClick={this.handleOpenModal}
                             >
                                 Salva json
                             </button>
                         ) : (
-                            <button className="customButtonDisabled" disabled>
+                            <button className="customButtonDisabled buttonNormal" disabled>
                                 Salva json
                             </button>
                         )}
