@@ -54,7 +54,6 @@
     },
     "coveragePathIgnorePatterns": [
       "src/index.js",
-      "src/main.js",
       "src/tests/mocks/mockFile.js"
     ]
   },

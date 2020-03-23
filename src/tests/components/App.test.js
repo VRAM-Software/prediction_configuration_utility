@@ -8,7 +8,7 @@ import UserNotes from "../../components/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, shallow, mount } from "enzyme";
 import Modal from "../../components/Modal";
-import {ipcRenderer} from 'electron';
+import { ipcRenderer } from "electron";
 import CheckBox from "../../components/CheckBox";
 
 jest.mock("electron", () => ({
@@ -47,13 +47,20 @@ describe("Rendering tests for <App /> component", () => {
             userData: [1, 2, 3, 4]
         });
         expect(
-            component.containsAllMatchingElements([<Graph />, <UserNotes />], <UserNotes />)
+            component.containsAllMatchingElements(
+                [<Graph />, <UserNotes />],
+                <UserNotes />
+            )
         ).toBeTruthy();
     });
 
     test("should not render render <Graph/> and two <UserNotes/> when component is rendered", () => {
         expect(
-            component.containsAllMatchingElements([<Graph />, <UserNotes />, <UserNotes />])
+            component.containsAllMatchingElements([
+                <Graph />,
+                <UserNotes />,
+                <UserNotes />
+            ])
         ).toBeFalsy();
     });
 
@@ -141,13 +148,16 @@ describe("Rendering tests for <App /> component", () => {
         component.setState({
             isTraining: true
         });
-        expect(component.find("button[children='Addestrando...']")).toBeTruthy();
+        expect(
+            component.find("button[children='Addestrando...']")
+        ).toBeTruthy();
     });
 });
 
 describe("Method tests for <App/> component", () => {
     let component;
     let mountedComponent;
+    const log = logMsg => console.log(logMsg);
     beforeEach(() => {
         component = shallow(<App />);
         mountedComponent = mount(<App />);
@@ -208,7 +218,8 @@ describe("Method tests for <App/> component", () => {
             userData: [1, 2, 3, 4]
         });
         mountedComponent
-            .find("textarea").at(1)
+            .find("textarea")
+            .at(1)
             .simulate("change", { target: { value: "test text" } });
         expect(mountedComponent.state("userNotes")).toEqual("test text");
     });
@@ -218,7 +229,8 @@ describe("Method tests for <App/> component", () => {
             userData: [1, 2, 3, 4]
         });
         mountedComponent
-            .find("textarea").at(0)
+            .find("textarea")
+            .at(0)
             .simulate("change", { target: { value: "test text" } });
         expect(mountedComponent.state("notesPredittore")).toEqual("test text");
     });
@@ -236,7 +248,9 @@ describe("Method tests for <App/> component", () => {
         mountedComponent.setState({
             userData: [1, 2, 3, 4]
         });
-        mountedComponent.find("span[children='Regressione Lineare']").simulate("click");
+        mountedComponent
+            .find("span[children='Regressione Lineare']")
+            .simulate("click");
         expect(mountedComponent.state("algorithm")).toEqual("rl");
     });
 
@@ -307,5 +321,25 @@ describe("Method tests for <App/> component", () => {
             type: "text/csv",
             extension: "csv"
         });
+    });
+
+    test("onChange function should deal with null files correctly", () => {
+        console.log = jest.fn();
+        mountedComponent
+            .find("#fileChooser")
+            .at(0)
+            .simulate("change", { target: { files: [null] } });
+        
+        expect(console.log).toHaveBeenCalledWith("Il file è nullo");
+    });
+
+    test("handleChangeAlgorithm should output to console if algorithm chosen is already chosen", () => {
+        console.log = jest.fn();
+        mountedComponent.setState({
+            userData: [1, 2, 3, 4]
+        });
+        mountedComponent.find(".checkSelected").simulate("click");
+        
+        expect(console.log).toHaveBeenCalledWith("Algoritmo scelto è già inizializzato");
     });
 });
