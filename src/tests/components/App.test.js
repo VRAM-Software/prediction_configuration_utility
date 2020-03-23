@@ -152,6 +152,15 @@ describe("Rendering tests for <App /> component", () => {
             component.find("button[children='Addestrando...']")
         ).toBeTruthy();
     });
+
+    test("should not render button with 'Addestrando...' when component is not training", () => {
+        component.setState({
+            isTraining: false
+        });
+        expect(
+            component.find("button[children='Inizia addestramento']")
+        ).toBeTruthy();
+    });
 });
 
 describe("Method tests for <App/> component", () => {
@@ -291,6 +300,21 @@ describe("Method tests for <App/> component", () => {
             extension: "csv"
         });
     });
+
+    test("onChange function should deal with non csv,json files correctly", () => {
+        const fileContents = "a,b,c\n1,2,3";
+        console.log = jest.fn();
+        const file = new Blob([fileContents], {
+            type: "text"
+        });
+        file.name = "test.txt";
+        file.path = "/path/to/txt";
+        mountedComponent
+            .find("#fileChooser")
+            .at(0)
+            .simulate("change", { target: { files: [file] } });
+        expect(console.log).toHaveBeenCalledWith("Il file non è corretto");
+    })
 
     test("onChange function should callCsvToJson function", () => {
         const fileContents = "a,b,c\n1,2,3";

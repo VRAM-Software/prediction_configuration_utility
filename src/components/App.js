@@ -118,6 +118,8 @@ export default class App extends React.Component {
                 this.setState({
                     csvFileInfo: obj
                 });
+            } else {
+                console.log("Il file non è corretto");
             }
         } else {
             console.log("Il file è nullo");
