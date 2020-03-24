@@ -6,7 +6,7 @@ const Utils = require("./classes/Utils");
 const IO = require("./classes/IO");
 const meta = require("./config/config");
 let window;
-var jsonTrained;
+let jsonTrained;
 
 function startTraining(data, notes, callback) {
     const trainer = new Trainer();
@@ -63,8 +63,10 @@ ipcMain.on("start-training", (event, arg) => {
             throw err;
         }
         console.log("Finished training");
+        
     });
-    event.reply("finished-training");
+    console.log(jsonTrained);
+    event.reply("finished-training", jsonTrained);
 });
 
 ipcMain.on("get-json-from-csv", (event, arg) => {

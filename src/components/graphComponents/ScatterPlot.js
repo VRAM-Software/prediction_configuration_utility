@@ -3,6 +3,8 @@ import { scaleLinear, axisLeft, axisBottom } from "d3";
 import Axis from "./Axis";
 import TrendLine from "./TrendLine";
 import RenderCircles from "./RenderCircles";
+import LinearSvm from "../LinearSvm";
+import Grid from "../Grid";
 
 export default class ScatterPlot extends React.Component {
     render() {
@@ -10,8 +12,7 @@ export default class ScatterPlot extends React.Component {
         const width = 500 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
         const data = this.props.data;
-        let x,
-            y = null;
+        let x, y = null;
 
         if (this.props.graph === "svm") {
             const maxX = Math.max.apply(
@@ -57,6 +58,9 @@ export default class ScatterPlot extends React.Component {
                         className="main"
                     >
                         <RenderCircles data={data} scale={{ x, y }} />
+                        <Grid width={width} height={height} />
+                        <LinearSvm result={this.props.result} scale={{ x, y }}/>
+                        {/* {this.props.result ? <LinearSvm result={this.props.result} /> : null} */}
                         {/* <TrendLine data={data} scale={{ x, y }} />  */}
                         <Axis
                             axis="x"

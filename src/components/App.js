@@ -64,7 +64,6 @@ export default class App extends React.Component {
         e.preventDefault();
         ipcRenderer.send("save-to-disk", {
             name: this.state.fileName,
-            json: this.state.trainedJson,
             notes: this.state.userNotes
         });
         this.handleCloseModal(e);
@@ -79,11 +78,13 @@ export default class App extends React.Component {
             data: this.state.userData,
             notes: this.state.userNotes
         });
-        ipcRenderer.on("finished-training", () => {
+        ipcRenderer.on("finished-training", (event, arg) => {
             this.setState({
                 isTrainingDone: true,
-                isTraining: false
+                isTraining: false,
+                trainedJson: arg
             });
+            console.log("ciao", arg);
         });
     };
 
@@ -154,7 +155,10 @@ export default class App extends React.Component {
         const group = (
             <>
                 <div className="graphContainer">
-                    <Graph data={this.state.userData} />
+                    <Graph
+                        data={this.state.userData}
+                        result={this.state.trainedJson}
+                    />
                 </div>
 
                 <div className="infoContainer">
@@ -220,10 +224,15 @@ export default class App extends React.Component {
                                 className="customButton buttonNormal"
                                 onClick={this.handleStartTraining}
                             >
-                                {this.state.isTraining ? "Addestrando..." : "Inizia addestramento"}
+                                {this.state.isTraining
+                                    ? "Addestrando..."
+                                    : "Inizia addestramento"}
                             </button>
                         ) : (
-                            <button className="customButtonDisabled buttonNormal" disabled>
+                            <button
+                                className="customButtonDisabled buttonNormal"
+                                disabled
+                            >
                                 Inizia addestramento
                             </button>
                         )}
@@ -237,7 +246,10 @@ export default class App extends React.Component {
                                 Salva json
                             </button>
                         ) : (
-                            <button className="customButtonDisabled buttonNormal" disabled>
+                            <button
+                                className="customButtonDisabled buttonNormal"
+                                disabled
+                            >
                                 Salva json
                             </button>
                         )}
