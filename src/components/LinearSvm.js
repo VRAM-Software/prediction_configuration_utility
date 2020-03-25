@@ -151,8 +151,7 @@ export default class LinearSvm extends React.Component {
         const decision = [];
         const pg = [];
         const ng = [];
-        console.log(result);
-        if (result) {
+        if (this.props.result) {
             let X = [];
             let Y = [];
             for (let i = data.length - 1; i >= 0; i--) {
@@ -162,61 +161,64 @@ export default class LinearSvm extends React.Component {
 
             let otherResult = this.SMO(X, Y, 1, 0.000001, 30, -1);
 
-            // let w = otherResult.w[0];
-            // let b = otherResult.b;
-            let w = result.w;
-            let b = result.b * -1;
+            let w = otherResult.w[0];
+            let b = otherResult.b;
+            // let w = this.props.result.w;
+            // let b = this.props.result.b * -1;
 
-            console.log("Result:", otherResult.w, otherResult.b);
-            console.log("our result:", result.w, result.b);
-            for (let i = 0; i < 1000; i++) {
+            console.log(w, b);
+            for (let i = 0; i < 10; i++) {
                 decision[i] = {
-                    x: i / 100,
-                    y: (-w[0] / w[1]) * (i / 100) - b / w[1]
+                    x: i / 1,
+                    y: (-w[0] / w[1]) * (i / 1) - b / w[1]
                 };
             }
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 10; i++) {
                 pg[i] = {
-                    x: i / 100,
-                    y: (-w[0] / w[1]) * (i / 100) - (1 + b) / w[1]
+                    x: i / 1,
+                    y: (-w[0] / w[1]) * (i / 1) - (1 + b) / w[1]
                 };
             }
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 10; i++) {
                 ng[i] = {
-                    x: i / 100,
-                    y: (-w[0] / w[1]) * (i / 100) - (-1 + b) / w[1]
+                    x: i / 1,
+                    y: (-w[0] / w[1]) * (i / 1) - (-1 + b) / w[1]
                 };
             }
+            console.log(decision);
+        } else {
+            console.log("no json arrived here");
         }
-
-        // console.log(decision);
-
+        
         return (
             <svg>
-                {decision[999] ? (
+                {ng[9] ? (
                     <>
                         <line
-                            x1={this.props.scale.x(decision[0].x)}
+                            id="decision"
+                            x1={this.props.scale.x(decision[0].x + this.props.minX)}
                             y1={this.props.scale.y(decision[0].y)}
-                            x2={this.props.scale.x(decision[999].x)}
-                            y2={this.props.scale.y(decision[999].y)}
+                            x2={this.props.scale.x(decision[9].x + this.props.minX)}
+                            y2={this.props.scale.y(decision[9].y)}
                             style={{ stroke: "black", strokeWidth: "2" }}
                         />
                         <line
-                            x1={this.props.scale.x(pg[0].x)}
+                            id="pg"
+                            x1={this.props.scale.x(pg[0].x + this.props.minX)}
                             y1={this.props.scale.y(pg[0].y)}
-                            x2={this.props.scale.x(pg[999].x)}
-                            y2={this.props.scale.y(pg[999].y)}
-                            style={{ stroke: "red", strokeWidth: "2" }}
+                            x2={this.props.scale.x(pg[9].x + this.props.minX)}
+                            y2={this.props.scale.y(pg[9].y)}
+                            style={{ stroke: "black", strokeWidth: "2", strokeDasharray: "10,10"}}
                         />
                         <line
-                            x1={this.props.scale.x(ng[0].x)}
+                            id="ng"
+                            x1={this.props.scale.x(ng[0].x + this.props.minX)}
                             y1={this.props.scale.y(ng[0].y)}
-                            x2={this.props.scale.x(ng[999].x)}
-                            y2={this.props.scale.y(ng[999].y)}
-                            style={{ stroke: "green", strokeWidth: "2" }}
+                            x2={this.props.scale.x(ng[9].x + this.props.minX)}
+                            y2={this.props.scale.y(ng[9].y)}
+                            style={{ stroke: "black", strokeWidth: "2", strokeDasharray: "10,10"}}
                         />
                     </>
                 ) : null}

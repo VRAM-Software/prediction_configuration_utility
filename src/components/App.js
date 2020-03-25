@@ -14,7 +14,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userData: test,
+            userData: null,
             userNotes: "",
             notesPredittore: "",
             fileName: "addestramento",
@@ -84,7 +84,6 @@ export default class App extends React.Component {
                 isTraining: false,
                 trainedJson: arg
             });
-            console.log("ciao", arg);
         });
     };
 
