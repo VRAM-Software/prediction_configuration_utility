@@ -7,14 +7,14 @@ import Modal from "./Modal";
 import "../assets/App.css";
 import CheckBox from "./CheckBox";
 import config from "../config/config";
-
+import test from "./test";
 const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userData: null,
+            userData: test,
             userNotes: "",
             notesPredittore: "",
             fileName: "addestramento",

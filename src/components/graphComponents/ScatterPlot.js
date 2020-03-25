@@ -29,10 +29,10 @@ export default class ScatterPlot extends React.Component {
             );
             x = scaleLinear()
                 .range([0, width])
-                .domain([-maxX - 2, maxX + 2]);
+                .domain([-maxX * 1.5 - 2, maxX * 1.5 + 2]);
             y = scaleLinear()
                 .range([0, height])
-                .domain([maxY + 2, -maxY - 2]);
+                .domain([maxY * 1.5 + 2, -maxY * 1.5 - 2]);
         } else {
             x = scaleLinear()
                 .range([0, width])
@@ -58,9 +58,8 @@ export default class ScatterPlot extends React.Component {
                         className="main"
                     >
                         <RenderCircles data={data} scale={{ x, y }} />
-                        <Grid width={width} height={height} />
+                        {/* <Grid width={width} height={height} /> */}
                         <LinearSvm result={this.props.result} scale={{ x, y }}/>
-                        {/* {this.props.result ? <LinearSvm result={this.props.result} /> : null} */}
                         {/* <TrendLine data={data} scale={{ x, y }} />  */}
                         <Axis
                             axis="x"
