@@ -7,6 +7,11 @@ export default class Axis extends React.Component {
         select(node).call(this.props.scale);
     }
 
+    componentDidUpdate() {
+        const node = this.refs[this.props.axis];
+        select(node).call(this.props.scale);
+    }
+
     render() {
         return (
             <g

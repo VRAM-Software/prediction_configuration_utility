@@ -1,9 +1,7 @@
 import React from "react";
 import { scaleLinear, axisLeft, axisBottom } from "d3";
 import Axis from "./Axis";
-import TrendLine from "./TrendLine";
 import RenderCircles from "./RenderCircles";
-import LinearSvm from "../LinearSvm";
 import Grid from "../Grid";
 
 export default class ScatterPlotNoAxis extends React.Component {
@@ -12,86 +10,60 @@ export default class ScatterPlotNoAxis extends React.Component {
         const width = 500 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
         const data = this.props.data;
+        const svgWidth = width + margin.right + margin.left;
+        const svgHeight = height + margin.top + margin.bottom;
+        const gTransform = "translate(" + margin.left + "," + margin.top + ")";
+        const xAxisTransform = "translate(0," + height + ")";
+        const yAxisTransform = "translate(0,0)";
+        let constraints = {
+            maxX: Math.max.apply(
+                Math,
+                this.props.data.map(o => {
+                    return o.weight;
+                })
+            ),
+            maxY: Math.max.apply(
+                Math,
+                this.props.data.map(o => {
+                    return o.size;
+                })
+            ),
+            minX: Math.min.apply(
+                Math,
+                this.props.data.map(o => {
+                    return o.weight;
+                })
+            ),
+            minY: Math.min.apply(
+                Math,
+                this.props.data.map(o => {
+                    return o.size;
+                })
+            )
+        };
         let x = null;
         let y = null;
 
-        if (this.props.graph === "svm") {
-            const minX = Math.min.apply(
-                Math,
-                data.map(o => {
-                    return o.weight;
-                })
-            );
-
-            const minY = Math.min.apply(
-                Math,
-                data.map(o => {
-                    return o.size;
-                })
-            );
-
-            const maxX = Math.max.apply(
-                Math,
-                data.map(o => {
-                    return o.weight;
-                })
-            );
-            const maxY = Math.max.apply(
-                Math,
-                data.map(o => {
-                    return o.size;
-                })
-            );
-            x = scaleLinear()
-                .domain([minX - 2, maxX + 2])
-                .range([0, width]);
-            y = scaleLinear()
-                .domain([minY - 2, maxY + 2])
-                .range([height, 0]);
-        }
+        x = scaleLinear()
+            .domain([constraints.minX - 2, constraints.maxX + 2])
+            .range([0, width]);
+        y = scaleLinear()
+            .domain([constraints.minY - 2, constraints.maxY + 2])
+            .range([height, 0]);
 
         return (
             <div>
-                <svg
-                    width={width + margin.right + margin.left}
-                    height={height + margin.top + margin.bottom}
-                    className="chart"
-                >
+                <svg width={svgWidth} height={svgHeight} className="chart">
                     <g
-                        transform={
-                            "translate(" + margin.left + "," + margin.top + ")"
-                        }
                         width={width}
                         height={height}
+                        transform={gTransform}
                         className="main"
                     >
                         {this.props.result ? (
                             <Grid
                                 result={this.props.result}
-                                maxX = {Math.max.apply(
-                                    Math,
-                                    data.map(o => {
-                                        return o.weight;
-                                    })
-                                )}
-                                maxY = {Math.max.apply(
-                                    Math,
-                                    data.map(o => {
-                                        return o.size;
-                                    })
-                                )}
-                                minX = {Math.min.apply(
-                                    Math,
-                                    data.map(o => {
-                                        return o.weight;
-                                    })
-                                )}
-                                minY = {Math.min.apply(
-                                    Math,
-                                    data.map(o => {
-                                        return o.size;
-                                    })
-                                )}
+                                constraints={constraints}
                                 width={width}
                                 height={height}
                                 scale={{ x, y }}
@@ -102,12 +74,12 @@ export default class ScatterPlotNoAxis extends React.Component {
 
                         <Axis
                             axis="x"
-                            transform={"translate(0," + height + ")"}
+                            transform={xAxisTransform}
                             scale={axisBottom().scale(x)}
                         />
                         <Axis
                             axis="y"
-                            transform="translate(0,0)"
+                            transform={yAxisTransform}
                             scale={axisLeft().scale(y)}
                         />
                     </g>

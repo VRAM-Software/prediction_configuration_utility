@@ -4,10 +4,9 @@ import Chooser from "./Chooser";
 import Graph from "./Graph";
 import UserNotes from "./UserNotes";
 import Modal from "./Modal";
-import "../assets/App.css";
 import CheckBox from "./CheckBox";
 import config from "../config/config";
-import test from "./test";
+import "../assets/App.css";
 const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
@@ -24,8 +23,23 @@ export default class App extends React.Component {
             csvFileInfo: null,
             trainedJson: null,
             algorithm: "svm",
-            isTraining: false
+            isTraining: false,
+            axisControl: 1
         };
+    }
+
+    handleChangeAxis = e => {
+        e.preventDefault();
+        if (this.state.axisControl === 1) {
+            this.setState({
+                axisControl: -1
+            });
+        } else {
+            this.setState({
+                axisControl: 1
+            });
+        }
+        
     }
 
     handleOpenModal = e => {
@@ -154,9 +168,11 @@ export default class App extends React.Component {
         const group = (
             <>
                 <div className="graphContainer">
+                    <button onClick={this.handleChangeAxis}>Change Axis</button>
                     <Graph
                         data={this.state.userData}
                         result={this.state.trainedJson}
+                        axisControl={this.state.axisControl}
                     />
                 </div>
 
