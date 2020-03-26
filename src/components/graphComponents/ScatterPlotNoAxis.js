@@ -16,6 +16,20 @@ export default class ScatterPlotNoAxis extends React.Component {
         let y = null;
 
         if (this.props.graph === "svm") {
+            const minX = Math.min.apply(
+                Math,
+                data.map(o => {
+                    return o.weight;
+                })
+            );
+
+            const minY = Math.min.apply(
+                Math,
+                data.map(o => {
+                    return o.size;
+                })
+            );
+
             const maxX = Math.max.apply(
                 Math,
                 data.map(o => {
@@ -29,11 +43,11 @@ export default class ScatterPlotNoAxis extends React.Component {
                 })
             );
             x = scaleLinear()
-                .domain([0, maxX + 2])
+                .domain([minX - 2, maxX + 2])
                 .range([0, width]);
             y = scaleLinear()
-                .domain([maxY + 2, 0])
-                .range([0, height]);
+                .domain([minY - 2, maxY + 2])
+                .range([height, 0]);
         }
 
         return (
@@ -54,6 +68,30 @@ export default class ScatterPlotNoAxis extends React.Component {
                         {this.props.result ? (
                             <Grid
                                 result={this.props.result}
+                                maxX = {Math.max.apply(
+                                    Math,
+                                    data.map(o => {
+                                        return o.weight;
+                                    })
+                                )}
+                                maxY = {Math.max.apply(
+                                    Math,
+                                    data.map(o => {
+                                        return o.size;
+                                    })
+                                )}
+                                minX = {Math.min.apply(
+                                    Math,
+                                    data.map(o => {
+                                        return o.weight;
+                                    })
+                                )}
+                                minY = {Math.min.apply(
+                                    Math,
+                                    data.map(o => {
+                                        return o.size;
+                                    })
+                                )}
                                 width={width}
                                 height={height}
                                 scale={{ x, y }}
