@@ -19,8 +19,6 @@ class SvmTrainer {
         svm.setOptions(this.options);
         this.translateData(data);
         svm.train(this.data, this.labels);
-        this.data.forEach(point => {console.log(svm.predictClass(point))});
-        
         this.trainedJson = svm.toJSON();
         return this.trainedJson;
     };

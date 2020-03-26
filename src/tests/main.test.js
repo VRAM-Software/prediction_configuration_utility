@@ -14,7 +14,7 @@ const appPath = path.join(__dirname, "..", "..");
 
 
 describe("Application launch", () => {
-    jest.setTimeout(10000);
+    jest.setTimeout(50000);
     let app;
     beforeEach(() => {
         app = new Application({

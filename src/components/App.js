@@ -23,23 +23,8 @@ export default class App extends React.Component {
             csvFileInfo: null,
             trainedJson: null,
             algorithm: "svm",
-            isTraining: false,
-            axisControl: 1
+            isTraining: false
         };
-    }
-
-    handleChangeAxis = e => {
-        e.preventDefault();
-        if (this.state.axisControl === 1) {
-            this.setState({
-                axisControl: -1
-            });
-        } else {
-            this.setState({
-                axisControl: 1
-            });
-        }
-        
     }
 
     handleOpenModal = e => {
@@ -168,7 +153,6 @@ export default class App extends React.Component {
         const group = (
             <>
                 <div className="graphContainer">
-                    <button onClick={this.handleChangeAxis}>Change Axis</button>
                     <Graph
                         data={this.state.userData}
                         result={this.state.trainedJson}
