@@ -5,12 +5,13 @@ import Grid from "../../components/Grid";
 
 const data = [
     { weight: 1, size: 1, label: 1 },
-    { weight: 2, size: 2, label: 2 }
+    { weight: 2, size: 2, label: -1 }
 ];
 
 const result = {
 	w: [1,1],
-	b: 1
+    b: 1,
+    D: 2
 };
 
 const x = x => x;
