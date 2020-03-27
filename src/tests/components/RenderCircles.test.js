@@ -30,12 +30,12 @@ describe("<RenderCircles /> component", () => {
     });
 
     test("renders green circle if label is 1", () => {
-        const component = mount(<RenderCircles data={[propData[0]]} scale={propScale} />);
+        const component = mount(<svg><RenderCircles data={[propData[0]]} scale={propScale} /></svg>);
         expect(component.find("circle").prop("style")).toHaveProperty("fill", "green");
     });
 
     test("renders red circle if label label is different from 1", () => {
-        const component = mount(<RenderCircles data={[propData[1]]} scale={propScale} />);
+        const component = mount(<svg><RenderCircles data={[propData[1]]} scale={propScale} /></svg>);
         expect(component.find("circle").prop("style")).toHaveProperty("fill", "red");
     });
 

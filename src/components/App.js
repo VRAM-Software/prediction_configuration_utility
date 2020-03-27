@@ -140,9 +140,7 @@ export default class App extends React.Component {
                 {
                     algorithm: algorithm
                 },
-                () => {
-                    console.log(this.state);
-                }
+                () => {}
             );
         } else {
             console.log("Algoritmo scelto è già inizializzato");

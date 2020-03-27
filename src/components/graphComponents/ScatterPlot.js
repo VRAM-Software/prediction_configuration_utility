@@ -13,8 +13,10 @@ export default class ScatterPlot extends React.Component {
         const svgWidth = width + margin.right + margin.left;
         const svgHeight = height + margin.top + margin.bottom;
         const gTransform = "translate(" + margin.left + "," + margin.top + ")";
-        const xAxisTransform = "translate(0," + height / 2 + ")";
-        const yAxisTransform = "translate(" + width / 2 + "," + 0 + ")";
+        const xAxisTransformCentered = "translate(0," + height / 2 + ")";
+        const yAxisTransformCentered = "translate(" + width / 2 + "," + 0 + ")";
+        const xAxisTransform = "translate(0," + height + ")";
+        const yAxisTransform = "translate(0,0)";
         let constraints = {
             maxX: Math.max.apply(
                 Math,
@@ -50,6 +52,7 @@ export default class ScatterPlot extends React.Component {
         y = scaleLinear()
             .domain([constraints.minY - 2, constraints.maxY + 2])
             .range([height, 0]);
+        
 
         return (
             <div>
