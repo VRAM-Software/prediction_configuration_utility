@@ -13,16 +13,29 @@ const result = {
 	b: 1
 };
 
+const x = x => x;
+const y = y => y;
+
+const constraints = {
+    maxX: 2,
+    maxY: 2,
+    minX: 0,
+    minY: 0
+}
+
 configure({ adapter: new Adapter() });
 
 describe("Test per il componente ScatterPlot", () => {
     let component;
     beforeEach(() => {
-        component = shallow(<Grid />);
+        component = shallow(<Grid scale={{x, y}} result={result} constraints={constraints}/>);
     });
 
-    test("should rendere component properly", () => {
+    test("should render component properly", () => {
         expect(component).toBeTruthy();
     });
 
+    test("should render rect component", () => {
+        expect(component.containsMatchingElement(<rect />)).toBeTruthy();
+    });
 });
