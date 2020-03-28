@@ -4,10 +4,9 @@ import Chooser from "./Chooser";
 import Graph from "./Graph";
 import UserNotes from "./UserNotes";
 import Modal from "./Modal";
-import "../assets/App.css";
 import CheckBox from "./CheckBox";
 import config from "../config/config";
-
+import "../assets/App.css";
 const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
@@ -64,7 +63,6 @@ export default class App extends React.Component {
         e.preventDefault();
         ipcRenderer.send("save-to-disk", {
             name: this.state.fileName,
-            json: this.state.trainedJson,
             notes: this.state.userNotes
         });
         this.handleCloseModal(e);
@@ -79,10 +77,11 @@ export default class App extends React.Component {
             data: this.state.userData,
             notes: this.state.userNotes
         });
-        ipcRenderer.on("finished-training", () => {
+        ipcRenderer.on("finished-training", (event, arg) => {
             this.setState({
                 isTrainingDone: true,
-                isTraining: false
+                isTraining: false,
+                trainedJson: arg
             });
         });
     };
@@ -141,9 +140,7 @@ export default class App extends React.Component {
                 {
                     algorithm: algorithm
                 },
-                () => {
-                    console.log(this.state);
-                }
+                () => {}
             );
         } else {
             console.log("Algoritmo scelto è già inizializzato");
@@ -154,7 +151,11 @@ export default class App extends React.Component {
         const group = (
             <>
                 <div className="graphContainer">
-                    <Graph data={this.state.userData} />
+                    <Graph
+                        data={this.state.userData}
+                        result={this.state.trainedJson}
+                        axisControl={this.state.axisControl}
+                    />
                 </div>
 
                 <div className="infoContainer">
@@ -220,10 +221,15 @@ export default class App extends React.Component {
                                 className="customButton buttonNormal"
                                 onClick={this.handleStartTraining}
                             >
-                                {this.state.isTraining ? "Addestrando..." : "Inizia addestramento"}
+                                {this.state.isTraining
+                                    ? "Addestrando..."
+                                    : "Inizia addestramento"}
                             </button>
                         ) : (
-                            <button className="customButtonDisabled buttonNormal" disabled>
+                            <button
+                                className="customButtonDisabled buttonNormal"
+                                disabled
+                            >
                                 Inizia addestramento
                             </button>
                         )}
@@ -237,7 +243,10 @@ export default class App extends React.Component {
                                 Salva json
                             </button>
                         ) : (
-                            <button className="customButtonDisabled buttonNormal" disabled>
+                            <button
+                                className="customButtonDisabled buttonNormal"
+                                disabled
+                            >
                                 Salva json
                             </button>
                         )}
