@@ -26,32 +26,20 @@ class IO {
         });
     }
 
-    translateToJson(data) {
-        csv({
-            delimiter: "auto"
-        })
-            .fromString(data)
-            .then(res => {
-                return res;
-            });
-    }
-
-    static readCsvFile(path) {
+    static readFile = (path, callback) => {
         fs.readFile(path, 'utf8', (err, data) => {
             if (err) {
-                throw err;
+                return callback(err);
             }
             csv({
                 delimiter: "auto"
             })
                 .fromString(data)
                 .then(res => {
-                    return res;
+                    callback(null, res);
                 });
         });
     }
-
-    
 }
 
 module.exports = IO;
