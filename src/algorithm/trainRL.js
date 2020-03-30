@@ -1,13 +1,13 @@
 const Regression = require('./regression.module')
 
-class RLTrainer{
+class RLTrainer {
     constructor() {
         this.trainedJSON = null;
         this.data = [];
         this.options = null;
     }
 
-    set = option => {
+    setOptions = option => {
         this.options = option;
     }
 
@@ -24,7 +24,10 @@ class RLTrainer{
         let valY = [];
         let result = [];
 
+        // {x1: 1, x2: 2, y: 2}
         for (let i = 0; i < json.length; i++) {
+            valX = [];
+            valY = [];
             for(let j = 0; j  < this.options.numX; j++) {
                 let objToAdd = json[i];
                 valX.push(objToAdd[Object.keys(objToAdd)[j]]);
@@ -32,10 +35,8 @@ class RLTrainer{
             valY.push(json[i].y);
             result.push({x: valX, y: valY});
         }
-        this.data = data;
+        this.data = result;
     }
-
-    /*getTrainedJson = () => {
-        return this.trainedJSON;
-    };*/
 }
+
+module.exports = RLTrainer;

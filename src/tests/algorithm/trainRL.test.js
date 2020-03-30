@@ -1,33 +1,24 @@
-const Train = require("../../algorithm/trainRL");
-//const SVM = require("ml-modules").SVM;
+const Trainer = require("../../algorithm/trainRL");
 
-/*const mockedTrain = jest.fn();
-const mockedToJSON = jest.fn();
-const mockedSetOptions = jest.fn();
-
-jest.mock("ml-modules", () => ({
-    SVM: jest.fn(() => ({
-        train: mockedTrain,
-        toJSON: mockedToJSON,
-        setOptions: mockedSetOptions
-    }))
-}));*/
+jest.mock('../../algorithm/regression.module');
 
 describe("test for training RL algorithm's wrapper class", () => {
     let trainer;
     beforeEach(() => {
-        trainer = new Train();
+        trainer = new Trainer();
     });
 
     test("insertData should insert in the field data, the expected array", () => {
         const data = [
             { x1: 1, x2: 2, y: 2 },
-            { x1: 2, x2: 4, y: 4 }
+            { x1: 9, x2: 9, y: 9 }
         ];
+        trainer.options = {numX: 2};
         trainer.insertData(data);
-        expect(trainer.data).toEqual([
-            [{x: [1, 2], y: [2]}, {x: [2, 4], y: [4]}]
-        ]);
+        expect(trainer.data).toEqual(
+            [{x: [1, 2], y: [2]},{x: [9, 9], y: [9]}]
+       );
+
     });
 
     /*test("train method should call train method from ml-modules", () => {
