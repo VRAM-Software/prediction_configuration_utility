@@ -15,7 +15,7 @@ class RLTrainer {
     train = data => {
         const rl = new Regression(this.options);
         this.insertData(data);
-        this.trainedJson = JSON.stringify(rl.calculateCoefficients()); //FIXME: trasformare oggetto con nomi più significativi
+        this.trainedJson = JSON.stringify(rl.calculateCoefficients());
         return this.trainedJson;
     };
 
