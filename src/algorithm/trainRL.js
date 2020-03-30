@@ -22,14 +22,14 @@ class RLTrainer {
     insertData = json => {
         let valX = [];
         let valY = [];
-        let result = [];
+        const result = [];
 
         // {x1: 1, x2: 2, y: 2}
         for (let i = 0; i < json.length; i++) {
             valX = [];
             valY = [];
             for(let j = 0; j  < this.options.numX; j++) {
-                let objToAdd = json[i];
+                const objToAdd = json[i];
                 valX.push(objToAdd[Object.keys(objToAdd)[j]]);
             }
             valY.push(json[i].y);

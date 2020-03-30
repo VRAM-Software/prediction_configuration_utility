@@ -63,7 +63,6 @@ ipcMain.on("start-training", (event, arg) => {
             throw err;
         }
         console.log("Finished training");
-        
     });
     console.log(jsonTrained);
     event.reply("finished-training", jsonTrained);

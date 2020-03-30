@@ -32,13 +32,13 @@ export default class Grid extends React.Component {
     };
 
     render() {
-        let coords = [];
+        const coords = [];
         if (this.props.result) {
             for ( let x = this.props.constraints.minX - 2; x <= this.props.constraints.maxX + 2; x += 0.2) {
                 for (let y = this.props.constraints.minY - 2; y <= this.props.constraints.maxY + 2; y += 0.2) {
-                    let predictedClass = this.predictClass([x, y]);
-                    let predictedValue = predictedClass;
-                    let color = this.getColor(predictedValue, predictedClass);
+                    const predictedClass = this.predictClass([x, y]);
+                    const predictedValue = predictedClass;
+                    const color = this.getColor(predictedValue, predictedClass);
                     coords.push({
                         x: this.props.scale.x(x),
                         y: this.props.scale.y(y),
@@ -48,7 +48,7 @@ export default class Grid extends React.Component {
             }
         }
 
-        let objs = coords.map((item, index) => (
+        const objs = coords.map((item, index) => (
             <rect
                 key={index}
                 x={item.x}
