@@ -113,7 +113,8 @@ export default class App extends React.Component {
                     jsonFileInfo: obj
                 });
             } else if (obj.extension === "csv") {
-                this.csvToJson(e.target.files[0]);
+                // this.csvToJson(e.target.files[0]);
+                ipcRenderer.send("get-json-from-csv", obj.path);
                 this.setState({
                     csvFileInfo: obj
                 });

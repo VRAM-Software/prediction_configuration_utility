@@ -26,8 +26,18 @@ class IO {
         });
     }
 
+    translateToJson(data) {
+        csv({
+            delimiter: "auto"
+        })
+            .fromString(data)
+            .then(res => {
+                return res;
+            });
+    }
+
     static readCsvFile(path) {
-        fs.readFile(path, (err, data) => {
+        fs.readFile(path, 'utf8', (err, data) => {
             if (err) {
                 throw err;
             }
@@ -35,11 +45,13 @@ class IO {
                 delimiter: "auto"
             })
                 .fromString(data)
-                .then(result => {
-                    return result;
+                .then(res => {
+                    return res;
                 });
         });
     }
+
+    
 }
 
 module.exports = IO;

@@ -72,7 +72,5 @@ ipcMain.on("start-training", (event, arg) => {
 ipcMain.on("get-json-from-csv", (event, arg) => {
     console.log(arg);
     const file = IO.readCsvFile(arg);
-    if (file) {
-        event.reply("csv-converted", file);
-    }
+    console.log(file);
 });
