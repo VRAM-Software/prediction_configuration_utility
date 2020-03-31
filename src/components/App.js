@@ -1,5 +1,4 @@
 import React from "react";
-import * as csv from "csvtojson";
 import Chooser from "./Chooser";
 import Graph from "./Graph";
 import UserNotes from "./UserNotes";
