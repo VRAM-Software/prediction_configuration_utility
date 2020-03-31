@@ -26,10 +26,10 @@ class Regression {
         if(!options) {
             throw new Error('missing options')
         }
-        if(!('numX' in options)) {
+        elseif(!('numX' in options)) {
             throw new Error('you must give the width of the X dimension as the property numX')
         }
-        if(!('numY' in options)) {
+        elseif(!('numY' in options)) {
             throw new Error('you must give the width of the X dimension as the property numY')
         }
         //Costruisco una matrice con prendendo numX e numY presi in input
@@ -44,7 +44,7 @@ class Regression {
         if(!options) {
             throw new Error('missing options')
         }
-        if(!(options.x instanceof Array) || !(options.y instanceof Array)) {
+        elseif(!(options.x instanceof Array) || !(options.y instanceof Array)) {
             throw new Error('x and y must be given as arrays')
         }
         this.addRowAndColumn(this.transposeOfXTimesX,{lhsColumn: options.x,rhsRow: options.x})
@@ -67,10 +67,10 @@ class Regression {
         if(!options) {
             throw new Error('missing options')
         }
-        if(!(options.x instanceof Array)) {
+        elseif(!(options.x instanceof Array)) {
             throw new Error('x property must be given as an array')
         }
-        if(!this.coefficients) {
+        elseif(!this.coefficients) {
             this.calculateCoefficients()
         }
         var hypothesis = []
