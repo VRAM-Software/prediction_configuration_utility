@@ -20,25 +20,4 @@ describe("test for training RL algorithm's wrapper class", () => {
        );
 
     });
-
-    /*test("train method should call train method from ml-modules", () => {
-        const data = [
-            { weight: 1, size: 1, label: 1 },
-            { weight: 2, size: 2, label: 2 }
-        ];
-        const res = trainer.train(data);
-        const options = {
-            kernel: {
-                linear: true
-            },
-            karpathy: true
-        }
-        expect(mockedSetOptions).toHaveBeenCalledWith(trainer.options);
-        expect(mockedTrain).toHaveBeenCalledWith(
-            trainer.data,
-            trainer.labels
-        );
-        expect(mockedToJSON).toHaveBeenCalled();
-        expect(res).toEqual(trainer.trainedJson);
-    });*/
 });

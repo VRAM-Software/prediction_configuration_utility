@@ -329,37 +329,6 @@ describe("Method tests for <App/> component", () => {
         expect(console.log).toHaveBeenCalledWith("Il file non è corretto");
     });
 
-    test("onChange function should callCsvToJson function", () => {
-        const fileContents = "a,b,c\n1,2,3";
-        const file = new Blob([fileContents], {
-            type: "text/csv"
-        });
-        const readAsText = jest.fn();
-        const addEventListener = jest.fn((_, evtHandler) => {
-            evtHandler();
-        });
-        const dummyFileReader = {
-            addEventListener,
-            readAsText,
-            result: fileContents
-        };
-        window.FileReader = jest.fn(() => dummyFileReader);
-        file.name = "test.csv";
-        file.path = "/path/to/csv";
-        mountedComponent
-            .find("#fileChooser")
-            .at(0)
-            .simulate("change", { target: { files: [file] } });
-        expect(FileReader).toHaveBeenCalled();
-        expect(readAsText).toHaveBeenCalledWith(file);
-        expect(mountedComponent.state("csvFileInfo")).toEqual({
-            name: "test.csv",
-            path: "/path/to/csv",
-            type: "text/csv",
-            extension: "csv"
-        });
-    });
-
     test("onChange function should deal with null files correctly", () => {
         console.log = jest.fn();
         mountedComponent

@@ -63,7 +63,6 @@ ipcMain.on("start-training", (event, arg) => {
             throw err;
         }
         console.log("Finished training");
-        
     });
     console.log(jsonTrained);
     event.reply("finished-training", jsonTrained);
@@ -71,8 +70,7 @@ ipcMain.on("start-training", (event, arg) => {
 
 ipcMain.on("get-json-from-csv", (event, arg) => {
     console.log(arg);
-    const file = IO.readCsvFile(arg);
-    if (file) {
-        event.reply("csv-converted", file);
-    }
+    IO.readFile(arg, (err, res) => {
+        event.reply("read-csv", res);
+    });
 });

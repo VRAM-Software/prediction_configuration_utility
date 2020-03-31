@@ -26,17 +26,17 @@ class IO {
         });
     }
 
-    static readCsvFile(path) {
-        fs.readFile(path, (err, data) => {
+    static readFile = (path, callback) => {
+        fs.readFile(path, 'utf8', (err, data) => {
             if (err) {
-                throw err;
+                return callback(err);
             }
             csv({
                 delimiter: "auto"
             })
                 .fromString(data)
-                .then(result => {
-                    return result;
+                .then(res => {
+                    callback(null, res);
                 });
         });
     }

@@ -86,25 +86,6 @@ export default class App extends React.Component {
         });
     };
 
-    // translate this method to a call to main Process
-    csvToJson = file => {
-        const reader = new FileReader();
-        const app = this;
-        reader.onload = function(e) {
-            const txt = reader.result;
-            csv({
-                delimiter: "auto"
-            })
-                .fromString(txt)
-                .then(res => {
-                    app.setState({
-                        userData: res
-                    });
-                });
-        };
-        reader.readAsText(file);
-    };
-
     onChange = e => {
         if (e.target.files[0]) {
             const obj = this.getFileInfo(e.target.files[0]);
@@ -113,7 +94,12 @@ export default class App extends React.Component {
                     jsonFileInfo: obj
                 });
             } else if (obj.extension === "csv") {
-                this.csvToJson(e.target.files[0]);
+                ipcRenderer.send("get-json-from-csv", obj.path);
+                ipcRenderer.on("read-csv", (event, arg) => {
+                    this.setState({
+                        userData: arg
+                    })
+                })
                 this.setState({
                     csvFileInfo: obj
                 });
