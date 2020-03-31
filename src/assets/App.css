@@ -296,6 +296,21 @@ input:focus {
     visibility: visible;
 }
 
-.paramSelected {
-    background-color: #4392f1;
+.selectContainerParamModal {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.selectContainerParamModal select {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 30%;
+}
+
+#paramModalButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
 }

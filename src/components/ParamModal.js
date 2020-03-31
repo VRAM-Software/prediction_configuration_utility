@@ -5,111 +5,54 @@ export default class Modal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            params: {
-                x: null,
-                y: null
-            },
+            isXselected: false,
             selected: []
         };
     }
 
-    select = (name, p) => {
-        if (p == "x") {
-            this.setState({
-                params: {
-                    x: name,
-                    y: null
-                } 
-            })
-        } else {
-            this.setState({
-                params: {
-                    y: name,
-                    x: null
-                } 
-            })
-        }
-        console.log(this.state.params)
-        // this.setState({
-        //     params: {
-        //         p: name
-        //     } 
-        // })
-        // const array = this.state.selected;
-        // if (array.length < 2) {
-        //     array.push(name);
-        // } else {
-        //     console.log("2 values decided already");
-        // }
-        // this.setState({
-        //     selected: array
-        // })
+    setX = (e) => {
+        e.preventDefault();
+        let array = this.state.selected;
+        array[0] = e.target.value;
+        this.setState({
+            selected: array,
+            isXselected: true
+        });
     }
 
-    unSelect = (p) => {
-        if (p === "x") {
-            this.setState({
-                params: {
-                    x: null,
-                    y: this.state.params.y
-                }
-            })
-        } else {
-            this.setState({
-                params: {
-                    y: null,
-                    x: this.state.params.x
-                }
-            })
-        }
-        console.log(this.state.params)
-        // let array = this.state.selected.filter(item => item !== name);
-        // this.setState({
-        //     selected: array
-        // })
+    setY = (e) => {
+        e.preventDefault();
+        let array = this.state.selected;
+        array[1] = e.target.value;
+        this.setState({
+            selected: array
+        });
     }
 
     render() {
-
         const obj = this.props.data.map((item, index) => (
-            <div key={index} className="checkBoxContainer">
-                x:
-                <div
-                    id="checkBox"
-                    className={
-                        this.state.params.x === item
-                            ? "checkSelected"
-                            : "checkNotSelected"
-                    }
-                    onClick={this.state.params.x === item ? () => this.unSelect("x") : () => this.select(item, "x")}
-                ></div>
-                y:
-                <div
-                    id="checkBox"
-                    className={
-                        this.state.params.y === item
-                            ? "checkSelected"
-                            : "checkNotSelected"
-                    }
-                    onClick={this.state.params.y === item ? () => this.unSelect("y") : () => this.select(item, "y")}
-                ></div>
-                <span>
-                    {item}
-                </span>
-            </div>
+            <option key={index} disabled={this.state.selected.includes(item) ? true : false}>
+                {item}
+            </option>
         ))
-        
-
-        // const obj = this.props.data.map((item, index) => (
-        //     <div className={this.state.selected.includes(item) ? "paramSelected" : ""} key={index} onClick={() => this.select(item)}>{item}</div>
-        // ))
         return (
             <div className="modalContainer">
                 <div className="saveJsonModal">
-                    <h3>Scegli i parametri:</h3>
-                    {obj}
-                    {this.state.selected.length === 2 ? <button onClick={() => this.props.setParams(this.state.selected)}>Select</button> : <button disabled>Selected</button>}
-                    
+                    <h3>Seleziona i parametri da utilizzare</h3>
+                    <div className="selectContainerParamModal">
+                        <select onChange={this.setX}>
+                            <option value={null} disabled selected>Seleziona X</option>
+                            {obj}
+                        </select>
+
+                        <select onChange={this.setY} disabled={this.state.isXselected ? false : true}>
+                            <option value={null} disabled selected>Seleziona Y</option>
+                            {obj}
+                        </select>
+                    </div>
+                    <div id="paramModalButtonContainer">
+                        {this.state.selected.length === 2 ? <button className="customButton buttonSmaller" onClick={() => this.props.setParams(this.state.selected)}>Select</button> : <button className="customButtonDisabled buttonSmaller" disabled>Selected</button>}
+                    </div>      
                 </div>
                 <div className="modalBackground"/>
             </div>

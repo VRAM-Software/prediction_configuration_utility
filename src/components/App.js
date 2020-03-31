@@ -137,6 +137,7 @@ export default class App extends React.Component {
                 ipcRenderer.on("read-csv", (event, arg) => {
                     let array = Object.keys(arg[0]);
                     array.length = Math.min(array.length, 2);
+                    console.log(array);
                     this.selectParams(array);
                     this.setState({
                         tempData: arg
