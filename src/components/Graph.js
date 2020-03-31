@@ -5,6 +5,7 @@ export default class Graph extends React.Component {
         return (
             <ScatterPlot
                 data={this.props.data}
+                params={this.props.params}
                 result={this.props.result}
                 graph="svm"
             />
