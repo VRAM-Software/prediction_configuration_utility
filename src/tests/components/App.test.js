@@ -8,6 +8,7 @@ import UserNotes from "../../components/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, shallow, mount } from "enzyme";
 import Modal from "../../components/Modal";
+import ParamModal from "../../components/ParamModal";
 import { ipcRenderer } from "electron";
 import CheckBox from "../../components/CheckBox";
 
@@ -69,6 +70,13 @@ describe("Rendering tests for <App /> component", () => {
             isModalEnabled: true
         });
         expect(component.containsMatchingElement(<Modal />)).toBeTruthy();
+    });
+
+    test("component <ParamModal/> should be displayed if isParamModalEnabled state is true", () => {
+        component.setState({
+            isParamModalEnabled: true
+        });
+        expect(component.containsMatchingElement(<ParamModal />)).toBeTruthy();
     });
 
     test("should not render <Modal/> when component is rendered", () => {
