@@ -1,42 +1,42 @@
-const Regression = require('./regression.module')
+const AlgorithmTrainer = require("../AlgorithmTrainer");
+const Regression = require("./lib/regression.module");
 
-class RLTrainer {
+class RlTrainer extends AlgorithmTrainer {
     constructor() {
-        this.trainedJSON = null;
-        this.data = [];
+        super();
+        this.trainedJson = null;
         this.options = null;
+        this.data = [];
     }
 
-    setOptions = option => {
-        this.options = option;
-    }
-
-    //data: array di oggetti JSON
     train = data => {
         const rl = new Regression(this.options);
-        this.insertData(data);
+        this.translateData(data);
         this.trainedJson = JSON.stringify(rl.calculateCoefficients());
         return this.trainedJson;
     };
 
-    insertData = json => {
+    translateData = data => {
         let valX = [];
         let valY = [];
         const result = [];
 
-        // {x1: 1, x2: 2, y: 2}
-        for (let i = 0; i < json.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             valX = [];
             valY = [];
             for(let j = 0; j  < this.options.numX; j++) {
-                const objToAdd = json[i];
+                const objToAdd = data[i];
                 valX.push(objToAdd[Object.keys(objToAdd)[j]]);
             }
-            valY.push(json[i].y);
+            valY.push(data[i].y);
             result.push({x: valX, y: valY});
         }
         this.data = result;
-    }
+    };
+
+    setOptions = option => {
+        this.options = option;
+    };
 }
 
-module.exports = RLTrainer;
+module.exports = RlTrainer;

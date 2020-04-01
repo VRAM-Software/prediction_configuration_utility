@@ -2,7 +2,7 @@ import React from "react";
 import { scaleLinear, axisLeft, axisBottom } from "d3";
 import Axis from "./Axis";
 import RenderCircles from "./RenderCircles";
-import Grid from "../Grid";
+import Grid from "./Grid";
 
 export default class ScatterPlot extends React.Component {
     render() {

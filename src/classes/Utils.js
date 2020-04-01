@@ -22,7 +22,7 @@ class Utils {
 
     // not tested
     static buildJson(json, notes, meta) {
-        return JSON.stringify({
+        return {
             author: meta.author,
             version: meta.version,
             pluginAim: "svm",
@@ -34,7 +34,7 @@ class Utils {
             kernelType: json.kernelType,
             w: json.w,
             notes: notes
-        });
+        };
     }
 }
 

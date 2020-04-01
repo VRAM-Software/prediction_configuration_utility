@@ -6,7 +6,7 @@
   "private": true,
   "description": "Applicativo Esterno Gruppo VRAM",
   "homepage": "./",
-  "main": "src/main.js",
+  "main": "src/viewmodel/main.js",
   "build": {
     "appId": "com.vramsoftware.prediction_configuration_utility",
     "files": [
@@ -54,7 +54,7 @@
     },
     "coveragePathIgnorePatterns": [
       "src/index.js",
-      "src/main.js",
+      "src/viewmodel/main.js",
       "src/tests/mocks/mockFile.js",
       "src/algorithm/regression.module.js"
     ]

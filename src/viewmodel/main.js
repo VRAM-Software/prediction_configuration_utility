@@ -1,10 +1,13 @@
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
-const Trainer = require("./algorithm/train");
-const Utils = require("./classes/Utils");
-const IO = require("./classes/IO");
-const meta = require("./config/config");
+const Trainer = require("../algorithm/train");
+const Utils = require("../classes/Utils");
+const IO = require("../classes/IO");
+const meta = require("../config/config");
+const ReadCsv = require("../model/input/ReadCsv");
+const ReadJson = require("../model/input/ReadJson");
+const WriteJson = require("../model/output/WriteJson");
 let window;
 let jsonTrained;
 
@@ -53,7 +56,9 @@ app.on("activate", () => {
 });
 
 ipcMain.on("save-to-disk", (event, arg) => {
-    IO.writeToDisk(arg.name, Utils.buildJson(jsonTrained, arg.notes, meta));
+    const writer = new WriteJson();
+    let string = writer.parser(Utils.buildJson(jsonTrained, arg.notes, meta));
+    writer.writeToDisk("src/output/", arg.name, string, ".json");
     event.reply("File correctly written");
 });
 
@@ -69,7 +74,8 @@ ipcMain.on("start-training", (event, arg) => {
 });
 
 ipcMain.on("get-json-from-csv", (event, arg) => {
-    IO.readFile(arg, (err, res) => {
+    const csvReader = new ReadCsv();
+    csvReader.readFile(arg, (err, res) => {
         event.reply("read-csv", res);
-    });
+    })
 });

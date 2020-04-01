@@ -1,12 +1,12 @@
 import React from "react";
-import Chooser from "./Chooser";
-import Graph from "./Graph";
-import UserNotes from "./UserNotes";
-import Modal from "./Modal";
-import ParamModal from "./ParamModal";
-import CheckBox from "./CheckBox";
+import Chooser from "./ui/Chooser";
+import Graph from "./ui/Graph";
+import UserNotes from "./ui/UserNotes";
+import Modal from "./ui/Modal";
+import ParamModal from "./ui/ParamModal";
+import CheckBox from "./ui/CheckBox";
 import config from "../config/config";
-import "../assets/App.css";
+import "./App.css";
 const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
