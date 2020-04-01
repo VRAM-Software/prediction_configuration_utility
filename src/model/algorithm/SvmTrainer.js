@@ -1,4 +1,5 @@
 const AlgorithmTrainer = require("../AlgorithmTrainer");
+const modules = require("ml-modules");
 const SVM = modules.SVM;
 
 class SvmTrainer extends AlgorithmTrainer {
@@ -25,13 +26,13 @@ class SvmTrainer extends AlgorithmTrainer {
     };
 
     translateData = data => {
-        const data = [];
+        const temp = [];
         const labels = [];
-        for (let i = 0; i < json.length; i++) {
-            data.push([parseFloat(json[i].weight), parseFloat(json[i].size)]);
-            labels.push(json[i].label);
+        for (let i = 0; i < data.length; i++) {
+            temp.push([parseFloat(data[i].weight), parseFloat(data[i].size)]);
+            labels.push(data[i].label);
         }
-        this.data = data;
+        this.data = temp;
         this.labels = labels;
     };
 

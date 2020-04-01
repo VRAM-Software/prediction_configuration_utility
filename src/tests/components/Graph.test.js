@@ -1,6 +1,6 @@
 import React from "react";
-import Graph from "../../components/Graph";
-import ScatterPlot from "../../components/graphComponents/ScatterPlot";
+import Graph from "../../view/ui/Graph";
+import ScatterPlot from "../../view/graphComponents/ScatterPlot";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

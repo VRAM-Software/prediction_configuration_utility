@@ -1,9 +1,8 @@
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
-const Trainer = require("../algorithm/train");
+const SvmTrainer = require("../model/algorithm/SvmTrainer");
 const Utils = require("../classes/Utils");
-const IO = require("../classes/IO");
 const meta = require("../config/config");
 const ReadCsv = require("../model/input/ReadCsv");
 const ReadJson = require("../model/input/ReadJson");
@@ -12,9 +11,9 @@ let window;
 let jsonTrained;
 
 function startTraining(data, notes, callback) {
-    const trainer = new Trainer();
+    const trainer = new SvmTrainer();
     trainer.train(data, notes);
-    jsonTrained = trainer.getTrainedJson();
+    jsonTrained = trainer.jsonTrained;
 
     if (typeof callback === "function") {
         callback();
@@ -57,7 +56,8 @@ app.on("activate", () => {
 
 ipcMain.on("save-to-disk", (event, arg) => {
     const writer = new WriteJson();
-    let string = writer.parser(Utils.buildJson(jsonTrained, arg.notes, meta));
+    let objToWrite = writer.buildJson(jsonTrained, arg.notes, meta);
+    let string = writer.parser(objToWrite);
     writer.writeToDisk("src/output/", arg.name, string, ".json");
     event.reply("File correctly written");
 });

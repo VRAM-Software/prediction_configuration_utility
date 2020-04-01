@@ -1,5 +1,5 @@
 import React from "react";
-import ParamModal from "../../components/ParamModal";
+import ParamModal from "../../view/ui/ParamModal";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

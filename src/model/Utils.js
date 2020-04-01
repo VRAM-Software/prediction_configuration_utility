@@ -1,5 +1,4 @@
 class Utils {
-    // not tested
     static getDate() {
         const today = new Date();
         const dd = String(today.getDate()).padStart(2, "0");
@@ -8,7 +7,6 @@ class Utils {
         return yyyy + "/" + mm + "/" + dd;
     }
 
-    // not tested
     static getTime() {
         const today = new Date();
         return String(
@@ -18,23 +16,6 @@ class Utils {
                 ":" +
                 today.getSeconds()
         );
-    }
-
-    // not tested
-    static buildJson(json, notes, meta) {
-        return {
-            author: meta.author,
-            version: meta.version,
-            pluginAim: "svm",
-            date: Utils.getDate(),
-            time: Utils.getTime(),
-            N: json.N,
-            D: json.D,
-            b: json.b,
-            kernelType: json.kernelType,
-            w: json.w,
-            notes: notes
-        };
     }
 }
 

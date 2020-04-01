@@ -1,7 +1,7 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
-import Grid from "../../components/Grid";
+import Grid from "../../view/graphComponents/Grid";
 
 const data = [
     { weight: 1, size: 1, label: 1 },

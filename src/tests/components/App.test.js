@@ -1,16 +1,16 @@
 import React from "react";
 import "../mocks/mockFile";
 
-import App from "../../components/App";
-import Chooser from "../../components/Chooser";
-import Graph from "../../components/Graph";
-import UserNotes from "../../components/UserNotes";
+import App from "../../view/App";
+import Chooser from "../../view/ui/Chooser";
+import Graph from "../../view/ui/Graph";
+import UserNotes from "../../view/ui/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, shallow, mount } from "enzyme";
-import Modal from "../../components/Modal";
-import ParamModal from "../../components/ParamModal";
+import Modal from "../../view/ui/Modal";
+import ParamModal from "../../view/ui/ParamModal";
 import { ipcRenderer } from "electron";
-import CheckBox from "../../components/CheckBox";
+import CheckBox from "../../view/ui/CheckBox";
 
 jest.mock("electron", () => ({
     ipcRenderer: {
