@@ -5,9 +5,6 @@ class Read {
         if (this.constructor === Read) {
             throw new TypeError("Can not construct abstract class Read.");
         }
-        if (this.parser === Read.prototype.parser) {
-            throw new TypeError("Please implement abstract method parser.");
-        }
     }
 
     readFile = (path, callback) => {

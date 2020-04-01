@@ -3,12 +3,6 @@ class AlgorithmTrainer {
         if (this.constructor === AlgorithmTrainer) {
             throw new TypeError("Can not construct abstract class AlgorithmTrainer.");
         }
-        if (this.train === AlgorithmTrainer.prototype.train) {
-            throw new TypeError("Please implement abstract method train.");
-        }
-        if (this.translateData === AlgorithmTrainer.prototype.train) {
-            throw new TypeError("Please implement abstract method translateData.");
-        }
     }
 
     train = data => {

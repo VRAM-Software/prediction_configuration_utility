@@ -5,9 +5,6 @@ class Write {
         if (this.constructor === Write) {
             throw new TypeError("Can not construct abstract class Write.");
         }
-        if (this.parser === Write.prototype.parser) {
-            throw new TypeError("Please implement abstract method writeToDisk.");
-        }
     }
 
     writeToDisk = (path, name, data, extension) => {

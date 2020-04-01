@@ -6,7 +6,7 @@ class ReadCsv extends Read {
         super();
     }
 
-    parser = (data, callback = () => {}) => {
+    parser = (data, callback) => {
         csv({
             delimiter: "auto"
         })

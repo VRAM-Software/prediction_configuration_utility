@@ -56,7 +56,7 @@
       "src/index.js",
       "src/viewmodel/main.js",
       "src/tests/mocks/mockFile.js",
-      "src/algorithm/lib/regression.module.js"
+      "src/model/algorithm/lib/regression.module.js"
     ]
   },
   "eslintConfig": {
