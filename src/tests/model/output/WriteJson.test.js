@@ -16,7 +16,7 @@ describe("Test for ReadJson class", () => {
     });
 
     test("method buildJson should return js object with correct parametres", () => {
-        let json = writer.buildJson({N: 1, D: 2, b: 3, kernelType: 4, w: 5}, "notes", {author: "test", version: "testVersion"});
+        let json = writer.buildTrainedFile({N: 1, D: 2, b: 3, kernelType: 4, w: 5}, "notes", {author: "test", version: "testVersion"});
         let array = Object.keys(json);
         expect(array.includes("author")).toBeTruthy();
         expect(array.includes("version")).toBeTruthy();
