@@ -8,18 +8,9 @@ class Write {
     }
 
     writeToDisk = (path, name, data, extension) => {
-        fs.writeFile(path + "/" + name + extension, data, function(
-            err
-        ) {
-            if (err) {
-                return console.error(err);
-            }
-            console.log(
-                "Successfully wrote file: " +
-                    name + extension +
-                    " to: " + path
-            );
-        });
+        throw new TypeError(
+            "Do not call abstract method writeToDisk from child."
+        );
     };
 
     parser = (data, callback = () => {}) => {
@@ -27,13 +18,6 @@ class Write {
             "Do not call abstract method parser from child."
         );
     };
-
-    buildTrainedFile = (result, notes, meta) => {
-        throw new TypeError(
-            "Do not call abstract method parser from child."
-        );
-    }
-
 }
 
 module.exports = Write;

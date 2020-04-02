@@ -10,21 +10,20 @@ class WriteJson extends Write {
         return JSON.stringify(data);
     };
 
-    buildTrainedFile = (json, notes, meta) => {
-        return {
-            author: meta.author,
-            version: meta.version,
-            pluginAim: "svm",
-            date: Utils.getDate(),
-            time: Utils.getTime(),
-            N: json.N,
-            D: json.D,
-            b: json.b,
-            kernelType: json.kernelType,
-            w: json.w,
-            notes: notes
-        };
-    }
+    writeToDisk = (path, name, data, extension) => {
+        fs.writeFile(path + "/" + name + extension, data, function(
+            err
+        ) {
+            if (err) {
+                return console.error(err);
+            }
+            console.log(
+                "Successfully wrote file: " +
+                name + extension +
+                " to: " + path
+            );
+        });
+    };
 }
 
 module.exports = WriteJson;
