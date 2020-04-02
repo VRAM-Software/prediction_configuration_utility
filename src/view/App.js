@@ -99,7 +99,8 @@ export default class App extends React.Component {
         });
         ipcRenderer.send("start-training", {
             data: this.state.userData,
-            params: this.state.params
+            params: this.state.params,
+            algorithm: this.state.algorithm
         });
         ipcRenderer.on("finished-training", (event, arg) => {
             this.setState({
@@ -164,6 +165,8 @@ export default class App extends React.Component {
     };
 
     handleChangeAlgorithm = algorithm => {
+        console.log("algoritmo");
+        console.log(algorithm);
         if (algorithm !== this.state.algorithm) {
             this.setState(
                 {

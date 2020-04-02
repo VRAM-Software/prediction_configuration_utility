@@ -14,6 +14,7 @@ class RlTrainer extends AlgorithmTrainer {
         const rl = new Regression(this.options);
         this.translateData(data);
         this.trainedJson = rl.calculateCoefficients();
+        console.log("ci sono");
         return this.trainedJson;
     };
 
