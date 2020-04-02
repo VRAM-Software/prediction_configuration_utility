@@ -1,5 +1,5 @@
 import React from "react";
-import SaveFileName from "../../components/SaveFileName";
+import SaveFileName from "../../view/ui/SaveFileName";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

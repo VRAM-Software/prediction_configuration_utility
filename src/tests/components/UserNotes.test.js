@@ -1,5 +1,5 @@
 import React from "react";
-import UserNotes from "../../components/UserNotes";
+import UserNotes from "../../view/ui/UserNotes";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

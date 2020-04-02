@@ -1,10 +1,10 @@
 import React from "react";
-import ScatterPlot from "../../components/graphComponents/ScatterPlot";
+import ScatterPlot from "../../view/graphComponents/ScatterPlot";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure, mount } from "enzyme";
-import Axis from "../../components/graphComponents/Axis";
-import RenderCircles from "../../components/graphComponents/RenderCircles";
-import Grid from "../../components/Grid";
+import Axis from "../../view/graphComponents/Axis";
+import RenderCircles from "../../view/graphComponents/RenderCircles";
+import Grid from "../../view/graphComponents/Grid";
 
 const data = [
     { weight: 1, size: 1, label: 1 },
@@ -16,12 +16,16 @@ const result = {
 	b: 1
 };
 
+const params = [
+    "weight", "size"
+]
+
 configure({ adapter: new Adapter() });
 
 describe("Test per il componente ScatterPlot", () => {
     let component;
     beforeEach(() => {
-        component = shallow(<ScatterPlot data={data} result={result} />);
+        component = shallow(<ScatterPlot data={data} result={result} params={params} />);
     });
 
     test("renders RenderCircles child component", () => {

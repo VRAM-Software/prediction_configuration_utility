@@ -1,8 +1,10 @@
+const AlgorithmTrainer = require("../AlgorithmTrainer");
 const modules = require("ml-modules");
 const SVM = modules.SVM;
 
-class SvmTrainer {
+class SvmTrainer extends AlgorithmTrainer {
     constructor() {
+        super();
         this.trainedJson = null;
         this.data = [];
         this.labels = [];
@@ -23,21 +25,18 @@ class SvmTrainer {
         return this.trainedJson;
     };
 
-    translateData = json => {
-        const data = [];
+    translateData = data => {
+        const temp = [];
         const labels = [];
-        for (let i = 0; i < json.length; i++) {
-            data.push([parseFloat(json[i].weight), parseFloat(json[i].size)]);
-            labels.push(json[i].label);
+        for (let i = 0; i < data.length; i++) {
+            temp.push([parseFloat(data[i].weight), parseFloat(data[i].size)]);
+            labels.push(data[i].label);
         }
-        this.data = data;
+        this.data = temp;
         this.labels = labels;
     };
 
-    // useless to test a getter
-    getTrainedJson = () => {
-        return this.trainedJson;
-    };
+    setQualityIndex = data => {};
 }
 
 module.exports = SvmTrainer;

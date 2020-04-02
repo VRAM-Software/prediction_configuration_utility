@@ -2,7 +2,7 @@ import React from "react";
 import { scaleLinear, axisLeft, axisBottom } from "d3";
 import Axis from "./Axis";
 import RenderCircles from "./RenderCircles";
-import Grid from "../Grid";
+import Grid from "./Grid";
 
 export default class ScatterPlot extends React.Component {
     render() {
@@ -21,25 +21,25 @@ export default class ScatterPlot extends React.Component {
             maxX: Math.max.apply(
                 Math,
                 this.props.data.map(o => {
-                    return o.weight;
+                    return o[this.props.params[0]];
                 })
             ),
             maxY: Math.max.apply(
                 Math,
                 this.props.data.map(o => {
-                    return o.size;
+                    return o[this.props.params[1]];
                 })
             ),
             minX: Math.min.apply(
                 Math,
                 this.props.data.map(o => {
-                    return o.weight;
+                    return o[this.props.params[0]];
                 })
             ),
             minY: Math.min.apply(
                 Math,
                 this.props.data.map(o => {
-                    return o.size;
+                    return o[this.props.params[1]];
                 })
             )
         };
@@ -73,7 +73,7 @@ export default class ScatterPlot extends React.Component {
                             />
                         ) : null}
 
-                        <RenderCircles data={data} scale={{ x, y }} />
+                        <RenderCircles data={data} params={this.props.params} scale={{ x, y }} />
 
                         <Axis
                             axis="x"

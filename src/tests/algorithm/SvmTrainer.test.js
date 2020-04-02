@@ -1,4 +1,4 @@
-const Trainer = require("../../algorithm/train");
+const Trainer = require("../../model/algorithm/SvmTrainer");
 const SVM = require("ml-modules").SVM;
 
 const mockedTrain = jest.fn();

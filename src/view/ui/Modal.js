@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/App.css";
+import "../App.css";
 import SaveFileName from "./SaveFileName";
 
 export default class Modal extends React.Component {

@@ -1,17 +1,17 @@
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
-const Trainer = require("./algorithm/train");
-const Utils = require("./classes/Utils");
-const IO = require("./classes/IO");
-const meta = require("./config/config");
+const SvmTrainer = require("../model/algorithm/SvmTrainer");
+const meta = require("../config/config");
+const ReadCsv = require("../model/input/ReadCsv");
+const ReadJson = require("../model/input/ReadJson");
+const WriteJson = require("../model/output/WriteJson");
 let window;
 let jsonTrained;
 
-function startTraining(data, notes, callback) {
-    const trainer = new Trainer();
-    trainer.train(data, notes);
-    jsonTrained = trainer.getTrainedJson();
+function startTraining(data, callback) {
+    const trainer = new SvmTrainer();
+    jsonTrained = trainer.train(data);
 
     if (typeof callback === "function") {
         callback();
@@ -53,12 +53,15 @@ app.on("activate", () => {
 });
 
 ipcMain.on("save-to-disk", (event, arg) => {
-    IO.writeToDisk(arg.name, Utils.buildJson(jsonTrained, arg.notes, meta));
+    const writer = new WriteJson();
+    let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes, meta);
+    let string = writer.parser(objToWrite);
+    writer.writeToDisk("src/output/", arg.name, string, ".json");
     event.reply("File correctly written");
 });
 
 ipcMain.on("start-training", (event, arg) => {
-    startTraining(arg.data, arg.notes, err => {
+    startTraining(arg.data, err => {
         if (err) {
             throw err;
         }
@@ -69,8 +72,8 @@ ipcMain.on("start-training", (event, arg) => {
 });
 
 ipcMain.on("get-json-from-csv", (event, arg) => {
-    console.log(arg);
-    IO.readFile(arg, (err, res) => {
+    const csvReader = new ReadCsv();
+    csvReader.readFile(arg, (err, res) => {
         event.reply("read-csv", res);
-    });
+    })
 });

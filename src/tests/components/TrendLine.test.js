@@ -1,5 +1,5 @@
 import React from "react";
-import TrendLine from "../../components/graphComponents/TrendLine";
+import TrendLine from "../../view/graphComponents/TrendLine";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure, mount } from "enzyme";
 

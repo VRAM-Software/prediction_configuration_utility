@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../../components/Modal";
+import Modal from "../../view/ui/Modal";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

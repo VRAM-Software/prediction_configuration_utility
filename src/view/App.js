@@ -1,11 +1,12 @@
 import React from "react";
-import Chooser from "./Chooser";
-import Graph from "./Graph";
-import UserNotes from "./UserNotes";
-import Modal from "./Modal";
-import CheckBox from "./CheckBox";
+import Chooser from "./ui/Chooser";
+import Graph from "./ui/Graph";
+import UserNotes from "./ui/UserNotes";
+import Modal from "./ui/Modal";
+import ParamModal from "./ui/ParamModal";
+import CheckBox from "./ui/CheckBox";
 import config from "../config/config";
-import "../assets/App.css";
+import "./App.css";
 const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
@@ -22,8 +23,32 @@ export default class App extends React.Component {
             csvFileInfo: null,
             trainedJson: null,
             algorithm: "svm",
-            isTraining: false
+            isTraining: false,
+            isParamModalEnabled: false,
+            tempData: [],
+            params: []
         };
+    }
+
+    setUserData = () => {
+        const data = this.state.tempData;
+        this.setState({
+            userData: data
+        })
+    }
+
+    handleCloseParamModal = e => {
+        e.preventDefault();
+        this.setState({
+            isParamModalEnabled: false
+        })
+    }
+
+    handleOpenParamModal = e => {
+        e.preventDefault();
+        this.setState({
+            isParamModalEnabled: true
+        })
     }
 
     handleOpenModal = e => {
@@ -85,6 +110,21 @@ export default class App extends React.Component {
         });
     };
 
+    selectParams = (params) => {
+        this.setState({
+            params: params,
+            isParamModalEnabled: true
+        })
+    }
+
+    setParams = (data) => {
+        this.setState({
+            params: data,
+            isParamModalEnabled: false
+        })
+        this.setUserData();
+    }
+
     onChange = e => {
         if (e.target.files[0]) {
             const obj = this.getFileInfo(e.target.files[0]);
@@ -95,8 +135,12 @@ export default class App extends React.Component {
             } else if (obj.extension === "csv") {
                 ipcRenderer.send("get-json-from-csv", obj.path);
                 ipcRenderer.on("read-csv", (event, arg) => {
+                    let array = Object.keys(arg[0]);
+                    array.length = Math.min(array.length, 2);
+                    console.log(array);
+                    this.selectParams(array);
                     this.setState({
-                        userData: arg
+                        tempData: arg
                     })
                 })
                 this.setState({
@@ -138,6 +182,7 @@ export default class App extends React.Component {
                 <div className="graphContainer">
                     <Graph
                         data={this.state.userData}
+                        params={this.state.params}
                         result={this.state.trainedJson}
                         axisControl={this.state.axisControl}
                     />
@@ -243,6 +288,13 @@ export default class App extends React.Component {
                         change={this.handleChangeFileName}
                         save={this.handleSaveJson}
                         value={this.state.fileName}
+                    />
+                ) : null}
+                {this.state.isParamModalEnabled ? (
+                    <ParamModal 
+                        data={this.state.params}
+                        setParams={this.setParams}
+                        close={this.handleCloseParamModal}
                     />
                 ) : null}
             </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import CheckBox from "../../components/CheckBox";
+import CheckBox from "../../view/ui/CheckBox";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
