@@ -9,8 +9,9 @@ const WriteJson = require("../model/output/WriteJson");
 let window;
 let jsonTrained;
 
-function startTraining(data, callback) {
+function startTraining(data, param, callback) {
     const trainer = new SvmTrainer();
+    trainer.setParams(param);
     jsonTrained = trainer.train(data);
 
     if (typeof callback === "function") {
@@ -61,7 +62,7 @@ ipcMain.on("save-to-disk", (event, arg) => {
 });
 
 ipcMain.on("start-training", (event, arg) => {
-    startTraining(arg.data, err => {
+    startTraining(arg.data, arg.params, err => {
         if (err) {
             throw err;
         }

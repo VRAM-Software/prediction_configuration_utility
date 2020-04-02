@@ -7,31 +7,26 @@ class RlTrainer extends AlgorithmTrainer {
         this.trainedJson = null;
         this.options = null;
         this.data = [];
+        this.params = [];
     }
 
     train = data => {
         const rl = new Regression(this.options);
         this.translateData(data);
-        this.trainedJson = JSON.stringify(rl.calculateCoefficients());
+        this.trainedJson = rl.calculateCoefficients();
         return this.trainedJson;
     };
 
     translateData = data => {
-        let valX = [];
-        let valY = [];
         const result = [];
-
         for (let i = 0; i < data.length; i++) {
-            valX = [];
-            valY = [];
-            for(let j = 0; j  < this.options.numX; j++) {
-                const objToAdd = data[i];
-                valX.push(objToAdd[Object.keys(objToAdd)[j]]);
-            }
-            valY.push(data[i].y);
-            result.push({x: valX, y: valY});
+            result.push({x: data[i][this.params][0], y: data[i][this.params][1]});
         }
         this.data = result;
+    };
+
+    setParams = params => {
+        this.params = params;
     };
 
     setOptions = option => {
