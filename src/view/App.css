@@ -109,8 +109,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex-grow: 1.2;
+    flex-shrink: 1.2;
     flex-basis: 0;
     margin-left: 24px;
     background-color: #D7DEDC;

@@ -99,7 +99,7 @@ export default class App extends React.Component {
         });
         ipcRenderer.send("start-training", {
             data: this.state.userData,
-            notes: this.state.userNotes
+            params: this.state.params
         });
         ipcRenderer.on("finished-training", (event, arg) => {
             this.setState({

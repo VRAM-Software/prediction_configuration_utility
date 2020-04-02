@@ -17,6 +17,7 @@ class Utils {
                 today.getSeconds()
         );
     }
+
 }
 
 module.exports = Utils;

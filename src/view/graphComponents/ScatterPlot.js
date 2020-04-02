@@ -6,15 +6,15 @@ import Grid from "./Grid";
 
 export default class ScatterPlot extends React.Component {
     render() {
-        const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+        const margin = { top: 20, right: 20, bottom: 20, left: 30 };
         const width = 500 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
         const data = this.props.data;
         const svgWidth = width + margin.right + margin.left;
         const svgHeight = height + margin.top + margin.bottom;
         const gTransform = "translate(" + margin.left + "," + margin.top + ")";
-        const xAxisTransformCentered = "translate(0," + height / 2 + ")";
-        const yAxisTransformCentered = "translate(" + width / 2 + "," + 0 + ")";
+        //const xAxisTransformCentered = "translate(0," + height / 2 + ")";
+        //const yAxisTransformCentered = "translate(" + width / 2 + "," + 0 + ")";
         const xAxisTransform = "translate(0," + height + ")";
         const yAxisTransform = "translate(0,0)";
         let constraints = {

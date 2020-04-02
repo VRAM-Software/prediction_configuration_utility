@@ -1,5 +1,3 @@
-const fs = require("fs");
-
 class Write {
     constructor() {
         if (this.constructor === Write) {
@@ -7,19 +5,16 @@ class Write {
         }
     }
 
-    writeToDisk = (path, name, data, extension) => {
-        fs.writeFile(path + "/" + name + extension, data, function(
-            err
-        ) {
-            if (err) {
-                return console.error(err);
-            }
-            console.log(
-                "Successfully wrote file: " +
-                    name + extension +
-                    " to: " + path
-            );
-        });
+    writeToDisk = (path, name, data) => {
+        throw new TypeError(
+            "Do not call abstract method writeToDisk from child."
+        );
+    };
+
+    buildTrainedFile = (json, notes, meta) => {
+        throw new TypeError(
+            "Do not call abstract method buildTrainedFile from child."
+        );
     };
 
     parser = (data, callback = () => {}) => {
@@ -27,13 +22,6 @@ class Write {
             "Do not call abstract method parser from child."
         );
     };
-
-    buildTrainedFile = (result, notes, meta) => {
-        throw new TypeError(
-            "Do not call abstract method parser from child."
-        );
-    }
-
 }
 
 module.exports = Write;

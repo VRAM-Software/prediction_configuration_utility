@@ -14,6 +14,7 @@ class SvmTrainer extends AlgorithmTrainer {
             },
             karpathy: true
         };
+        this.params = [];
     }
 
     train = data => {
@@ -29,11 +30,15 @@ class SvmTrainer extends AlgorithmTrainer {
         const temp = [];
         const labels = [];
         for (let i = 0; i < data.length; i++) {
-            temp.push([parseFloat(data[i].weight), parseFloat(data[i].size)]);
+            temp.push([parseFloat(data[i][this.params[0]]), parseFloat(data[i][this.params[1]])]);
             labels.push(data[i].label);
         }
         this.data = temp;
         this.labels = labels;
+    };
+
+    setParams = params => {
+        this.params = params;
     };
 
     setQualityIndex = data => {};
