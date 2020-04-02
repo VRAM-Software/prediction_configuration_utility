@@ -165,8 +165,6 @@ export default class App extends React.Component {
     };
 
     handleChangeAlgorithm = algorithm => {
-        console.log("algoritmo");
-        console.log(algorithm);
         if (algorithm !== this.state.algorithm) {
             this.setState(
                 {

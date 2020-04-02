@@ -12,18 +12,24 @@ class RlTrainer extends AlgorithmTrainer {
 
     train = data => {
         const rl = new Regression(this.options);
-        this.translateData(data);
+        this.insertData(data, rl);
+        console.log("coefficiente");
+        console.log(rl.calculateCoefficients());
         this.trainedJson = rl.calculateCoefficients();
-        console.log("ci sono");
+        console.log("trainedJSON");
+        console.log(this.trainedJson);
         return this.trainedJson;
     };
 
-    translateData = data => {
-        const result = [];
+    //TODO: Sistemare l'architettura su trasnlate e ragionare se mantenere l'interfaccia Algorithm training
+    translateData = data => {};
+
+    insertData = (data, rl) => {
         for (let i = 0; i < data.length; i++) {
-            result.push({x: data[i][this.params][0], y: data[i][this.params][1]});
+            //console.log(data[i][this.params[0]]);
+            //console.log(data[i][this.params[1]]);
+            rl.push({x: [data[i][this.params[0]]], y: [data[i][this.params[1]]] });
         }
-        this.data = result;
     };
 
     setParams = params => {

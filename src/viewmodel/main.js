@@ -14,10 +14,13 @@ function startTraining(data, param, algorithm, callback) {
     let trainer = null;
     switch(algorithm) {
         case "svm": trainer = new SvmTrainer();
+                    break;
         case "rl": trainer = new RlTrainer();
                     trainer.setOptions({ numX: 1, numY: 1 });
+                    break;
         default: trainer = new SvmTrainer();
                  console.log("Algorithm not recognized. Using SVM as default");
+                 break;
     }
     trainer.setParams(param);
     jsonTrained = trainer.train(data);

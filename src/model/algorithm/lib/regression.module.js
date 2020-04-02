@@ -33,10 +33,10 @@ class Regression {
             throw new Error('you must give the width of the X dimension as the property numY')
         }
         //Costruisco una matrice con prendendo numX e numY presi in input
-        this.transposeOfXTimesX = this.rectMatrix({numRows: options.numX,numColumns: options.numX}) //matrice
-        this.transposeOfXTimesY = this.rectMatrix({numRows: options.numX,numColumns: options.numY}) //matrice
+        this.transposeOfXTimesX = this.rectMatrix({numRows: options.numX,numColumns: options.numX}); //matrice
+        this.transposeOfXTimesY = this.rectMatrix({numRows: options.numX,numColumns: options.numY}); //matrice
         //Ritorna una matrice identità di dimensioni numX
-        this.identity = this.identityMatrix(options.numX)  //matrice identità
+        this.identity = this.identityMatrix(options.numX);  //matrice identità
     }
 
     //Aggiungo dei dati che ho osservato per addestrare l'algoritmo
@@ -47,18 +47,18 @@ class Regression {
         else if(!(options.x instanceof Array) || !(options.y instanceof Array)) {
             throw new Error('x and y must be given as arrays')
         }
-        this.addRowAndColumn(this.transposeOfXTimesX,{lhsColumn: options.x,rhsRow: options.x})
-        this.addRowAndColumn(this.transposeOfXTimesY,{lhsColumn: options.x,rhsRow: options.y})
+        this.addRowAndColumn(this.transposeOfXTimesX,{lhsColumn: options.x,rhsRow: options.x});
+        this.addRowAndColumn(this.transposeOfXTimesY,{lhsColumn: options.x,rhsRow: options.y});
         // Adding an observation invalidates our coefficients.
         delete this.coefficients
     }
 
     //Calcola il coefficiente di correlazione (regressore) da utilizzare per l'algoritmo
     calculateCoefficients() {
-        var xTx = this.transposeOfXTimesX
-        var xTy = this.transposeOfXTimesY
-        var inv = this.inverse(xTx, this.identity)
-        this.coefficients = this.multiply(inv, xTy)
+        let xTx = this.transposeOfXTimesX;
+        let xTy = this.transposeOfXTimesY;
+        let inv = this.inverse(xTx, this.identity);
+        this.coefficients = this.multiply(inv, xTy);
         return this.coefficients
     }
 
@@ -73,14 +73,14 @@ class Regression {
         else if(!this.coefficients) {
             this.calculateCoefficients()
         }
-        var hypothesis = []
-        console.log("coefficients lenght")
-        console.log(this.coefficients.length)
+        let hypothesis = [];
+        console.log("coefficients lenght");
+        console.log(this.coefficients.length);
         for(let x = 0; x < this.coefficients.length; x++) {
-            var coefficientRow = this.coefficients[x]
+            let coefficientRow = this.coefficients[x];
             for(let y = 0; y < coefficientRow.length; y++) {
-                console.log("option")
-                console.log(options.x[x])
+                console.log("option");
+                console.log(options.x[x]);
                 hypothesis[y] = (hypothesis[y] || 0) + coefficientRow[y] * options.x[x]
             }
         }
@@ -89,12 +89,12 @@ class Regression {
 
     //Calcola la matrice inversa
     inverse(matrix, identity) {
-        var size = matrix.length
-        var result = new Array(size)
+        let size = matrix.length;
+        let result = new Array(size);
         for(let i = 0; i < size; i++){
             result[i] = matrix[i].concat(identity[i])
         }
-        result = this.rref(result)
+        result = this.rref(result);
         for(let i = 0; i < size; i++) {
             result[i].splice(0, size)
         }
@@ -103,14 +103,14 @@ class Regression {
 
     //Algoritmo ausiliario per il calcolo della matrice inversa
     rref(A) {
-        var rows = A.length;
-        var columns = A[0].length;
+        let rows = A.length;
+        let columns = A[0].length;
 
-        var lead = 0;
-        for (var k = 0; k < rows; k++) {
+        let lead = 0;
+        for (let k = 0; k < rows; k++) {
             if (columns <= lead) return;
 
-            var i = k;
+            let i = k;
             while (A[i][lead] === 0) {
                 i++;
                 if (rows === i) {
@@ -119,19 +119,19 @@ class Regression {
                     if (columns === lead) return;
                 }
             }
-            var irow = A[i], krow = A[k];
+            let irow = A[i], krow = A[k];
             A[i] = krow;
             A[k] = irow;
 
-            var val = A[k][lead];
-            for (var j = 0; j < columns; j++) {
+            let val = A[k][lead];
+            for (let j = 0; j < columns; j++) {
                 A[k][j] /= val;
             }
 
-            for (var i = 0; i < rows; i++) {
+            for (let i = 0; i < rows; i++) {
                 if (i === k) continue;
                 val = A[i][lead];
-                for (var j = 0; j < columns; j++) {
+                for (let j = 0; j < columns; j++) {
                     A[i][j] -= val * A[k][j];
                 }
             }
@@ -142,16 +142,16 @@ class Regression {
 
     //Esegue la molitplicazione tra matrici
     multiply(lhs, rhs) {
-        var options ={ numRows: lhs.length, numColumns: rhs[0].length }
-        var streamingProduct = this.rectMatrix(options)
+        let options ={ numRows: lhs.length, numColumns: rhs[0].length };
+        let streamingProduct = this.rectMatrix(options);
         for(let x = 0; x < rhs.length; x++) {
-            var lhsColumn = []
+            let lhsColumn = [];
             // Get the xth column of lhs.
             for(let r = 0; r < lhs.length; r++) {
                 lhsColumn.push(lhs[r][x])
             }
             // Get the xth row of rhs.
-            var rhsRow = rhs[x]
+            let rhsRow = rhs[x];
             this.addRowAndColumn(streamingProduct, {
                 lhsColumn: lhsColumn,
                 rhsRow: rhsRow
@@ -162,7 +162,7 @@ class Regression {
 
     //Ritorna una matrice identità con tutte le celle a 1
     identityMatrix(size) {
-        var matrix = this.rectMatrix({ numRows: size, numColumns: size })
+        let matrix = this.rectMatrix({ numRows: size, numColumns: size });
         for(let i = 0; i < size; i++) {
             matrix[i][i] = 1
         }
@@ -171,10 +171,10 @@ class Regression {
 
     //Ritorna una matrice numRows x numColumns con tutti gli elementi a 0
     rectMatrix(options) {
-        var matrix = new Array(options.numRows) //creo un array lungo numRows
+        let matrix = new Array(options.numRows); //creo un array lungo numRows
         for(let r = 0; r < options.numRows; r++) { //creo tanti array quanto vale numRows e tutti lunghi numColumns
-            var row = new Array(options.numColumns)
-            matrix[r] = row //creo la matrice con row come vettore riga, per ogni irga
+            let row = new Array(options.numColumns);
+            matrix[r] = row; //creo la matrice con row come vettore riga, per ogni irga
             for(let c = 0; c < options.numColumns; c++) {
                 row[c] = 0
             }
