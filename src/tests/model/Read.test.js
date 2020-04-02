@@ -30,10 +30,9 @@ describe("Tests for class Read class", () => {
 
     test("method readFile should read file correctly", () => {
         let callbackFs;
-        //let callbackReader = {"Errore!"};
         let option;
 
-        jest.spyOn(fs, 'readFile').mockImplementation((path, data, cb) => {
+        jest.spyOn(fs, "readFile").mockImplementation((path, data, cb) => {
             callbackFs = cb;
             option = data;
         });
@@ -53,6 +52,17 @@ describe("Tests for class Read class", () => {
         //expect(logSpy).toBeCalledWith("ciao");
         //expect(reader.parser).toHaveBeenCalled();
         //callback();
+    });
+
+    test("method readFile should throw error when read file failed", () => {
+        let callbackFs;
+        jest.spyOn(fs, 'readFile').mockImplementation((path, data, cb) => {
+            callbackFs = cb;
+        });
+        const myError = new Error("read file failed");
+        let callbackError = (myError, null);
+        reader.readFile("src/filetest.csv", callbackError);
+        expect(() => callbackFs(myError, null)).toThrowError(myError);
     });
 });
 

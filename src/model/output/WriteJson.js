@@ -35,7 +35,7 @@ class WriteJson extends Write {
             err
         ) {
             if (err) {
-                return console.error(err);
+                throw err;
             }
             console.log(
                 "Successfully wrote file: " +
