@@ -109,7 +109,8 @@ class Regression {
                 }
             }
             var irow = A[i], krow = A[k];
-            A[i] = krow, A[k] = irow;
+            A[i] = krow;
+            A[k] = irow;
 
             var val = A[k][lead];
             for (var j = 0; j < columns; j++) {
