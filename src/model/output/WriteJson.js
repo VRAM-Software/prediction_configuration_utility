@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const Write = require("../Write");
 const Utils = require("../Utils");
 
@@ -28,7 +30,8 @@ class WriteJson extends Write {
     }
 
     writeToDisk = (path, name, data) => {
-        fs.writeFile(path + "/" + name + this.extension, this.parser(data), function(
+        let context = this;
+        fs.writeFile(path + "/" + name + context.extension, this.parser(data), function(
             err
         ) {
             if (err) {
@@ -36,7 +39,7 @@ class WriteJson extends Write {
             }
             console.log(
                 "Successfully wrote file: " +
-                name + extension +
+                name + context.extension +
                 " to: " + path
             );
         });
