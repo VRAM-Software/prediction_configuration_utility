@@ -56,7 +56,7 @@ ipcMain.on("save-to-disk", (event, arg) => {
     const writer = new WriteJson();
     let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes, meta);
     let string = writer.parser(objToWrite);
-    writer.writeToDisk("src/output/", arg.name, string, ".json");
+    writer.writeToDisk("src/output/", arg.name, string);
     event.reply("File correctly written");
 });
 

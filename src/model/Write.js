@@ -7,7 +7,7 @@ class Write {
         }
     }
 
-    writeToDisk = (path, name, data, extension) => {
+    writeToDisk = (path, name, data) => {
         throw new TypeError(
             "Do not call abstract method writeToDisk from child."
         );
