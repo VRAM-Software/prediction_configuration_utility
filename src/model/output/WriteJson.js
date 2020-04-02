@@ -10,7 +10,7 @@ class WriteJson extends Write {
         return JSON.stringify(data);
     };
 
-    buildJson = (json, notes, meta) => {
+    buildTrainedFile = (json, notes, meta) => {
         return {
             author: meta.author,
             version: meta.version,

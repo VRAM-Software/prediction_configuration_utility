@@ -27,6 +27,13 @@ class Write {
             "Do not call abstract method parser from child."
         );
     };
+
+    buildTrainedFile = (result, notes, meta) => {
+        throw new TypeError(
+            "Do not call abstract method parser from child."
+        );
+    }
+
 }
 
 module.exports = Write;
