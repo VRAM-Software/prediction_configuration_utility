@@ -2,33 +2,36 @@ class Regression {
     //METODI DI INTERFACCIA PER L'UTILIZZO DI RL
 
     //permette di fare la push solo che al posto di passare un option, passo i parametri e si costruisce da sola la option
-    add(xs,ys){
+    add(xs,ys) {
         this.addObservation({
             x:[1].concat(xs),y:[ys]
         })
     }
 
-    calculate(){
+    calculate() {
         return this.calculateCoefficients()
     }
 
-    predict(xs){
+    predict(xs) {
         return this.hypothesize({
             x:[1].concat(xs)
         })
     }
 
-    push(options){
+    push(options) {
         this.addObservation(options)
     }
 
-    constructor(options){
-        if(!options)
+    constructor(options) {
+        if(!options) {
             throw new Error('missing options')
-        if(!('numX' in options))
+        }
+        else if(!('numX' in options)) {
             throw new Error('you must give the width of the X dimension as the property numX')
-        if(!('numY' in options))
+        }
+        else if(!('numY' in options)) {
             throw new Error('you must give the width of the X dimension as the property numY')
+        }
         //Costruisco una matrice con prendendo numX e numY presi in input
         this.transposeOfXTimesX = this.rectMatrix({numRows: options.numX,numColumns: options.numX}) //matrice
         this.transposeOfXTimesY = this.rectMatrix({numRows: options.numX,numColumns: options.numY}) //matrice
@@ -37,11 +40,13 @@ class Regression {
     }
 
     //Aggiungo dei dati che ho osservato per addestrare l'algoritmo
-    addObservation(options){
-        if(!options)
+    addObservation(options) {
+        if(!options) {
             throw new Error('missing options')
-        if(!(options.x instanceof Array) || !(options.y instanceof Array))
+        }
+        else if(!(options.x instanceof Array) || !(options.y instanceof Array)) {
             throw new Error('x and y must be given as arrays')
+        }
         this.addRowAndColumn(this.transposeOfXTimesX,{lhsColumn: options.x,rhsRow: options.x})
         this.addRowAndColumn(this.transposeOfXTimesY,{lhsColumn: options.x,rhsRow: options.y})
         // Adding an observation invalidates our coefficients.
@@ -49,7 +54,7 @@ class Regression {
     }
 
     //Calcola il coefficiente di correlazione (regressore) da utilizzare per l'algoritmo
-    calculateCoefficients(){
+    calculateCoefficients() {
         var xTx = this.transposeOfXTimesX
         var xTy = this.transposeOfXTimesY
         var inv = this.inverse(xTx, this.identity)
@@ -59,18 +64,21 @@ class Regression {
 
     //Calcolo l'array dei valori ipotetici
     hypothesize(options) {
-        if(!options)
+        if(!options) {
             throw new Error('missing options')
-        if(!(options.x instanceof Array))
+        }
+        else if(!(options.x instanceof Array)) {
             throw new Error('x property must be given as an array')
-        if(!this.coefficients)
+        }
+        else if(!this.coefficients) {
             this.calculateCoefficients()
+        }
         var hypothesis = []
         console.log("coefficients lenght")
         console.log(this.coefficients.length)
-        for(var x = 0; x < this.coefficients.length; x++) {
+        for(let x = 0; x < this.coefficients.length; x++) {
             var coefficientRow = this.coefficients[x]
-            for(var y = 0; y < coefficientRow.length; y++) {
+            for(let y = 0; y < coefficientRow.length; y++) {
                 console.log("option")
                 console.log(options.x[x])
                 hypothesis[y] = (hypothesis[y] || 0) + coefficientRow[y] * options.x[x]
@@ -83,10 +91,13 @@ class Regression {
     inverse(matrix, identity) {
         var size = matrix.length
         var result = new Array(size)
-        for(var i = 0; i < size; i++)
+        for(let i = 0; i < size; i++){
             result[i] = matrix[i].concat(identity[i])
+        }
         result = this.rref(result)
-        for(var i = 0; i < size; i++) result[i].splice(0, size)
+        for(let i = 0; i < size; i++) {
+            result[i].splice(0, size)
+        }
         return result
     }
 
@@ -131,16 +142,17 @@ class Regression {
 
     //Esegue la molitplicazione tra matrici
     multiply(lhs, rhs) {
-        var options = { numRows: lhs.length, numColumns: rhs[0].length }
+        var options ={ numRows: lhs.length, numColumns: rhs[0].length }
         var streamingProduct = this.rectMatrix(options)
-        for(var x = 0; x < rhs.length; x++) {
+        for(let x = 0; x < rhs.length; x++) {
             var lhsColumn = []
             // Get the xth column of lhs.
-            for(var r = 0; r < lhs.length; r++)
+            for(let r = 0; r < lhs.length; r++) {
                 lhsColumn.push(lhs[r][x])
+            }
             // Get the xth row of rhs.
             var rhsRow = rhs[x]
-            this.addRowAndColumn(streamingProduct,{
+            this.addRowAndColumn(streamingProduct, {
                 lhsColumn: lhsColumn,
                 rhsRow: rhsRow
             })
@@ -149,20 +161,21 @@ class Regression {
     }
 
     //Ritorna una matrice identità con tutte le celle a 1
-    identityMatrix(size){
+    identityMatrix(size) {
         var matrix = this.rectMatrix({ numRows: size, numColumns: size })
-        for(var i = 0; i < size; i++)
+        for(let i = 0; i < size; i++) {
             matrix[i][i] = 1
+        }
         return matrix
     }
 
     //Ritorna una matrice numRows x numColumns con tutti gli elementi a 0
-    rectMatrix(options){
+    rectMatrix(options) {
         var matrix = new Array(options.numRows) //creo un array lungo numRows
-        for(var r = 0; r < options.numRows; r++) { //creo tanti array quanto vale numRows e tutti lunghi numColumns
+        for(let r = 0; r < options.numRows; r++) { //creo tanti array quanto vale numRows e tutti lunghi numColumns
             var row = new Array(options.numColumns)
             matrix[r] = row //creo la matrice con row come vettore riga, per ogni irga
-            for(var c = 0; c < options.numColumns; c++) {
+            for(let c = 0; c < options.numColumns; c++) {
                 row[c] = 0
             }
         }
@@ -171,9 +184,11 @@ class Regression {
 
     //percorro la matrice product e sommo ai valori che già ha
     addRowAndColumn(product,options){ //option contiene i valori da aggiungere etichettati nella funzione chiamante
-        for(var c = 0; c < options.lhsColumn.length; c++)
-            for(var r = 0; r < options.rhsRow.length; r++)
+        for(let c = 0; c < options.lhsColumn.length; c++){
+            for(let r = 0; r < options.rhsRow.length; r++){
                 product[c][r] += options.lhsColumn[c] * options.rhsRow[r]
+            }
+        }
     }
 
 }
