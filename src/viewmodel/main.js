@@ -3,31 +3,32 @@ const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
 const SvmTrainer = require("../model/algorithm/SvmTrainer");
 const RlTrainer = require("../model/algorithm/RlTrainer");
-const meta = require("../config/config");
 const ReadCsv = require("../model/input/ReadCsv");
 const ReadJson = require("../model/input/ReadJson");
 const WriteJson = require("../model/output/WriteJson");
 let window;
 let jsonTrained;
 
-function startTraining(data, param, algorithm, callback) {
-    let trainer = null;
-    switch(algorithm) {
-        case "svm": trainer = new SvmTrainer();
-                    break;
-        case "rl": trainer = new RlTrainer();
-                    trainer.setOptions({ numX: 1, numY: 1 });
-                    break;
-        default: trainer = new SvmTrainer();
-                 console.log("Algorithm not recognized. Using SVM as default");
-                 break;
-    }
+function startTrainingRl(data, param, algorithm, callback) {
+    let trainer = new RlTrainer();
+    trainer.setOptions({ numX: 1, numY: 1 });
     trainer.setParams(param);
     jsonTrained = trainer.train(data);
     if (typeof callback === "function") {
         callback();
     }
 }
+
+function startTrainingSvm(data, param, algorithm, callback) {
+    let trainer = new SvmTrainer();
+    trainer.setParams(param);
+    jsonTrained = trainer.train(data);
+    if (typeof callback === "function") {
+        callback();
+    }
+}
+
+
 
 function createWindow() {
     let mainWindow = new BrowserWindow({
@@ -65,14 +66,24 @@ app.on("activate", () => {
 
 ipcMain.on("save-to-disk", (event, arg) => {
     const writer = new WriteJson();
-    let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes, meta);
+    let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes);
     let string = writer.parser(objToWrite);
     writer.writeToDisk("src/output", arg.name, string);
     event.reply("File correctly written");
 });
 
-ipcMain.on("start-training", (event, arg) => {
-    startTraining(arg.data, arg.params, arg.algorithm, err => {
+ipcMain.on("start-training-rl", (event, arg) => {
+    startTrainingRl(arg.data, arg.params, arg.algorithm, err => {
+        if (err) {
+            throw err;
+        }
+        console.log("Finished training");
+    });
+    console.log(jsonTrained);
+    event.reply("finished-training", jsonTrained);
+});
+ipcMain.on("start-training-svm", (event, arg) => {
+    startTrainingSvm(arg.data, arg.params, arg.algorithm, err => {
         if (err) {
             throw err;
         }

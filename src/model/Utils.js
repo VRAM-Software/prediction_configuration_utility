@@ -1,3 +1,4 @@
+const config = require("../config/config")
 class Utils {
     static getDate() {
         const today = new Date();
@@ -16,6 +17,15 @@ class Utils {
                 ":" +
                 today.getSeconds()
         );
+    }
+
+    static getTemplateTrainedFile = () => {
+        return {
+            author: config.author,
+            version: config.version,
+            date: Utils.getDate(),
+            time: Utils.getTime()
+        };
     }
 
 }

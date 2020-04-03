@@ -11,7 +11,7 @@ class Write {
         );
     };
 
-    buildTrainedFile = (json, notes, meta) => {
+    buildTrainedFile = (json, notes) => {
         throw new TypeError(
             "Do not call abstract method buildTrainedFile from child."
         );

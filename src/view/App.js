@@ -26,7 +26,8 @@ export default class App extends React.Component {
             isTraining: false,
             isParamModalEnabled: false,
             tempData: [],
-            params: []
+            params: [],
+            paramLength: null
         };
     }
 
@@ -92,12 +93,31 @@ export default class App extends React.Component {
         this.handleCloseModal(e);
     };
 
-    handleStartTraining = e => {
+    handleStartTrainingSvm = e => {
         e.preventDefault();
         this.setState({
             isTraining: true
         });
-        ipcRenderer.send("start-training", {
+        ipcRenderer.send("start-training-svm", {
+            data: this.state.userData,
+            params: this.state.params,
+            algorithm: this.state.algorithm
+        });
+        ipcRenderer.on("finished-training", (event, arg) => {
+            this.setState({
+                isTrainingDone: true,
+                isTraining: false,
+                trainedJson: arg
+            });
+        });
+    };
+
+    handleStartTrainingRl = e => {
+        e.preventDefault();
+        this.setState({
+            isTraining: true
+        });
+        ipcRenderer.send("start-training-rl", {
             data: this.state.userData,
             params: this.state.params,
             algorithm: this.state.algorithm
@@ -137,11 +157,12 @@ export default class App extends React.Component {
                 ipcRenderer.send("get-json-from-csv", obj.path);
                 ipcRenderer.on("read-csv", (event, arg) => {
                     let array = Object.keys(arg[0]);
-                    array.length = Math.min(array.length, 2);
+                    array.length = Math.min(array.length, array.length-1);
                     console.log(array);
                     this.selectParams(array);
                     this.setState({
-                        tempData: arg
+                        tempData: arg,
+                        paramLength: array.length
                     })
                 })
                 this.setState({
@@ -186,6 +207,7 @@ export default class App extends React.Component {
                         params={this.state.params}
                         result={this.state.trainedJson}
                         axisControl={this.state.axisControl}
+                        paramLength={this.state.paramLength}
                     />
                 </div>
 
@@ -213,11 +235,56 @@ export default class App extends React.Component {
             </>
         );
 
+        let buttonSvm = null;
+            this.state.csvFileInfo ?
+                 buttonSvm = (
+                <button
+                    className="customButton buttonNormal"
+                    onClick={this.handleStartTrainingSvm}
+                >
+                    {this.state.isTraining
+                        ? "Addestrando..."
+                        : "Inizia addestramento svm"}
+                </button>
+            ) : buttonSvm= (
+                <button
+                    className="customButtonDisabled buttonNormal"
+                    disabled
+                >
+                    Inizia addestramento svm
+                </button>
+            )
+
+        let buttonRl = null;
+        this.state.csvFileInfo ?
+            buttonRl = (
+            <button
+                className="customButton buttonNormal"
+                onClick={this.handleStartTrainingRl}
+            >
+                {this.state.isTraining
+                    ? "Addestrando..."
+                    : "Inizia addestramento rl"}
+            </button>
+        ) : buttonRl= (
+            <button
+                className="customButtonDisabled buttonNormal"
+                disabled
+            >
+                Inizia addestramento rl
+            </button>
+        )
+
+
         return (
             <div className="App">
                 <span id="metaText">
                     VRAM Software Applicativo Esterno - PoC 3
                 </span>
+                {this.state.trainedJson ? (
+                    <span className="done">Addestramento avvenuto</span>
+                ): null
+                }
                 <div className="contentContainer">
                     {this.state.userData !== null ? group : null}
                 </div>
@@ -247,23 +314,12 @@ export default class App extends React.Component {
                         </span>
                     </div>
                     <div>
-                        {this.state.csvFileInfo ? (
-                            <button
-                                className="customButton buttonNormal"
-                                onClick={this.handleStartTraining}
-                            >
-                                {this.state.isTraining
-                                    ? "Addestrando..."
-                                    : "Inizia addestramento"}
-                            </button>
-                        ) : (
-                            <button
-                                className="customButtonDisabled buttonNormal"
-                                disabled
-                            >
-                                Inizia addestramento
-                            </button>
-                        )}
+                        {this.state.algorithm === "rl" ?(
+                                buttonRl )
+                            : null }
+                        {this.state.algorithm === "svm" ?(
+                            buttonSvm )
+                        : null }
                     </div>
                     <div>
                         {this.state.isTrainingDone ? (

@@ -63,9 +63,10 @@ export default class ScatterPlot extends React.Component {
                         transform={gTransform}
                         className="main"
                     >
-                        {this.props.result ? (
+
+                        {this.props.result && this.props.paramLength<3 ? (
                             <Grid
-                                result={this.props.result}
+                                result={this.props.result.result}
                                 constraints={constraints}
                                 width={width}
                                 height={height}
