@@ -57,14 +57,14 @@ export default class ScatterPlot extends React.Component {
 
         return (
             <div>
-                <svg width={svgWidth} height={svgHeight} className="chart">
+                <svg width = {svgWidth} height = {svgHeight} className = "chart">
                     <g
                         width = {width}
                         height = {height}
                         transform = {gTransform}
                         className = "main"
                     >
-                        {this.props.result && this.props.paramLength<4 && this.props.algorithm==="svm"? (
+                        {this.props.result && this.props.paramLength < 4 && this.props.algorithm === "svm"? (
                             <Grid
                                 result = {this.props.result.result}
                                 paramLength = {this.props.paramLength}
@@ -74,18 +74,17 @@ export default class ScatterPlot extends React.Component {
                                 scale = {{ x, y }}
                             />
                         ) : null}
-                        {this.props.result && this.props.paramLength<3 && this.props.algorithm==="rl"? (
+
+                        {this.props.result && this.props.paramLength < 3 && this.props.algorithm === "rl"? (
                             <TrendLine
                                 result = {this.props.result.result}
                                 params = {this.props.params}
                                 data = {data}
                                 scale = {{ x, y }}
-
                             />
-
-
                         ): null}
-                        <RenderCircles data={data} params={this.props.params} algorithm={this.props.algorithm} scale={{ x, y }} />
+
+                        <RenderCircles data = {data} params = {this.props.params} algorithm = {this.props.algorithm} scale = {{ x, y }} />
 
                         <Axis
                             axis = "x"
