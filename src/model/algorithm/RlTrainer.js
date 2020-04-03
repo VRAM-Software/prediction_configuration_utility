@@ -13,19 +13,33 @@ class RlTrainer extends AlgorithmTrainer {
 
     train = data => {
         const rl = new Regression(this.options);
+        console.log(this.options);
         this.translateData(data);
         rl.insertData(this.data);
         this.trainedObj = rl.calculateCoefficients();
         return this.buildTrainedObject(this.trainedObj);
     };
 
+
     translateData = data => {
-        let dataToInsert = [];
+        let valX = [];
+        let valY = [];
+        const result = [];
+
         for (let i = 0; i < data.length; i++) {
-            dataToInsert.push({x: [data[i][this.params[0]]], y: [data[i][this.params[1]]] });
+            valX = [];
+            valY = [];
+            for(let j = 0; j  < this.options.numX; j++) {
+                const objToAdd = data[i];
+                valX.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
+            }
+            valY.push(parseFloat(data[i][Object.keys(data[i])[this.params.length-1]]));
+            result.push({x: valX, y: valY});
         }
-        this.data = dataToInsert;
+        this.data = result;
+        console.log(this.data);
     };
+
 
     setParams = params => {
         this.params = params;
@@ -38,7 +52,6 @@ class RlTrainer extends AlgorithmTrainer {
         return file;
     };
 
-    //TODO: Provare a passarla nel costruttore
     setOptions = option => {
         this.options = option;
     };

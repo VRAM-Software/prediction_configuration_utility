@@ -63,18 +63,17 @@ export default class ScatterPlot extends React.Component {
                         transform={gTransform}
                         className="main"
                     >
-
-                        {this.props.result && this.props.paramLength<3 ? (
+                        {this.props.result && this.props.paramLength<4 && this.props.algorithm==="svm"? (
                             <Grid
                                 result={this.props.result.result}
+                                paramLength={this.props.paramLength}
                                 constraints={constraints}
                                 width={width}
                                 height={height}
                                 scale={{ x, y }}
                             />
                         ) : null}
-
-                        <RenderCircles data={data} params={this.props.params} scale={{ x, y }} />
+                        <RenderCircles data={data} params={this.props.params} algorithm={this.props.algorithm} scale={{ x, y }} />
 
                         <Axis
                             axis="x"

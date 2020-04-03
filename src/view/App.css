@@ -316,8 +316,6 @@ input:focus {
 }
 
 .done {
-    position: absolute;
-    top:0;
-    left:4px;
-    margin-top: 4px;
+    position: relative;
+    margin-top: 20px;
 }

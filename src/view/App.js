@@ -15,7 +15,6 @@ export default class App extends React.Component {
         this.state = {
             userData: null,
             userNotes: "",
-            notesPredittore: "",
             fileName: "addestramento",
             isTrainingDone: false,
             isModalEnabled: false,
@@ -27,6 +26,7 @@ export default class App extends React.Component {
             isParamModalEnabled: false,
             tempData: [],
             params: [],
+            array: [],
             paramLength: null
         };
     }
@@ -72,12 +72,6 @@ export default class App extends React.Component {
         });
     };
 
-    handleChangeNotesPredittore = e => {
-        this.setState({
-            notesPredittore: e.target.value
-        });
-    };
-
     handleChangeFileName = e => {
         this.setState({
             fileName: e.target.value
@@ -100,7 +94,7 @@ export default class App extends React.Component {
         });
         ipcRenderer.send("start-training-svm", {
             data: this.state.userData,
-            params: this.state.params,
+            params: this.state.array,
             algorithm: this.state.algorithm
         });
         ipcRenderer.on("finished-training", (event, arg) => {
@@ -119,7 +113,7 @@ export default class App extends React.Component {
         });
         ipcRenderer.send("start-training-rl", {
             data: this.state.userData,
-            params: this.state.params,
+            params: this.state.array,
             algorithm: this.state.algorithm
         });
         ipcRenderer.on("finished-training", (event, arg) => {
@@ -157,12 +151,13 @@ export default class App extends React.Component {
                 ipcRenderer.send("get-json-from-csv", obj.path);
                 ipcRenderer.on("read-csv", (event, arg) => {
                     let array = Object.keys(arg[0]);
-                    array.length = Math.min(array.length, array.length-1);
+                    array.length = Math.min(array.length, array.length);
                     console.log(array);
                     this.selectParams(array);
                     this.setState({
                         tempData: arg,
-                        paramLength: array.length
+                        paramLength: array.length,
+                        array: array
                     })
                 })
                 this.setState({
@@ -208,6 +203,7 @@ export default class App extends React.Component {
                         result={this.state.trainedJson}
                         axisControl={this.state.axisControl}
                         paramLength={this.state.paramLength}
+                        algorithm={this.state.algorithm}
                     />
                 </div>
 
@@ -218,19 +214,16 @@ export default class App extends React.Component {
                         algorithm={this.state.algorithm}
                     />
                     <h3 className="margin-top-medium">
-                        Inserisci note del predittore
-                    </h3>
-                    <UserNotes
-                        handleChange={this.handleChangeNotesPredittore}
-                        value={this.state.notesPredittore}
-                    />
-                    <h3 className="margin-top-medium">
                         Inserisci note al file di configurazione
                     </h3>
                     <UserNotes
                         handleChange={this.handleChangeNotes}
                         value={this.state.userNotes}
                     />
+                    {this.state.trainedJson ? (
+                        <span className="done">Addestramento avvenuto</span>
+                    ): null
+                    }
                 </div>
             </>
         );
@@ -281,10 +274,7 @@ export default class App extends React.Component {
                 <span id="metaText">
                     VRAM Software Applicativo Esterno - PoC 3
                 </span>
-                {this.state.trainedJson ? (
-                    <span className="done">Addestramento avvenuto</span>
-                ): null
-                }
+
                 <div className="contentContainer">
                     {this.state.userData !== null ? group : null}
                 </div>
