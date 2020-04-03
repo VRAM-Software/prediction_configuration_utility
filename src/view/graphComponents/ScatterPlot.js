@@ -3,6 +3,7 @@ import { scaleLinear, axisLeft, axisBottom } from "d3";
 import Axis from "./Axis";
 import RenderCircles from "./RenderCircles";
 import Grid from "./Grid";
+import TrendLine from "./TrendLine";
 
 export default class ScatterPlot extends React.Component {
     render() {
@@ -13,8 +14,8 @@ export default class ScatterPlot extends React.Component {
         const svgWidth = width + margin.right + margin.left;
         const svgHeight = height + margin.top + margin.bottom;
         const gTransform = "translate(" + margin.left + "," + margin.top + ")";
-        //const xAxisTransformCentered = "translate(0," + height / 2 + ")";
-        //const yAxisTransformCentered = "translate(" + width / 2 + "," + 0 + ")";
+        //const xAxisTransformcenterd = "translate(0," + height / 2 + ")";
+        //const yAxisTransformcentered = "translate(" + width / 2 + "," + 0 + ")";
         const xAxisTransform = "translate(0," + height + ")";
         const yAxisTransform = "translate(0,0)";
         let constraints = {
@@ -58,27 +59,38 @@ export default class ScatterPlot extends React.Component {
             <div>
                 <svg width={svgWidth} height={svgHeight} className="chart">
                     <g
-                        width={width}
-                        height={height}
-                        transform={gTransform}
-                        className="main"
+                        width = {width}
+                        height = {height}
+                        transform = {gTransform}
+                        className = "main"
                     >
                         {this.props.result && this.props.paramLength<4 && this.props.algorithm==="svm"? (
                             <Grid
-                                result={this.props.result.result}
-                                paramLength={this.props.paramLength}
-                                constraints={constraints}
-                                width={width}
-                                height={height}
-                                scale={{ x, y }}
+                                result = {this.props.result.result}
+                                paramLength = {this.props.paramLength}
+                                constraints = {constraints}
+                                width = {width}
+                                height = {height}
+                                scale = {{ x, y }}
                             />
                         ) : null}
+                        {this.props.result && this.props.paramLength<3 && this.props.algorithm==="rl"? (
+                            <TrendLine
+                                result = {this.props.result.result}
+                                params = {this.props.params}
+                                data = {data}
+                                scale = {{ x, y }}
+
+                            />
+
+
+                        ): null}
                         <RenderCircles data={data} params={this.props.params} algorithm={this.props.algorithm} scale={{ x, y }} />
 
                         <Axis
-                            axis="x"
-                            transform={xAxisTransform}
-                            scale={axisBottom().scale(x)}
+                            axis = "x"
+                            transform = {xAxisTransform}
+                            scale = {axisBottom().scale(x)}
                         />
                         <Axis
                             axis="y"
