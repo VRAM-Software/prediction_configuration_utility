@@ -53,6 +53,12 @@ class Regression {
         delete this.coefficients
     }
 
+    insertData(data){
+        for(let i = 0; i < data.length; ++i){
+            this.addObservation(data[i]);
+        }
+    }
+
     //Calcola il coefficiente di correlazione (regressore) da utilizzare per l'algoritmo
     calculateCoefficients() {
         let xTx = this.transposeOfXTimesX;

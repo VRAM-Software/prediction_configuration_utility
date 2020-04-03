@@ -13,7 +13,7 @@ class WriteJson extends Write {
         return JSON.stringify(data);
     };
 
-    //TODO: ragionare su dove fare la build dei file da salvare
+    //TODO: implementare come definito con Marco
     buildTrainedFile = (json, notes, meta) => {
         return {
             author: meta.author,
