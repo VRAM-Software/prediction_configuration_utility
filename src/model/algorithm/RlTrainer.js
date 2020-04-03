@@ -48,6 +48,7 @@ class RlTrainer extends AlgorithmTrainer {
     buildTrainedObject = result => {
         let file = Utils.getTemplateTrainedFile();
         file.pluginAim = "rl";
+        file.Predictors = this.params;
         file.result = result;
         return file;
     };
