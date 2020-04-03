@@ -23,8 +23,8 @@ class SvmTrainer extends AlgorithmTrainer {
         svm.setOptions(this.options);
         this.translateData(data);
         svm.train(this.data, this.labels);
-        return this.buildTrainedObject(this.trainedJson);
         this.trainedJson = svm.toJSON();
+        return this.buildTrainedObject(this.trainedJson);
     };
 
     translateData = data => {
