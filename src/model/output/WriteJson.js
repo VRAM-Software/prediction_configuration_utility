@@ -1,7 +1,6 @@
 const fs = require("fs");
 
 const Write = require("../Write");
-const Utils = require("../Utils");
 
 class WriteJson extends Write {
     constructor() {
@@ -13,21 +12,10 @@ class WriteJson extends Write {
         return JSON.stringify(data);
     };
 
-    //TODO: implementare come definito con Marco
-    buildTrainedFile = (json, notes, meta) => {
-        return {
-            author: meta.author,
-            version: meta.version,
-            pluginAim: "svm",
-            date: Utils.getDate(),
-            time: Utils.getTime(),
-            N: json.N,
-            D: json.D,
-            b: json.b,
-            kernelType: json.kernelType,
-            w: json.w,
-            notes: notes
-        };
+    buildTrainedFile = (json, notes) => {
+        let objectToWrite = json;
+        objectToWrite.notes = notes;
+        return objectToWrite;
     }
 
     writeToDisk = (path, name, data) => {

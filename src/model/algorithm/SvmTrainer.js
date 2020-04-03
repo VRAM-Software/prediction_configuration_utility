@@ -1,30 +1,30 @@
 const AlgorithmTrainer = require("../AlgorithmTrainer");
 const modules = require("ml-modules");
 const SVM = modules.SVM;
+const Utils = require("../Utils");
 
 class SvmTrainer extends AlgorithmTrainer {
     constructor() {
         super();
-        this.trainedJson = null;
+        this.trainedObj = null;
         this.data = [];
         this.labels = [];
+        this.params = [];
         this.options = {
             kernel: {
                 linear: true
             },
             karpathy: true
         };
-        this.params = [];
     }
 
     train = data => {
         const svm = new SVM();
         svm.setOptions(this.options);
         this.translateData(data);
-        //let dataTrain = [];
         svm.train(this.data, this.labels);
-        this.trainedJson = svm.toJSON();
-        return this.trainedJson;
+        this.trainedObj = svm.toJSON();
+        return this.buildTrainedObject(this.trainedObj);
     };
 
     translateData = data => {
@@ -45,6 +45,13 @@ class SvmTrainer extends AlgorithmTrainer {
 
     setParams = params => {
         this.params = params;
+    };
+
+    buildTrainedObject = result => {
+        let file = Utils.getTemplateTrainedFile();
+        file.pluginAim = "svm";
+        file.result = result;
+        return file;
     };
 
     setQualityIndex = data => {};

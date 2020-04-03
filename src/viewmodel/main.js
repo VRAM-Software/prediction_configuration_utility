@@ -3,7 +3,6 @@ const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
 const SvmTrainer = require("../model/algorithm/SvmTrainer");
 const RlTrainer = require("../model/algorithm/RlTrainer");
-const meta = require("../config/config");
 const ReadCsv = require("../model/input/ReadCsv");
 const ReadJson = require("../model/input/ReadJson");
 const WriteJson = require("../model/output/WriteJson");
@@ -65,7 +64,7 @@ app.on("activate", () => {
 
 ipcMain.on("save-to-disk", (event, arg) => {
     const writer = new WriteJson();
-    let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes, meta);
+    let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes);
     let string = writer.parser(objToWrite);
     writer.writeToDisk("src/output", arg.name, string);
     event.reply("File correctly written");

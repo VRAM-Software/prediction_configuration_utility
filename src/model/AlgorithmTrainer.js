@@ -21,6 +21,12 @@ class AlgorithmTrainer {
         );
     };
 
+    buildTrainedObject = result => {
+        throw new TypeError(
+            "Do not call abstract method setParams from child."
+        );
+    };
+
     setQualityIndex = data => {
         throw new TypeError(
             "Do not call abstract method setQualityIndex from child."
