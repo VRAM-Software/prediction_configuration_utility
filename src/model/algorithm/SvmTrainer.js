@@ -6,7 +6,7 @@ const Utils = require("../Utils");
 class SvmTrainer extends AlgorithmTrainer {
     constructor() {
         super();
-        this.trainedJson = null;
+        this.trainedObj = null;
         this.data = [];
         this.labels = [];
         this.params = [];
@@ -22,11 +22,9 @@ class SvmTrainer extends AlgorithmTrainer {
         const svm = new SVM();
         svm.setOptions(this.options);
         this.translateData(data);
-        console.log(this.data);
         svm.train(this.data, this.labels);
-        this.trainedJson = svm.toJSON();
         return this.buildTrainedObject(this.trainedJson);
-
+        this.trainedJson = svm.toJSON();
     };
 
     translateData = data => {
