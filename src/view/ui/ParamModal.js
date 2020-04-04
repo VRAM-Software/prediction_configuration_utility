@@ -28,6 +28,21 @@ export default class Modal extends React.Component {
             selected: array
         });
     }
+    setOrder = () => {
+        let array = [];
+        array.push(this.state.selected[0]);
+        array.push(this.state.selected[1]);
+        console.log("data");
+        console.log(this.props.data);
+        for (let i=0; i<this.props.data.length; i++) {
+            if (!this.state.selected.includes(this.props.data[i])) {
+                array.push(this.props.data[i]);
+            }
+        }
+        console.log("array");
+        console.log(array);
+        this.props.setParams(array);
+    }
 
     render() {
         const obj = this.props.data.map((item, index) => (
@@ -51,7 +66,7 @@ export default class Modal extends React.Component {
                         </select>
                     </div>
                     <div id="paramModalButtonContainer">
-                        {this.state.selected.length === 2 ? <button className="customButton buttonSmaller" onClick={() => this.props.setParams(this.state.selected)}>Select</button> : <button className="customButtonDisabled buttonSmaller" disabled>Selected</button>}
+                        {this.state.selected.length === 2 ? <button className="customButton buttonSmaller" onClick={() => this.setOrder()}>Select</button> : <button className="customButtonDisabled buttonSmaller" disabled>Selected</button>}
                     </div>      
                 </div>
                 <div className="modalBackground"/>

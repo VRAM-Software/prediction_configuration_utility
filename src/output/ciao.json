@@ -1,1 +1,1 @@
-{"author":"VRAMSoftware","version":"1.0.0","date":"2020/04/03","time":"18:14:46","pluginAim":"svm","notePredictors":["weight","size"],"result":{"N":15,"D":2,"b":69.07717872966937,"kernelType":"linear","w":[-0.9231905465285237,-0.9970457902508096]},"notes":""}
+{"author":"VRAMSoftware","version":"1.0.0","date":"2020/04/04","time":"15:30:48","pluginAim":"svm","Predictors":["weight","size"],"result":{"N":15,"D":2,"b":69.07717872965739,"kernelType":"linear","w":[-0.9231905465283674,-0.9970457902506409]},"notes":""}
