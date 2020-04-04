@@ -20,6 +20,18 @@ class AlgorithmTrainer {
             "Do not call abstract method setParams from child."
         );
     };
+
+    buildTrainedObject = result => {
+        throw new TypeError(
+            "Do not call abstract method buildTrainedObject from child."
+        );
+    };
+
+    setQualityIndex = data => {
+        throw new TypeError(
+            "Do not call abstract method setQualityIndex from child."
+        );
+    };
 }
 
 module.exports = AlgorithmTrainer;

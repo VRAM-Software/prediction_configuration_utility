@@ -314,3 +314,8 @@ input:focus {
     width: 100%;
     height: 10%;
 }
+
+.done {
+    position: relative;
+    margin-top: 20px;
+}

@@ -36,7 +36,7 @@
     "electron": "electron .",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "ci-test": "react-scripts test --watchAll=false --coverage --coverageReporters=text-lcov",
+    "ci-test": "react-scripts test --watchAll=false --coverage",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
@@ -57,6 +57,9 @@
       "src/viewmodel/main.js",
       "src/tests/mocks/mockFile.js",
       "src/model/algorithm/lib/regression.module.js"
+    ],
+    "coverageReporters" : [
+      "lcov"
     ]
   },
   "eslintConfig": {

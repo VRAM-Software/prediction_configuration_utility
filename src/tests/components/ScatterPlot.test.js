@@ -11,21 +11,30 @@ const data = [
     { weight: 2, size: 2, label: 2 }
 ];
 
-const result = {
-	w: [1,1],
-	b: 1
+const results = {
+	result: {
+        N: 2,
+        D: 2
+    }
 };
 
 const params = [
     "weight", "size"
-]
+];
+
+const param = 3;
+
+const algorithm = "svm";
 
 configure({ adapter: new Adapter() });
 
 describe("Test per il componente ScatterPlot", () => {
     let component;
     beforeEach(() => {
-        component = shallow(<ScatterPlot data={data} result={result} params={params} />);
+        component = shallow(<ScatterPlot data={data} result={{result: {
+            N: 2,
+            D: 2
+        }}} params={params} paramLength={3} algorithm={"svm"} />);
     });
 
     test("renders RenderCircles child component", () => {
@@ -35,7 +44,7 @@ describe("Test per il componente ScatterPlot", () => {
 	});
 	
 	test("renders Grid component if props result exist", () => {
-		expect(component.containsMatchingElement(<Grid result={result} />)).toEqual(
+		expect(component.containsMatchingElement(<Grid />)).toEqual(
             true
         );
 	});
