@@ -20,7 +20,7 @@ const propScale = {
     y: jest.fn()
 };
 
-const propResult = [ [ 2 ] ];
+const propResult = [ [ 0 ], [ 2 ] ];
 
 const propParams = ["x", "y"];
 

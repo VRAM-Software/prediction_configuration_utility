@@ -9,7 +9,7 @@ describe("test for training RL algorithm's wrapper class", () => {
     let trainer;
     beforeEach(() => {
         trainer = new Trainer();
-        trainer.setOptions({ numX: 2, numY: 1});
+        trainer.setOptions({ numX: 3, numY: 1});
         trainer.setParams(["x1", "x2", "y"]);
     });
 
@@ -19,10 +19,10 @@ describe("test for training RL algorithm's wrapper class", () => {
             { x1: 9, x2: 9, y: 9 }
         ];
         trainer.translateData(data);
-        expect(trainer.options).toEqual({ numX: 2, numY: 1 });
+        expect(trainer.options).toEqual({ numX: 3, numY: 1 });
         expect(trainer.data).toEqual([
-            { x: [1, 2], y: [2] },
-            { x: [9, 9], y: [9] }
+            { x: [1, 1, 2], y: [2] },
+            { x: [1, 9, 9], y: [9] }
         ]);
     });
 
@@ -32,12 +32,12 @@ describe("test for training RL algorithm's wrapper class", () => {
             { x1: 9, y: 9 }
         ];
         trainer.setParams(["x1", "y"]);
-        trainer.setOptions({ numX: 1, numY: 1});
+        trainer.setOptions({ numX: 2, numY: 1});
         trainer.translateData(data);
-        expect(trainer.options).toEqual({ numX: 1, numY: 1 });
+        expect(trainer.options).toEqual({ numX: 2, numY: 1 });
         expect(trainer.data).toEqual([
-            { x: [1], y: [2] },
-            { x: [9], y: [9] }
+            { x: [1, 1], y: [2] },
+            { x: [1, 9], y: [9] }
         ]);
     });
 
@@ -72,6 +72,6 @@ describe("test for training RL algorithm's wrapper class", () => {
     });
 
     test("setOptions should set params correctly on RlTrainer", () => {
-        expect(trainer.options).toEqual({ numX: 2, numY: 1});
+        expect(trainer.options).toEqual({ numX: 3, numY: 1});
     });
 });
