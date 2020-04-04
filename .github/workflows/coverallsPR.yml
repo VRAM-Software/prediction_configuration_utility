@@ -1,0 +1,29 @@
+name: coverallsPR
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone repository
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: fetch all
+        run: git fetch --prune --unshallow
+      - name: install npm dependecies
+        run: npm ci
+      - name: install xvfb for testing
+        run: sudo apt-get install xvfb
+      - name: run tests
+        run: xvfb-run --auto-servernum npm run ci-test
+        env:   
+          CI: true
+          DISPLAY: 99.0
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
