@@ -33,14 +33,19 @@ describe("<RenderCircles /> component", () => {
         expect(component.containsMatchingElement(<circle/>)).toEqual(true);
     });
 
-    test("renders green circle if label is 1", () => {
-        const component = mount(<svg><RenderCircles data={[propData[0]]} params={params} scale={propScale} /></svg>);
+    test("renders green circle if algorithm is svm and label is 1", () => {
+        const component = mount(<svg><RenderCircles data={[propData[0]]} params={params} algorithm = "svm" scale={propScale} /></svg>);
         expect(component.find("circle").prop("style")).toHaveProperty("fill", "green");
     });
 
-    test("renders red circle if label label is different from 1", () => {
-        const component = mount(<svg><RenderCircles data={[propData[1]]} params={params} scale={propScale} /></svg>);
+    test("renders red circle if algorithm is svm and label is different from 1", () => {
+        const component = mount(<svg><RenderCircles data={[propData[1]]} params={params} algorithm = "svm" scale={propScale} /></svg>);
         expect(component.find("circle").prop("style")).toHaveProperty("fill", "red");
+    });
+
+    test("renders black circle if algorithm is rl", () => {
+        const component = mount(<svg><RenderCircles data={[propData[1]]} params={params} algorithm = "rl" scale={propScale} /></svg>);
+        expect(component.find("circle").prop("style")).toHaveProperty("fill", "black");
     });
 
 });
