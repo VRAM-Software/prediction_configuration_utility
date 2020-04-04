@@ -94,7 +94,7 @@ export default class App extends React.Component {
         });
         ipcRenderer.send("start-training-svm", {
             data: this.state.userData,
-            params: this.state.array,
+            params: this.state.params,
             algorithm: this.state.algorithm
         });
         ipcRenderer.on("finished-training", (event, arg) => {
@@ -113,7 +113,7 @@ export default class App extends React.Component {
         });
         ipcRenderer.send("start-training-rl", {
             data: this.state.userData,
-            params: this.state.array,
+            params: this.state.params,
             algorithm: this.state.algorithm
         });
         ipcRenderer.on("finished-training", (event, arg) => {
@@ -125,10 +125,10 @@ export default class App extends React.Component {
         });
     };
 
-    selectParams = (params) => {
+    selectParams = (data) => {
         this.setState({
-            params: params,
-            isParamModalEnabled: true
+            isParamModalEnabled: true,
+            params: data,
         })
     }
 
@@ -138,6 +138,7 @@ export default class App extends React.Component {
             isParamModalEnabled: false
         })
         this.setUserData();
+        console.log(data);
     }
 
     onChange = e => {
@@ -148,16 +149,18 @@ export default class App extends React.Component {
                     jsonFileInfo: obj
                 });
             } else if (obj.extension === "csv") {
+                if (this.state.csvFileInfo) {
+                    this.setState({
+                        trainedJson: null,
+                        isTrainingDone: false})
+                }
                 ipcRenderer.send("get-json-from-csv", obj.path);
                 ipcRenderer.on("read-csv", (event, arg) => {
                     let array = Object.keys(arg[0]);
-                    array.length = Math.min(array.length, array.length);
-                    console.log(array);
                     this.selectParams(array);
                     this.setState({
                         tempData: arg,
                         paramLength: array.length,
-                        array: array
                     })
                 })
                 this.setState({
@@ -184,7 +187,8 @@ export default class App extends React.Component {
         if (algorithm !== this.state.algorithm) {
             this.setState(
                 {
-                    algorithm: algorithm
+                    algorithm: algorithm,
+                    trainedJson: null
                 },
                 () => {}
             );

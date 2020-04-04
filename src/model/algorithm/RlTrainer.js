@@ -25,16 +25,29 @@ class RlTrainer extends AlgorithmTrainer {
         let valX = [];
         let valY = [];
         const result = [];
-
-        for (let i = 0; i < data.length; i++) {
-            valX = [];
-            valY = [];
-            for(let j = 0; j  < this.options.numX; j++) {
-                const objToAdd = data[i];
-                valX.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
+        let array = Object.keys(data[0]);
+        if (array.length > 2) {
+            for (let i = 0; i < data.length; i++) {
+                valX = [];
+                valY = [];
+                for (let j = 0; j < this.options.numX; j++) {
+                    const objToAdd = data[i];
+                    valX.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
+                }
+                valY.push(parseFloat(data[i][Object.keys(data[i])[this.params.length - 1]]));
+                result.push({x: valX, y: valY});
             }
-            valY.push(parseFloat(data[i][Object.keys(data[i])[this.params.length-1]]));
-            result.push({x: valX, y: valY});
+        }
+        else {
+            for (let i = 0; i < data.length; i++) {
+                valX = [];
+                valY = [];
+                //valX.push(parseFloat(data[i][Object.keys(data[i])[0]]));
+                //valY.push(parseFloat(data[i][Object.keys(data[i])[this.params.length-1]]));
+                valX.push(parseFloat(data[i][this.params[0]]));
+                valY.push(parseFloat(data[i][this.params[1]]));
+                result.push({x: valX, y: valY});
+            }
         }
         this.data = result;
         console.log(this.data);
@@ -48,7 +61,9 @@ class RlTrainer extends AlgorithmTrainer {
     buildTrainedObject = result => {
         let file = Utils.getTemplateTrainedFile();
         file.pluginAim = "rl";
-        file.Predictors = this.params;
+        let array = this.params;
+        array.length = Math.min(array.length, array.length-1);
+        file.Predictors = array;
         file.result = result;
         return file;
     };

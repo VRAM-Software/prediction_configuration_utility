@@ -32,21 +32,25 @@ class SvmTrainer extends AlgorithmTrainer {
         let temp2 = [];
         const labels = [];
         let array = Object.keys(data[0]);
-        console.log(array);
-        for (let i = 0; i < data.length; i++) {
-            for(let j = 0; j < array.length-1; ++j){
-                const objToAdd = data[i];
-                temp2.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
+        console.log(this.params);
+        if (array.length > 3) {
+            for (let i = 0; i < data.length; i++) {
+                for(let j = 0; j < this.params.length-1; ++j){
+                    const objToAdd = data[i];
+                    temp2.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
+                }
+                temp.push(temp2);
+                temp2 = [];
+                labels.push(data[i][Object.keys(data[i])[this.params.length-1]]);
             }
-            temp.push(temp2);
-            temp2 = [];
-            //temp.push([parseFloat(data[i][this.params[0]]), parseFloat(data[i][this.params[1]])]);
-            labels.push(data[i][Object.keys(data[i])[array.length-1]]);
+        } else {
+            for (let i = 0; i < data.length; i++) {
+                temp.push([parseFloat(data[i][this.params[0]]), parseFloat(data[i][this.params[1]])]);
+                labels.push(data[i][Object.keys(data[i])[this.params.length-1]]);
+            }
         }
-        console.log(temp);
         this.data = temp;
         this.labels = labels;
-        console.log(this.labels);
     };
 
     setParams = params => {
