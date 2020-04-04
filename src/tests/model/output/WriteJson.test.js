@@ -23,18 +23,15 @@ describe("Test for WriteJson class", () => {
     });
 
     test("method buildTrainedFile should return js object with correct parametres", () => {
-        let json = writer.buildTrainedFile({N: 1, D: 2, b: 3, kernelType: 4, w: 5}, "notes", {author: "test", version: "testVersion"});
-        let array = Object.keys(json);
+        let json = writer.buildTrainedFile({author:"VRAM Software", version: "1.0.0",date:"2020/04/03",time:"21:56:55",pluginAim:"svm", Predictors:["a", "b"], Result:{N:15,D:3,b:49.77254566600638,kernelType:"linear",w:[-0.6580027516346796,-0.4545439115789933,-0.3641814838666142]}}, "notes");
+let array = Object.keys(json);
         expect(array.includes("author")).toBeTruthy();
         expect(array.includes("version")).toBeTruthy();
-        expect(array.includes("pluginAim")).toBeTruthy();
         expect(array.includes("date")).toBeTruthy();
         expect(array.includes("time")).toBeTruthy();
-        expect(array.includes("N")).toBeTruthy();
-        expect(array.includes("D")).toBeTruthy();
-        expect(array.includes("b")).toBeTruthy();
-        expect(array.includes("kernelType")).toBeTruthy();
-        expect(array.includes("w")).toBeTruthy();
+        expect(array.includes("pluginAim")).toBeTruthy();
+        expect(array.includes("Predictors")).toBeTruthy();
+        expect(array.includes("Result")).toBeTruthy();
         expect(array.includes("notes")).toBeTruthy();
     });
 
@@ -44,13 +41,11 @@ describe("Test for WriteJson class", () => {
             callback = cb;
         });
         const logSpy = jest.spyOn(console, 'log');
-        const json = { author: "VRAMSoftware", version: "1.0.0", pluginAim: "svm", date: "2020/04/02", time: "16:2:24", N:15,
-                       D:2, b:63.54986981144975, kernelType: "linear", w:[-0.8503742683400565,-0.9184042098072634], notes:"" };
+        const json = { author:"VRAM Software", version: "1.0.0",date:"2020/04/03",time:"21:56:55",pluginAim:"svm", Predictors:["a", "b"], Result:{N:15,D:3,b:49.77254566600638,kernelType:"linear",w:[-0.6580027516346796,-0.4545439115789933,-0.3641814838666142]},notes:""};
         writer.writeToDisk("src/output", "prova", json);
         expect(fs.writeFile).toBeCalledWith(
             "src/output/prova.json",
-            JSON.stringify({ author: "VRAMSoftware", version: "1.0.0", pluginAim: "svm", date: "2020/04/02", time: "16:2:24", N:15,
-                D:2, b:63.54986981144975, kernelType: "linear", w:[-0.8503742683400565,-0.9184042098072634], notes:"" }),
+            { author:"VRAM Software", version: "1.0.0",date:"2020/04/03",time:"21:56:55",pluginAim:"svm", Predictors:["a", "b"], Result:{N:15,D:3,b:49.77254566600638,kernelType:"linear",w:[-0.6580027516346796,-0.4545439115789933,-0.3641814838666142]}, notes:""},
             callback
         );
         callback();
