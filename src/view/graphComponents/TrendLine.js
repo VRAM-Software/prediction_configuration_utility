@@ -57,11 +57,10 @@ export default class TrendLine extends React.Component {
 
     let coordsY = [];
     for (let i=0; i<this.props.data.length; i++) {
-        coordsY.push((temp[i]*(this.props.result[0][0])+1))
+        coordsY.push((temp[i]*(this.props.result[0][0])))
       }
       console.log("coordsY");
       console.log(coordsY);
-      let data = {x: coordsX, y: coordsY};
       const trendline= this.linearRegression(coordsX, coordsY);
       console.log("trendline");
       console.log(trendline);
