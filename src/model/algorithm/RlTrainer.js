@@ -16,7 +16,6 @@ class RlTrainer extends AlgorithmTrainer {
         this.translateData(data);
         rl.insertData(this.data);
         this.trainedObj = rl.calculateCoefficients();
-        console.log(this.trainedObj);
         return this.buildTrainedObject(this.trainedObj);
     };
 
@@ -29,8 +28,9 @@ class RlTrainer extends AlgorithmTrainer {
         if (array.length > 2) {
             for (let i = 0; i < data.length; i++) {
                 valX = [];
+                valX.push(1);
                 valY = [];
-                for (let j = 0; j < this.options.numX; j++) {
+                for (let j = 0; j < this.options.numX - 1; j++) {
                     const objToAdd = data[i];
                     valX.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
                 }
@@ -41,12 +41,13 @@ class RlTrainer extends AlgorithmTrainer {
         else {
             for (let i = 0; i < data.length; i++) {
                 valX = [];
+                valX.push(1);
                 valY = [];
-                //valX.push(parseFloat(data[i][Object.keys(data[i])[0]]));
-                //valY.push(parseFloat(data[i][Object.keys(data[i])[this.params.length-1]]));
                 valX.push(parseFloat(data[i][this.params[0]]));
                 valY.push(parseFloat(data[i][this.params[1]]));
                 result.push({x: valX, y: valY});
+                console.log("result2");
+                console.log(result);
             }
         }
         this.data = result;
