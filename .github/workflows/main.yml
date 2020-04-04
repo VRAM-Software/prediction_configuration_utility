@@ -6,15 +6,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: clone repository
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: git fetch --prune --unshallow
-      - run: npm ci
-      - run: sudo apt-get install xvfb
-      - run: npm run build
-      - run: xvfb-run --auto-servernum npm run ci-test
+      - name: fetch all
+        run: git fetch --prune --unshallow
+      - name: install npm dependecies
+        run: npm ci
+      - name: install xvfb for testing
+        run: sudo apt-get install xvfb
+      - name: run build 
+        run: npm run build
+      - name: run tests
+        run: xvfb-run --auto-servernum npm run ci-test
         env:   
           CI: true
           DISPLAY: 99.0
