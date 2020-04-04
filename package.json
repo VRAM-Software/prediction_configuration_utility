@@ -36,7 +36,7 @@
     "electron": "electron .",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "ci-test": "react-scripts test --watchAll=false --coverage --coverageReporters=text-lcov | coveralls",
+    "ci-test": "react-scripts test --watchAll=false --coverage --coverageReporters=text-lcov",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",

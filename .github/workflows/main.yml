@@ -15,11 +15,13 @@ jobs:
       - run: sudo apt-get install xvfb
       - run: npm run build
       - run: xvfb-run --auto-servernum npm run ci-test
-        env:
-          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
-          COVERALLS_GIT_BRANCH: "${{ github.ref }}"     
+        env:   
           CI: true
           DISPLAY: 99.0
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: build & analyze with sonar
         uses: sonarsource/sonarcloud-github-action@v1.1
         env:
