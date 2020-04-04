@@ -64,6 +64,7 @@ export default class ScatterPlot extends React.Component {
                         transform = {gTransform}
                         className = "main"
                     >
+                        {/*{this.props.result && this.props.paramLength < 4 && this.props.algorithm === "svm"? (*/}
                         {this.props.result && this.props.paramLength < 4 && this.props.algorithm === "svm"? (
                             <Grid
                                 result = {this.props.result.result}

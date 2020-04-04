@@ -26,7 +26,7 @@ const constraints = {
 
 configure({ adapter: new Adapter() });
 
-describe("Test per il componente ScatterPlot", () => {
+describe("Test per il componente Grid", () => {
     let component;
     beforeEach(() => {
         component = shallow(<Grid scale={{x, y}} result={result} constraints={constraints}/>);

@@ -83,21 +83,44 @@ describe("Rendering tests for <App /> component", () => {
         expect(component.containsMatchingElement(<Modal />)).toBeFalsy();
     });
 
-    test("button 'Inizia addestramento' should be disabled when <App /> is rendered", () => {
+    test("button 'Inizia addestramento svm' should be disabled when <App /> is rendered", () => {
         expect(
             component
-                .find("button[children='Inizia addestramento']")
+                .find("button[children='Inizia addestramento svm']")
                 .is("[disabled]")
         ).toBeTruthy();
     });
 
-    test("button 'Inizia addestramento' should be enabled when csvFile exists", () => {
+    test("button 'Inizia addestramento rl' should be disabled when <App /> is rendered", () => {
+        component.setState({
+            algorithm: "rl"
+        });
+        expect(
+            component
+                .find("button[children='Inizia addestramento rl']")
+                .is("[disabled]")
+        ).toBeTruthy();
+    });
+
+    test("button 'Inizia addestramento svm' should be enabled when csvFile exists", () => {
         component.setState({
             csvFileInfo: "test"
         });
         expect(
             component
-                .find("button[children='Inizia addestramento']")
+                .find("button[children='Inizia addestramento svm']")
+                .is("[disabled]")
+        ).toBeFalsy();
+    });
+
+    test("button 'Inizia addestramento rl' should be enabled when csvFile exists", () => {
+        component.setState({
+            csvFileInfo: "test",
+            algorithm: "rl"
+        });
+        expect(
+            component
+                .find("button[children='Inizia addestramento rl']")
                 .is("[disabled]")
         ).toBeFalsy();
     });
@@ -180,13 +203,28 @@ describe("Method tests for <App/> component", () => {
         mountedComponent = mount(<App />);
     });
 
-    test("button 'Inizia addestramento' should trigger state change when clicked", () => {
+    test("button 'Inizia addestramento svm' should trigger state change when clicked", () => {
         component.setState({
             userData: [1, 2, 3, 4],
-            csvFileInfo: "csv"
+            csvFileInfo: "csv",
+            algorithm: "svm"
         });
         component
-            .find("button[children='Inizia addestramento']")
+            .find("button[children='Inizia addestramento svm']")
+            .simulate("click", {
+                preventDefault: () => {}
+            });
+        expect(component.state("isTraining")).toEqual(true);
+    });
+
+    test("button 'Inizia addestramento rl' should trigger state change when clicked", () => {
+        component.setState({
+            userData: [1, 2, 3, 4],
+            csvFileInfo: "csv",
+            algorithm: "rl"
+        });
+        component
+            .find("button[children='Inizia addestramento rl']")
             .simulate("click", {
                 preventDefault: () => {}
             });
@@ -249,20 +287,9 @@ describe("Method tests for <App/> component", () => {
         });
         mountedComponent
             .find("textarea")
-            .at(1)
+            //.at(1)
             .simulate("change", { target: { value: "test text" } });
         expect(mountedComponent.state("userNotes")).toEqual("test text");
-    });
-
-    test("changing text in notesPredittore textarea should trigger state change", () => {
-        mountedComponent.setState({
-            userData: [1, 2, 3, 4]
-        });
-        mountedComponent
-            .find("textarea")
-            .at(0)
-            .simulate("change", { target: { value: "test text" } });
-        expect(mountedComponent.state("notesPredittore")).toEqual("test text");
     });
 
     test("changing current algorithm with button should trigger state change in App", () => {

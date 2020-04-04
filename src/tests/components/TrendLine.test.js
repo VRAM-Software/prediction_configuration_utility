@@ -8,11 +8,11 @@ configure({
 });
 
 const propData = [
-    { weight: 1, size: 1 },
-    { weight: 2, size: 2 },
-    { weight: 3, size: 3 },
-    { weight: 4, size: 4 },
-    { weight: 5, size: 5 }
+    { x: 1, y: 2 },
+    { x: 2, y: 4 },
+    { x: 3, y: 6 },
+    { x: 4, y: 8 },
+    { x: 5, y: 10 }
 ];
 
 const propScale = {
@@ -20,10 +20,19 @@ const propScale = {
     y: jest.fn()
 };
 
+const propResult = [ [ 2 ] ];
+
+const propParams = ["x", "y"];
+
 describe("Test per il componente TrendLine", () => {
     let component;
     beforeEach(() => {
-        component = shallow(<TrendLine data={propData} scale={propScale} />);
+        component = shallow(<TrendLine
+            data = {propData}
+            scale = {propScale}
+            result = {propResult}
+            params = {propParams}
+        />);
     });
 
     test("Render della linea", () => {
@@ -31,9 +40,13 @@ describe("Test per il componente TrendLine", () => {
     });
 
     test("Chiamate d3", () => {
-        expect(propScale.x).toHaveBeenNthCalledWith(1, 1);
-        expect(propScale.y).toHaveBeenNthCalledWith(1, 1);
-        expect(propScale.x).toHaveBeenNthCalledWith(2, 5);
-        expect(propScale.y).toHaveBeenNthCalledWith(2, 5);
+        expect(propScale.x).toHaveBeenNthCalledWith(1,1);
+        expect(propScale.y).toHaveBeenNthCalledWith(1,2);
+        expect(propScale.x).toHaveBeenNthCalledWith(2,5);
+        expect(propScale.y).toHaveBeenNthCalledWith(2,10);
+    });
+
+    test("should render component properly", () => {
+        expect(component).toBeTruthy();
     });
 });
