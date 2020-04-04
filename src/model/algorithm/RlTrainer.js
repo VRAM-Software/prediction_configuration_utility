@@ -13,10 +13,10 @@ class RlTrainer extends AlgorithmTrainer {
 
     train = data => {
         const rl = new Regression(this.options);
-        console.log(this.options);
         this.translateData(data);
         rl.insertData(this.data);
         this.trainedObj = rl.calculateCoefficients();
+        console.log(this.trainedObj);
         return this.buildTrainedObject(this.trainedObj);
     };
 
@@ -50,7 +50,6 @@ class RlTrainer extends AlgorithmTrainer {
             }
         }
         this.data = result;
-        console.log(this.data);
     };
 
 

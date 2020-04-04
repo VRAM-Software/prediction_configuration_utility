@@ -48,4 +48,21 @@ describe("test for training algorithm's wrapper class", () => {
         expect(mockedToJSON).toHaveBeenCalled();
         expect(res).toEqual(trainer.buildTrainedObject(trainer.trainedJson));
     });
+
+    test("buildTrainedObject should return a js Object with correct params", () => {
+        let trainedObj = trainer.buildTrainedObject({N:15,D:3,b:49.77254566600638,kernelType:"linear",w:[-0.6580027516346796,-0.4545439115789933,-0.3641814838666142]});
+        let result = Object.keys(trainedObj);
+
+        expect(result.includes("author")).toBeTruthy();
+        expect(result.includes("version")).toBeTruthy();
+        expect(result.includes("date")).toBeTruthy();
+        expect(result.includes("time")).toBeTruthy();
+        expect(result.includes("pluginAim")).toBeTruthy();
+        expect(result.includes("Predictors")).toBeTruthy();
+        expect(result.includes("result")).toBeTruthy();
+    });
+
+    test("setParams should set params correctly on SvmTrainer", () => {
+       expect(trainer.params).toEqual(["weight", "size", "label"]);
+    });
 });

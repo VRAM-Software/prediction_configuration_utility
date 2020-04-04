@@ -23,7 +23,7 @@ class AlgorithmTrainer {
 
     buildTrainedObject = result => {
         throw new TypeError(
-            "Do not call abstract method setParams from child."
+            "Do not call abstract method buildTrainedObject from child."
         );
     };
 
