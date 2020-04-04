@@ -1,22 +1,9 @@
 import fs from "fs";
 
 const Trainer = require("../../model/algorithm/RlTrainer");
-
 const Regression = require("../../model/algorithm/lib/regression.module.js");
-//import Regression from "../../model/algorithm/lib/regression.module.js";
-/*jest.mock("../../model/algorithm/lib/regression.module.js");
 
-const mockedTrain = jest.fn();
-const mockedCalculateCoefficients = jest.fn();
-const mockedInsertData = jest.fn();
-
-jest.mock("../../model/algorithm/lib/regression.module.js", () => ({
-    Regression: jest.fn(() => ({
-        constructor: Regression,
-        calculateCoefficients: mockedCalculateCoefficients,
-        insertData: mockedInsertData
-    }))
-}));*/
+jest.mock("../../model/algorithm/lib/regression.module.js");
 
 describe("test for training RL algorithm's wrapper class", () => {
     let trainer;
@@ -26,7 +13,7 @@ describe("test for training RL algorithm's wrapper class", () => {
         trainer.setParams(["x1", "x2", "y"]);
     });
 
-    test("insertData should insert in the field data, the expected array", () => {
+    test("insertData should insert in the field data, the expected array with number of params >= 3", () => {
         const data = [
             { x1: 1, x2: 2, y: 2 },
             { x1: 9, x2: 9, y: 9 }
@@ -39,18 +26,33 @@ describe("test for training RL algorithm's wrapper class", () => {
         ]);
     });
 
-    /*test("train method should call train method from regression.module", () => {
+    test("insertData should insert in the field data, the expected array with number of params < 3", () => {
+        const data = [
+            { x1: 1, y: 2 },
+            { x1: 9, y: 9 }
+        ];
+        trainer.setParams(["x1", "y"]);
+        trainer.setOptions({ numX: 1, numY: 1});
+        trainer.translateData(data);
+        expect(trainer.options).toEqual({ numX: 1, numY: 1 });
+        expect(trainer.data).toEqual([
+            { x: [1], y: [2] },
+            { x: [9], y: [9] }
+        ]);
+    });
+
+
+    test("train method should call train method from regression.module", () => {
         const data = [
             { x1: 1, x2: 2, y: 2 },
             { x1: 9, x2: 9, y: 9 }
         ];
 
         const res = trainer.train(data);
-        //jest.spyOn(insertData, 'Regression').mockImplementation((data) => {});
-        expect(mockedInsertData).toHaveBeenCalledWith(trainer.insertData(data));
-        expect(mockedCalculateCoefficients).toHaveBeenCalled();
+        expect(Regression.prototype.insertData).toHaveBeenCalledWith(trainer.data);
+        expect(Regression.prototype.calculateCoefficients).toHaveBeenCalled();
         expect(res).toEqual(trainer.buildTrainedObject(trainer.trainedJson));
-    });*/
+    });
 
     test("buildTrainedObject should return a js Object with correct params", () => {
         let trainedObj = trainer.buildTrainedObject([ [ 2.1013431013431014 ] ]);

@@ -20,7 +20,7 @@ describe("test for training algorithm's wrapper class", () => {
         trainer.setParams(["weight", "size", "label"]);
     });
 
-    test("translateData should return expected array", () => {
+    test("translateData should return expected array with number of params < 4", () => {
         const data = [
             { weight: 1, size: 1, label: 1 },
             { weight: 2, size: 2, label: -1 }
@@ -29,6 +29,20 @@ describe("test for training algorithm's wrapper class", () => {
         expect(trainer.data).toEqual([
             [1, 1],
             [2, 2]
+        ]);
+        expect(trainer.labels).toEqual([1, -1]);
+    });
+
+    test("translateData should return expected array with number of params >= 4", () => {
+        const data = [
+            { weight: 1, size: 1, height: 1, label: 1 },
+            { weight: 2, size: 2, height: 2, label: -1 }
+        ];
+        trainer.setParams(["weight", "size", "height", "label"]);
+        trainer.translateData(data);
+        expect(trainer.data).toEqual([
+            [1, 1, 1],
+            [2, 2, 2]
         ]);
         expect(trainer.labels).toEqual([1, -1]);
     });
