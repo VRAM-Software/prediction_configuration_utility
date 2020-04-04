@@ -17,25 +17,26 @@ describe("test for training algorithm's wrapper class", () => {
     let trainer;
     beforeEach(() => {
         trainer = new Trainer();
+        trainer.setParams(["weight", "size", "label"]);
     });
 
     test("translateData should return expected array", () => {
         const data = [
             { weight: 1, size: 1, label: 1 },
-            { weight: 2, size: 2, label: 2 }
+            { weight: 2, size: 2, label: -1 }
         ];
         trainer.translateData(data);
         expect(trainer.data).toEqual([
             [1, 1],
             [2, 2]
         ]);
-        expect(trainer.labels).toEqual([1, 2]);
+        expect(trainer.labels).toEqual([1, -1]);
     });
 
     test("train method should call train method from ml-modules", () => {
         const data = [
             { weight: 1, size: 1, label: 1 },
-            { weight: 2, size: 2, label: 2 }
+            { weight: 2, size: 2, label: -1 }
         ];
         const res = trainer.train(data);
 
@@ -45,6 +46,6 @@ describe("test for training algorithm's wrapper class", () => {
             trainer.labels
         );
         expect(mockedToJSON).toHaveBeenCalled();
-        expect(res).toEqual(trainer.trainedJson);
+        expect(res).toEqual(trainer.buildTrainedObject(trainer.trainedJson));
     });
 });

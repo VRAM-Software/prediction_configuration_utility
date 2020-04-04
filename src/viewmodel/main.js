@@ -12,8 +12,6 @@ let jsonTrained;
 function startTrainingRl(data, param, algorithm, callback) {
     let trainer = new RlTrainer();
     trainer.setOptions({ numX: param.length-1, numY: 1 });
-    console.log(param);
-    console.log(param.length-1);
     trainer.setParams(param);
     jsonTrained = trainer.train(data);
     if (typeof callback === "function") {

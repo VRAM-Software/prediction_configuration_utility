@@ -6,7 +6,7 @@ const Utils = require("../Utils");
 class SvmTrainer extends AlgorithmTrainer {
     constructor() {
         super();
-        this.trainedObj = null;
+        this.trainedJson = null;
         this.data = [];
         this.labels = [];
         this.params = [];
