@@ -6,7 +6,8 @@ class ReadJson extends Read {
     }
 
     parser = (data, callback = () => {}) => {
-        return JSON.parse(data);
+        callback(null, JSON.parse(data));
+        //return JSON.parse(data);
     }
 }
 

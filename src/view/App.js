@@ -145,6 +145,23 @@ export default class App extends React.Component {
         if (e.target.files[0]) {
             const obj = this.getFileInfo(e.target.files[0]);
             if (obj.extension === "json") {
+                if(this.state.jsonFileInfo) {
+                    this.setState({
+                        trainedJson: null,
+                        isTrainingDone: false,
+                        userNotes: ""
+                    });
+                }
+                ipcRenderer.send("get-json-configuration", obj.path);
+                ipcRenderer.on("read-json", (event, arg) => {
+                    console.log("sono su read json ciao");
+                    this.setState({
+                        userNotes: arg.notes
+                    });
+                    console.log("STATO!!!!!!");
+                    console.log(this.state.userNotes);
+                    //this.handleChangeNotes(e);
+                });
                 this.setState({
                     jsonFileInfo: obj
                 });
@@ -152,17 +169,20 @@ export default class App extends React.Component {
                 if (this.state.csvFileInfo) {
                     this.setState({
                         trainedJson: null,
-                        isTrainingDone: false})
+                        isTrainingDone: false,
+                        userNotes: ""
+                    })
                 }
                 ipcRenderer.send("get-json-from-csv", obj.path);
                 ipcRenderer.on("read-csv", (event, arg) => {
+                    console.log("sono su read cvs ciao");
                     let array = Object.keys(arg[0]);
                     this.selectParams(array);
                     this.setState({
                         tempData: arg,
                         paramLength: array.length,
                     })
-                })
+                });
                 this.setState({
                     csvFileInfo: obj
                 });
