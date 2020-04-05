@@ -73,50 +73,12 @@ export default class App extends React.Component {
 
     handleSaveJson = e => {
         e.preventDefault();
-        ipcRenderer.send("save-to-disk", {
+        ipcRenderer.send("write-file", {
             name: this.state.fileName,
             notes: this.state.userNotes,
             trainedJson: this.state.trainedJson
         });
         this.handleCloseModal(e);
-    };
-
-    handleStartTrainingSvm = e => {
-        e.preventDefault();
-        this.setState({
-            isTraining: true
-        });
-        ipcRenderer.send("start-training-svm", {
-            data: this.state.userData,
-            params: this.state.params,
-            algorithm: this.state.algorithm
-        });
-        ipcRenderer.on("finished-training", (event, arg) => {
-            this.setState({
-                isTrainingDone: true,
-                isTraining: false,
-                trainedJson: arg
-            });
-        });
-    };
-
-    handleStartTrainingRl = e => {
-        e.preventDefault();
-        this.setState({
-            isTraining: true
-        });
-        ipcRenderer.send("start-training-rl", {
-            data: this.state.userData,
-            params: this.state.params,
-            algorithm: this.state.algorithm
-        });
-        ipcRenderer.on("finished-training", (event, arg) => {
-            this.setState({
-                isTrainingDone: true,
-                isTraining: false,
-                trainedJson: arg
-            });
-        });
     };
 
     selectParams = (data) => {
@@ -134,47 +96,57 @@ export default class App extends React.Component {
         this.setUserData();
     };
 
+    resetState = () => {
+        this.setState({
+            userData: null,
+            userNotes: "",
+            fileName: "addestramento",
+            isTrainingDone: false,
+            isModalEnabled: false,
+            jsonFileInfo: null,
+            csvFileInfo: null,
+            trainedJson: null,
+            isTraining: false,
+            isParamModalEnabled: false,
+            tempData: [],
+            params: [],
+            array: [],
+            paramLength: null
+        })
+    }
+
     onChange = e => {
         if (e.target.files[0]) {
-            const obj = this.getFileInfo(e.target.files[0]);
-            if (obj.extension === "json") {
-                if(this.state.jsonFileInfo) {
-                    this.setState({
-                        userNotes: ""
-                    });
-                }
-                ipcRenderer.send("get-json-configuration", obj.path);
-                ipcRenderer.on("read-json", (event, arg) => {
-                    this.setState({
-                        userNotes: arg.notes
-                    });
-                });
-                this.setState({
-                    jsonFileInfo: obj
-                });
-            } else if (obj.extension === "csv") {
+            const obj = this.getFileInfo(e.target.files[0])
+            if (obj.extension === "csv") {
                 if (this.state.csvFileInfo) {
-                    this.setState({
-                        trainedJson: null,
-                        isTrainingDone: false,
-                        userNotes: ""
-                    })
+                    this.resetState();
                 }
-                ipcRenderer.send("get-json-from-csv", obj.path);
-                ipcRenderer.on("read-csv", (event, arg) => {
+                this.setState({
+                    csvFileInfo: obj
+                });
+            }
+            if (obj.extension === "rl") {
+                this.setState({
+                    rlFileInfo: obj
+                });
+            }
+
+            ipcRenderer.send("read-file", {path: obj.path, extension: obj.extension});
+            ipcRenderer.on("finished-reading", (event, arg) => {
+                if (obj.extension === "csv") {
                     let array = Object.keys(arg[0]);
                     this.selectParams(array);
                     this.setState({
                         tempData: arg,
                         paramLength: array.length,
                     })
-                });
-                this.setState({
-                    csvFileInfo: obj
-                });
-            } else {
-                console.log("Il file non è corretto");
-            }
+                } else {
+                    this.setState({
+                        userNotes: arg.notes
+                    });
+                }
+            });
         } else {
             console.log("Il file è nullo");
         }
@@ -202,6 +174,27 @@ export default class App extends React.Component {
             console.log("Algoritmo scelto è già inizializzato");
         }
     };
+
+
+    startTraining = e => {
+        e.preventDefault();
+        this.setState({
+            isTraining: true
+        });
+        ipcRenderer.send("train-data", {
+            data: this.state.userData,
+            params: this.state.params,
+            algorithm: this.state.algorithm
+        });
+        ipcRenderer.on("finished-training", (event, arg) => {
+            this.setState({
+                isTrainingDone: true,
+                isTraining: false,
+                trainedJson: arg
+            });
+        });
+    }
+
 
     render() {
         const group = (
@@ -243,7 +236,7 @@ export default class App extends React.Component {
                  buttonSvm = (
                 <button
                     className="customButton buttonNormal"
-                    onClick={this.handleStartTrainingSvm}
+                    onClick={this.startTraining}
                 >
                     {this.state.isTraining
                         ? "Addestrando..."
@@ -263,7 +256,7 @@ export default class App extends React.Component {
             buttonRl = (
             <button
                 className="customButton buttonNormal"
-                onClick={this.handleStartTrainingRl}
+                onClick={this.startTraining}
             >
                 {this.state.isTraining
                     ? "Addestrando..."

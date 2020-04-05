@@ -1,26 +1,10 @@
+const ProcessReading = require("./ProcessReading")
+const ProcessTraining = require("./ProcessTraining");
+const ProcessWriting = require("./ProcessWriting");
+
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
-const SvmTrainer = require("../model/algorithm/SvmTrainer");
-const RlTrainer = require("../model/algorithm/RlTrainer");
-const ReadCsv = require("../model/input/ReadCsv");
-const ReadJson = require("../model/input/ReadJson");
-const WriteJson = require("../model/output/WriteJson");
-
-function startTrainingRl(data, param, algorithm, callback) {
-    let trainer = new RlTrainer();
-    trainer.setOptions({ numX: param.length, numY: 1 });
-    trainer.setParams(param);
-    let jsonTrained = trainer.train(data);
-    callback(null, jsonTrained);
-}
-
-function startTrainingSvm(data, param, algorithm, callback) {
-    let trainer = new SvmTrainer();
-    trainer.setParams(param);
-    let jsonTrained = trainer.train(data);
-    callback(null, jsonTrained);
-}
 
 function createWindow() {
     let mainWindow = new BrowserWindow({
@@ -56,40 +40,41 @@ app.on("activate", () => {
     }
 });
 
-ipcMain.on("save-to-disk", (event, arg) => {
-    const writer = new WriteJson();
-    writer.writeToDisk("src/output", arg.name, arg.trainedJson, arg.notes, (err, res) => {
-        event.reply("File correctly written", res);
-    });
-});
-
-ipcMain.on("start-training-rl", (event, arg) => {
-    startTrainingRl(arg.data, arg.params, arg.algorithm, (err, result) => {
+ipcMain.on("train-data", (event, arg) => {
+    const processTraining = new ProcessTraining(arg.algorithm);
+    processTraining.setParams(arg.params);
+    processTraining.setData(arg.data);
+    processTraining.startTraining((err, res) => {
         if (err) {
             throw err;
         }
-        event.reply("finished-training", result);
+        event.reply("finished-training", res);
     });
 });
-ipcMain.on("start-training-svm", (event, arg) => {
-    startTrainingSvm(arg.data, arg.params, arg.algorithm, (err, result) => {
+
+
+ipcMain.on("read-file", (event, arg) => {
+    const processReading = new ProcessReading(arg.extension);
+    processReading.setPath(arg.path);
+    processReading.startReading((err, res) => {
         if (err) {
             throw err;
         }
-        event.reply("finished-training", result);
+        event.reply("finished-reading", res);
     });
 });
 
-ipcMain.on("get-json-from-csv", (event, arg) => {
-    const csvReader = new ReadCsv();
-    csvReader.readFile(arg, (err, res) => {
-        event.reply("read-csv", res);
-    })
+ipcMain.on("write-file", (event, arg) => {
+    const processWriting = new ProcessWriting("json");
+    processWriting.setPath("src/output");
+    processWriting.setName(arg.name);
+    processWriting.setTrainingResult(arg.trainedJson);
+    processWriting.setNotes(arg.notes);
+    processWriting.startWriting((err, res) => {
+        if (err) {
+            throw err;
+        }
+        event.reply("finished-writing", res);
+    });
 });
 
-ipcMain.on("get-json-configuration", (event, arg) => {
-    const jsonReader = new ReadJson();
-    jsonReader.readFile(arg, (err, res) => {
-        event.reply("read-json", res);
-    })
-});
