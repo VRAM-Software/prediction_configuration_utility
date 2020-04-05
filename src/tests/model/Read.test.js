@@ -36,12 +36,6 @@ describe("Tests for class Read class", () => {
             callbackFs = cb;
             option = data;
         });
-        /*jest.spyOn(reader, 'parser').mockImplementation((data, cb) => {
-            callbackReader = cb;
-        });*/
-        //const logSpy = jest.spyOn(console, 'log');
-        /*const json = { author: "VRAMSoftware", version: "1.0.0", pluginAim: "svm", date: "2020/04/02", time: "16:2:24", N:15,
-            D:2, b:63.54986981144975, kernelType: "linear", w:[-0.8503742683400565,-0.9184042098072634], notes:"" };*/
 
         reader.readFile("src/filetest.csv", callbackFs);
         expect(fs.readFile).toBeCalledWith(
@@ -49,9 +43,6 @@ describe("Tests for class Read class", () => {
             option,
             callbackFs
         );
-        //expect(logSpy).toBeCalledWith("ciao");
-        //expect(reader.parser).toHaveBeenCalled();
-        //callback();
     });
 
     test("method readFile should throw error when read file failed", () => {

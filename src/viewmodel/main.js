@@ -66,10 +66,11 @@ app.on("activate", () => {
 
 ipcMain.on("save-to-disk", (event, arg) => {
     const writer = new WriteJson();
-    let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes);
-    let string = writer.parser(objToWrite);
-    writer.writeToDisk("src/output", arg.name, string);
-    event.reply("File correctly written");
+    //let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes);
+    //let string = writer.parser(objToWrite);
+    writer.writeToDisk("src/output", arg.name, jsonTrained, arg.notes, (err, res) => {
+        event.reply("File correctly written", res);
+    });
 });
 
 ipcMain.on("start-training-rl", (event, arg) => {
