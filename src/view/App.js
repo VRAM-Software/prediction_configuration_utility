@@ -126,9 +126,9 @@ export default class App extends React.Component {
                     csvFileInfo: obj
                 });
             }
-            if (obj.extension === "rl") {
+            if (obj.extension === "json") {
                 this.setState({
-                    rlFileInfo: obj
+                    jsonFileInfo: obj
                 });
             }
 

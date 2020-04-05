@@ -365,21 +365,6 @@ describe("Method tests for <App/> component", () => {
         });
     });
 
-    test("onChange function should deal with non csv, json files correctly", () => {
-        const fileContents = "a,b,c\n1,2,3";
-        console.log = jest.fn();
-        const file = new Blob([fileContents], {
-            type: "text"
-        });
-        file.name = "test.txt";
-        file.path = "/path/to/txt";
-        mountedComponent
-            .find("#fileChooser")
-            .at(0)
-            .simulate("change", { target: { files: [file] } });
-        expect(console.log).toHaveBeenCalledWith("Il file non è corretto");
-    });
-
     test("onChange function should deal with null files correctly", () => {
         console.log = jest.fn();
         mountedComponent
