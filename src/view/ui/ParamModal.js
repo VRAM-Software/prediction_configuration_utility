@@ -32,15 +32,11 @@ export default class Modal extends React.Component {
         let array = [];
         array.push(this.state.selected[0]);
         array.push(this.state.selected[1]);
-        console.log("data");
-        console.log(this.props.data);
         for (let i=0; i<this.props.data.length; i++) {
             if (!this.state.selected.includes(this.props.data[i])) {
                 array.push(this.props.data[i]);
             }
         }
-        console.log("array");
-        console.log(array);
         this.props.setParams(array);
     }
 
