@@ -6,29 +6,21 @@ const RlTrainer = require("../model/algorithm/RlTrainer");
 const ReadCsv = require("../model/input/ReadCsv");
 const ReadJson = require("../model/input/ReadJson");
 const WriteJson = require("../model/output/WriteJson");
-let window;
-let jsonTrained;
 
 function startTrainingRl(data, param, algorithm, callback) {
     let trainer = new RlTrainer();
     trainer.setOptions({ numX: param.length, numY: 1 });
     trainer.setParams(param);
-    jsonTrained = trainer.train(data);
-    if (typeof callback === "function") {
-        callback();
-    }
+    let jsonTrained = trainer.train(data);
+    callback(null, jsonTrained);
 }
 
 function startTrainingSvm(data, param, algorithm, callback) {
     let trainer = new SvmTrainer();
     trainer.setParams(param);
-    jsonTrained = trainer.train(data);
-    if (typeof callback === "function") {
-        callback();
-    }
+    let jsonTrained = trainer.train(data);
+    callback(null, jsonTrained);
 }
-
-
 
 function createWindow() {
     let mainWindow = new BrowserWindow({
@@ -66,30 +58,26 @@ app.on("activate", () => {
 
 ipcMain.on("save-to-disk", (event, arg) => {
     const writer = new WriteJson();
-    //let objToWrite = writer.buildTrainedFile(jsonTrained, arg.notes);
-    //let string = writer.parser(objToWrite);
-    writer.writeToDisk("src/output", arg.name, jsonTrained, arg.notes, (err, res) => {
+    writer.writeToDisk("src/output", arg.name, arg.trainedJson, arg.notes, (err, res) => {
         event.reply("File correctly written", res);
     });
 });
 
 ipcMain.on("start-training-rl", (event, arg) => {
-    startTrainingRl(arg.data, arg.params, arg.algorithm, err => {
+    startTrainingRl(arg.data, arg.params, arg.algorithm, (err, result) => {
         if (err) {
             throw err;
         }
-        console.log("Finished training");
+        event.reply("finished-training", result);
     });
-    event.reply("finished-training", jsonTrained);
 });
 ipcMain.on("start-training-svm", (event, arg) => {
-    startTrainingSvm(arg.data, arg.params, arg.algorithm, err => {
+    startTrainingSvm(arg.data, arg.params, arg.algorithm, (err, result) => {
         if (err) {
             throw err;
         }
-        console.log("Finished training");
+        event.reply("finished-training", result);
     });
-    event.reply("finished-training", jsonTrained);
 });
 
 ipcMain.on("get-json-from-csv", (event, arg) => {

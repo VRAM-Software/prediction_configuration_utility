@@ -82,7 +82,8 @@ export default class App extends React.Component {
         e.preventDefault();
         ipcRenderer.send("save-to-disk", {
             name: this.state.fileName,
-            notes: this.state.userNotes
+            notes: this.state.userNotes,
+            trainedJson: this.state.trainedJson
         });
         this.handleCloseModal(e);
     };
