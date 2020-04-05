@@ -138,7 +138,6 @@ export default class App extends React.Component {
             isParamModalEnabled: false
         })
         this.setUserData();
-        console.log(data);
     }
 
     onChange = e => {
@@ -147,20 +146,14 @@ export default class App extends React.Component {
             if (obj.extension === "json") {
                 if(this.state.jsonFileInfo) {
                     this.setState({
-                        trainedJson: null,
-                        isTrainingDone: false,
                         userNotes: ""
                     });
                 }
                 ipcRenderer.send("get-json-configuration", obj.path);
                 ipcRenderer.on("read-json", (event, arg) => {
-                    console.log("sono su read json ciao");
                     this.setState({
                         userNotes: arg.notes
                     });
-                    console.log("STATO!!!!!!");
-                    console.log(this.state.userNotes);
-                    //this.handleChangeNotes(e);
                 });
                 this.setState({
                     jsonFileInfo: obj
@@ -175,7 +168,6 @@ export default class App extends React.Component {
                 }
                 ipcRenderer.send("get-json-from-csv", obj.path);
                 ipcRenderer.on("read-csv", (event, arg) => {
-                    console.log("sono su read cvs ciao");
                     let array = Object.keys(arg[0]);
                     this.selectParams(array);
                     this.setState({

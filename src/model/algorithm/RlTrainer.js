@@ -46,8 +46,6 @@ class RlTrainer extends AlgorithmTrainer {
                 valX.push(parseFloat(data[i][this.params[0]]));
                 valY.push(parseFloat(data[i][this.params[1]]));
                 result.push({x: valX, y: valY});
-                console.log("result2");
-                console.log(result);
             }
         }
         this.data = result;

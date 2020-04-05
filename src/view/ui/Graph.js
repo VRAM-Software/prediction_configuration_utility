@@ -2,7 +2,6 @@ import React from "react";
 import ScatterPlot from "../graphComponents/ScatterPlot";
 export default class Graph extends React.Component {
     render() {
-        console.log(this.props.algorithm);
         return (
             <ScatterPlot
                 data={this.props.data}

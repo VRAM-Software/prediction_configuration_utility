@@ -203,6 +203,22 @@ describe("Method tests for <App/> component", () => {
         mountedComponent = mount(<App />);
     });
 
+    test("onChange function should reset when jsonFileInfo is not null", () => {
+        component.setState({
+            jsonFileInfo: "info"
+        });
+        expect(component.state("userNotes")).toEqual("");
+    });
+
+    test("onChange function should reset when csvFileInfo is not null", () => {
+        component.setState({
+            csvFileInfo: "info"
+        });
+        expect(component.state("trainedJson")).toEqual(null);
+        expect(component.state("isTrainingDone")).toEqual(false);
+        expect(component.state("userNotes")).toEqual("");
+    });
+
     test("button 'Inizia addestramento svm' should trigger state change when clicked", () => {
         component.setState({
             userData: [1, 2, 3, 4],
@@ -349,7 +365,7 @@ describe("Method tests for <App/> component", () => {
         });
     });
 
-    test("onChange function should deal with non csv,json files correctly", () => {
+    test("onChange function should deal with non csv, json files correctly", () => {
         const fileContents = "a,b,c\n1,2,3";
         console.log = jest.fn();
         const file = new Blob([fileContents], {
