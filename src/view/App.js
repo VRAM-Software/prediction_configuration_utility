@@ -36,21 +36,14 @@ export default class App extends React.Component {
         this.setState({
             userData: data
         })
-    }
+    };
 
     handleCloseParamModal = e => {
         e.preventDefault();
         this.setState({
             isParamModalEnabled: false
         })
-    }
-
-    handleOpenParamModal = e => {
-        e.preventDefault();
-        this.setState({
-            isParamModalEnabled: true
-        })
-    }
+    };
 
     handleOpenModal = e => {
         e.preventDefault();
@@ -82,7 +75,8 @@ export default class App extends React.Component {
         e.preventDefault();
         ipcRenderer.send("save-to-disk", {
             name: this.state.fileName,
-            notes: this.state.userNotes
+            notes: this.state.userNotes,
+            trainedJson: this.state.trainedJson
         });
         this.handleCloseModal(e);
     };
@@ -129,16 +123,16 @@ export default class App extends React.Component {
         this.setState({
             isParamModalEnabled: true,
             params: data,
-        })
-    }
+        });
+    };
 
     setParams = (data) => {
         this.setState({
             params: data,
             isParamModalEnabled: false
-        })
+        });
         this.setUserData();
-    }
+    };
 
     onChange = e => {
         if (e.target.files[0]) {
