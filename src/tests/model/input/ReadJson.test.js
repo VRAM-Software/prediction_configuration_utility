@@ -9,9 +9,10 @@ describe("Test for ReadJson class", () => {
     });
 
     test("parser function should return array of js objects given csv", () => {
-        let result = reader.parser(jsObjString);
-        expect(result).toEqual({
-            a: 1, b: 2, c: 3
-        })
+        reader.parser(jsObjString, (err, res) => {
+            expect(res).toEqual({
+                a: 1, b: 2, c: 3
+            })
+        });
     })
 });

@@ -97,6 +97,15 @@ ipcMain.on("start-training-svm", (event, arg) => {
 ipcMain.on("get-json-from-csv", (event, arg) => {
     const csvReader = new ReadCsv();
     csvReader.readFile(arg, (err, res) => {
+        console.log("proooooooCSV");
         event.reply("read-csv", res);
+    })
+});
+
+ipcMain.on("get-json-configuration", (event, arg) => {
+    const jsonReader = new ReadJson();
+    jsonReader.readFile(arg, (err, res) => {
+        console.log("prooooooo");
+        event.reply("read-json", res);
     })
 });
