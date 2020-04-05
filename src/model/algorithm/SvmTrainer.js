@@ -62,7 +62,9 @@ class SvmTrainer extends AlgorithmTrainer {
         file.pluginAim = "svm";
         let array = this.params;
         array.length = Math.min(array.length, array.length-1);
-        file.Predictors = array;
+        file.predictors = array;
+        file.trainData = this.data;
+        file.trainLabels = this.labels;
         file.result = result;
         return file;
     };

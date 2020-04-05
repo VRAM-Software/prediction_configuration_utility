@@ -63,7 +63,7 @@ class RlTrainer extends AlgorithmTrainer {
         file.pluginAim = "rl";
         let array = this.params;
         array.length = Math.min(array.length, array.length-1);
-        file.Predictors = array;
+        file.predictors = array;
         file.result = result;
         return file;
     };
