@@ -63,7 +63,7 @@ describe("test for training RL algorithm's wrapper class", () => {
         expect(result.includes("date")).toBeTruthy();
         expect(result.includes("time")).toBeTruthy();
         expect(result.includes("pluginAim")).toBeTruthy();
-        expect(result.includes("Predictors")).toBeTruthy();
+        expect(result.includes("predictors")).toBeTruthy();
         expect(result.includes("result")).toBeTruthy();
     });
 

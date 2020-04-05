@@ -46,8 +46,6 @@ class RlTrainer extends AlgorithmTrainer {
                 valX.push(parseFloat(data[i][this.params[0]]));
                 valY.push(parseFloat(data[i][this.params[1]]));
                 result.push({x: valX, y: valY});
-                console.log("result2");
-                console.log(result);
             }
         }
         this.data = result;
@@ -63,7 +61,7 @@ class RlTrainer extends AlgorithmTrainer {
         file.pluginAim = "rl";
         let array = this.params;
         array.length = Math.min(array.length, array.length-1);
-        file.Predictors = array;
+        file.predictors = array;
         file.result = result;
         return file;
     };

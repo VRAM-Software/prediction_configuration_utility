@@ -32,7 +32,6 @@ class SvmTrainer extends AlgorithmTrainer {
         let temp2 = [];
         const labels = [];
         let array = Object.keys(data[0]);
-        console.log(this.params);
         if (array.length > 3) {
             for (let i = 0; i < data.length; i++) {
                 for(let j = 0; j < this.params.length-1; ++j){
@@ -62,7 +61,9 @@ class SvmTrainer extends AlgorithmTrainer {
         file.pluginAim = "svm";
         let array = this.params;
         array.length = Math.min(array.length, array.length-1);
-        file.Predictors = array;
+        file.predictors = array;
+        file.trainData = this.data;
+        file.trainLabels = this.labels;
         file.result = result;
         return file;
     };
