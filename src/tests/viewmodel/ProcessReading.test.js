@@ -6,11 +6,13 @@ describe("Tests for ProcessReading class", () => {
     let readerCsv;
     let readerJson;
     beforeEach(() => {
-        readerCsv = new ProcessReading("csv");
-        readerJson = new ProcessReading("json")
+        readerCsv = new ProcessReading();
+        readerJson = new ProcessReading()
     });
 
     test("should create the right object based on extension", () => {
+        readerCsv.setStrategy("csv");
+        readerJson.setStrategy("json");
         expect(readerCsv.getStrategy() instanceof PerformReadingCsv).toBeTruthy();
         expect(readerJson.getStrategy() instanceof PerformReadingJson).toBeTruthy();
     });

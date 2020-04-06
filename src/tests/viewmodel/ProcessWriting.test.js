@@ -4,10 +4,11 @@ const ProcessWriting = require("../../viewmodel/ProcessWriting");
 describe("Tests for ProcessWriting class", () => {
     let writer;
     beforeEach(() => {
-        writer = new ProcessWriting("json");
+        writer = new ProcessWriting();
     });
 
     test("should create the right object based on extension", () => {
+        writer.setStrategy("json");
         expect(writer.getStrategy() instanceof PerformWritingJson).toBeTruthy();
     });
 

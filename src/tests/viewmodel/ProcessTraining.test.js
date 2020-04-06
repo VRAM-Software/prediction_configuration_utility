@@ -6,11 +6,13 @@ describe("Tests for ProcessTraining class", () => {
     let trainerSvm;
     let trainerRl;;
     beforeEach(() => {
-        trainerSvm = new ProcessTraining("svm");
-        trainerRl = new ProcessTraining("rl")
+        trainerSvm = new ProcessTraining();
+        trainerRl = new ProcessTraining()
     });
 
     test("should create the right object based on algorithm chosen", () => {
+        trainerSvm.setStrategy("svm");
+        trainerRl.setStrategy("rl");
         expect(trainerSvm.getStrategy() instanceof PerformTrainingSvm).toBeTruthy();
         expect(trainerRl.getStrategy() instanceof PerformTrainingRl).toBeTruthy();
     });
