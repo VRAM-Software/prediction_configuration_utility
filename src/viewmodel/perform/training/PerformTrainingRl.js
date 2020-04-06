@@ -9,6 +9,10 @@ class PerformTrainingRl extends PerformTraining {
         super();
         this.trainer = new RlTrainer();
     }
+    
+    getTrainer = () => {
+        return this.trainer;
+    }
 
     callTrain = (params, data, callback) => {
         this.trainer.setParams(params);

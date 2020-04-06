@@ -1,11 +1,16 @@
 class PerformTraining {
+    result = null;
+    trainer = null;
     constructor() {
         if (this.constructor === PerformTraining) {
             throw new TypeError("Can not construct abstract class.");
         }
-        if (this.callTrain === PerformTraining.prototype.callTrain) {
-            throw new TypeError("Please implement abstract method callTrain.");
-        }
+    }
+
+    getTrainer = () => {
+        throw new TypeError(
+            "Do not call abstract method getTrainer from child."
+        );
     }
 
     callTrain = () => {

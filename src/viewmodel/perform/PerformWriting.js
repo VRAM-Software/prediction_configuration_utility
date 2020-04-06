@@ -1,11 +1,13 @@
 class PerformWriting {
+    writer = null;
     constructor() {
         if (this.constructor === PerformWriting) {
             throw new TypeError("Can not construct abstract class.");
         }
-        if (this.callWrite === PerformWriting.prototype.callWrite) {
-            throw new TypeError("Please implement abstract method callWrite.");
-        }
+    }
+
+    getWriter = () => {
+        throw new TypeError("Do not call abstract method getWriter from child.");
     }
 
     callWrite = () => {

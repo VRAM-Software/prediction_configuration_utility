@@ -10,6 +10,14 @@ class ProcessWriting {
         }
     }
 
+    getStrategy = () => {
+        return this.strategy;
+    }
+
+    getFileInfo = () => {
+        return this.fileInfo;
+    }
+
     setPath = (path) => {
         this.fileInfo.path = path;
     };

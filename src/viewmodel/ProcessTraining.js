@@ -15,6 +15,18 @@ class ProcessTraining {
         }
     }
 
+    getStrategy = () => {
+        return this.strategy;
+    }
+
+    getParams = () => {
+        return this.params;
+    }
+
+    getData = () => {
+        return this.data;
+    }
+
     setParams = (params) => {
         this.params = params;
     }

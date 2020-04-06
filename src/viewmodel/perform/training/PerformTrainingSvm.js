@@ -10,6 +10,10 @@ class PerformTrainingSvm extends PerformTraining {
         this.trainer = new SvmTrainer();
     }
 
+    getTrainer = () => {
+        return this.trainer;
+    }
+
     callTrain = (params, data, callback) => {
         this.trainer.setParams(params);
         this.result = this.trainer.train(data);

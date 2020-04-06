@@ -3,9 +3,10 @@ class PerformReading {
         if (this.constructor === PerformReading) {
             throw new TypeError("Can not construct abstract class.");
         }
-        if (this.callRead === PerformReading.prototype.callRead) {
-            throw new TypeError("Please implement abstract method callRead.");
-        }
+    }
+
+    getReader = () => {
+        throw new TypeError("Do not call abstract method getReader from child.");
     }
 
     callRead = () => {

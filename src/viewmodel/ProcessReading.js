@@ -13,8 +13,15 @@ class ProcessReading {
         } 
         if (extension === "csv") {
             this.strategy = new PerformReadingCsv();
-        }
-        
+        }   
+    }
+
+    getStrategy = () => {
+        return this.strategy;
+    }
+
+    getPath = () => {
+        return this.path;
     }
 
     setPath = (path) => {
