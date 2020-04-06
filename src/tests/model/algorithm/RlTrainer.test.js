@@ -1,9 +1,7 @@
-import fs from "fs";
+const Trainer = require("../../../model/algorithm/RlTrainer");
+const Regression = require("../../../model/algorithm/lib/regression.module.js");
 
-const Trainer = require("../../model/algorithm/RlTrainer");
-const Regression = require("../../model/algorithm/lib/regression.module.js");
-
-jest.mock("../../model/algorithm/lib/regression.module.js");
+jest.mock("../../../model/algorithm/lib/regression.module.js");
 
 describe("test for training RL algorithm's wrapper class", () => {
     let trainer;
