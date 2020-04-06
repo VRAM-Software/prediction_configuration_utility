@@ -2,42 +2,48 @@ const PerformTrainingRl = require("./perform/training/PerformTrainingRl");
 const PerformTrainingSvm = require("./perform/training/PerformTrainingSvm");
 
 class ProcessTraining {
-    strategy = null;
-    params = null;
-    data = null;
+    strategy;
+    params;
+    data;
 
-    constructor(algorithm) {
+    constructor() {
+        this.strategy = null;
+        this.params = null;
+        this.data = null;
+    }
+
+    setStrategy = (algorithm) => {
         if (algorithm === "svm") {
             this.strategy = new PerformTrainingSvm();
         }
         if (algorithm === "rl") {
             this.strategy = new PerformTrainingRl();
         }
-    }
+    };
 
     getStrategy = () => {
         return this.strategy;
-    }
+    };
 
     getParams = () => {
         return this.params;
-    }
+    };
 
     getData = () => {
         return this.data;
-    }
+    };
 
     setParams = (params) => {
         this.params = params;
-    }
+    };
 
     setData = (data) => {
         this.data = data;
-    }
-    
+    };
+
     startTraining = (callback) => {
         this.strategy.callTrain(this.params, this.data, callback);
-    }
+    };
 }
 
 module.exports = ProcessTraining;

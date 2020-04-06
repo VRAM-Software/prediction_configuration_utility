@@ -2,7 +2,7 @@ const PerformReading = require("../PerformReading");
 const ReadJson = require("../../../model/input/ReadJson");
 
 class PerformReadingCsv extends PerformReading {
-    reader = null;
+    reader;
 
     constructor() {
         super();
@@ -11,7 +11,7 @@ class PerformReadingCsv extends PerformReading {
 
     getReader = () => {
         return this.reader;
-    }
+    };
 
     callRead = (path, callback) => {
         this.reader.readFile(path, callback);

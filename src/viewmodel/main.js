@@ -1,4 +1,4 @@
-const ProcessReading = require("./ProcessReading")
+const ProcessReading = require("./ProcessReading");
 const ProcessTraining = require("./ProcessTraining");
 const ProcessWriting = require("./ProcessWriting");
 
@@ -11,8 +11,8 @@ function createWindow() {
         width: 1024,
         height: 768,
         webPreferences: {
-            nodeIntegration: true
-        }
+            nodeIntegration: true,
+        },
     });
 
     mainWindow.loadURL(
@@ -41,7 +41,8 @@ app.on("activate", () => {
 });
 
 ipcMain.on("train-data", (event, arg) => {
-    const processTraining = new ProcessTraining(arg.algorithm);
+    const processTraining = new ProcessTraining();
+    processTraining.setStrategy(arg.algorithm);
     processTraining.setParams(arg.params);
     processTraining.setData(arg.data);
     processTraining.startTraining((err, res) => {
@@ -52,9 +53,9 @@ ipcMain.on("train-data", (event, arg) => {
     });
 });
 
-
 ipcMain.on("read-file", (event, arg) => {
-    const processReading = new ProcessReading(arg.extension);
+    const processReading = new ProcessReading();
+    processReading.setStrategy(arg.extension);
     processReading.setPath(arg.path);
     processReading.startReading((err, res) => {
         if (err) {
@@ -66,6 +67,7 @@ ipcMain.on("read-file", (event, arg) => {
 
 ipcMain.on("write-file", (event, arg) => {
     const processWriting = new ProcessWriting("json");
+    processWriting.setStrategy("json");
     processWriting.setPath("src/output");
     processWriting.setName(arg.name);
     processWriting.setTrainingResult(arg.trainedJson);
@@ -77,4 +79,3 @@ ipcMain.on("write-file", (event, arg) => {
         event.reply("finished-writing", res);
     });
 });
-

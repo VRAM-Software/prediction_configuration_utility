@@ -11,7 +11,7 @@ class PerformTraining {
         throw new TypeError(
             "Do not call abstract method getTrainer from child."
         );
-    }
+    };
 
     callTrain = () => {
         throw new TypeError(

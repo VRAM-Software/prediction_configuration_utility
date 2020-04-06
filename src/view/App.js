@@ -97,114 +97,110 @@ export default class App extends React.Component {
     };
 
     resetState = () => {
-        this.setState(
-            {
-                userData: null,
-                userNotes: "",
-                fileName: "addestramento",
-                isTrainingDone: false,
-                isModalEnabled: false,
-                jsonFileInfo: null,
-                csvFileInfo: null,
-                trainedJson: null,
-                isTraining: false,
-                isParamModalEnabled: false,
-                tempData: [],
-                params: [],
-                array: [],
-                paramLength: null,
-            }
-        );
+        this.setState({
+            userData: null,
+            userNotes: "",
+            fileName: "addestramento",
+            isTrainingDone: false,
+            isModalEnabled: false,
+            jsonFileInfo: null,
+            csvFileInfo: null,
+            trainedJson: null,
+            isTraining: false,
+            isParamModalEnabled: false,
+            tempData: [],
+            params: [],
+            array: [],
+            paramLength: null,
+        });
     };
 
-    onLoadCsv = (e) => {
-        if (e.target.files[0]) {
-            const obj = this.getFileInfo(e.target.files[0]);
-            this.resetState(); 
-            this.setState({
-                csvFileInfo: obj,
-            });
-            ipcRenderer.send("read-file", {
-                path: obj.path,
-                extension: obj.extension,
-            });
-            ipcRenderer.on("finished-reading", (event, arg) => {
-                let array = Object.keys(arg[0]);
-                this.selectParams(array);
-                this.setState({
-                    tempData: arg,
-                    paramLength: array.length,
-                });
-            });
-        } else {
-            console.log("Il file è nullo");
-        }
-    }
-
-    onLoadJson = (e) => {
-        if (e.target.files[0]) {
-            const obj = this.getFileInfo(e.target.files[0]);
-            if (this.state.jsonFileInfo) {
-                this.setState({
-                    jsonFileInfo: null
-                })
-            }
-            this.setState({
-                jsonFileInfo: obj,
-            });
-            ipcRenderer.send("read-file", {
-                path: obj.path,
-                extension: obj.extension,
-            });
-            ipcRenderer.on("finished-reading", (event, arg) => {
-                this.setState({
-                    userNotes: arg.notes,
-                });
-            });
-        } else {
-            console.log("Il file è nullo");
-        }
-    }
-
-    // onChange = (e) => {
+    // onLoadCsv = (e) => {
     //     if (e.target.files[0]) {
     //         const obj = this.getFileInfo(e.target.files[0]);
-    //         if (obj.extension === "csv") {
-    //             this.resetState();
-                
-    //             this.setState({
-    //                 csvFileInfo: obj,
-    //             });
-            
-    //         }
-    //         if (obj.extension === "json") {
-    //             this.setState({
-    //                 jsonFileInfo: obj,
-    //             });
-    //         }
-
+    //         this.resetState();
+    //         this.setState({
+    //             csvFileInfo: obj,
+    //         });
     //         ipcRenderer.send("read-file", {
     //             path: obj.path,
     //             extension: obj.extension,
     //         });
     //         ipcRenderer.on("finished-reading", (event, arg) => {
-    //             if (obj.extension === "csv") {
-    //                 let array = Object.keys(arg[0]);
-    //                 this.selectParams(array);
-    //                 this.setState({
-    //                     tempData: arg,
-    //                     paramLength: array.length,
-    //                 });
-    //             } else {
-    //                 this.setState({
-    //                     userNotes: arg.notes,
-    //                 });
-    //             }
+    //             let array = Object.keys(arg[0]);
+    //             this.selectParams(array);
+    //             this.setState({
+    //                 tempData: arg,
+    //                 paramLength: array.length,
+    //             });
     //         });
     //     } else {
     //         console.log("Il file è nullo");
     //     }
-    // };
+    // }
+
+    // onLoadJson = (e) => {
+    //     if (e.target.files[0]) {
+    //         const obj = this.getFileInfo(e.target.files[0]);
+    //         if (this.state.jsonFileInfo) {
+    //             this.setState({
+    //                 jsonFileInfo: null
+    //             })
+    //         }
+    //         this.setState({
+    //             jsonFileInfo: obj,
+    //         });
+    //         ipcRenderer.send("read-file", {
+    //             path: obj.path,
+    //             extension: obj.extension,
+    //         });
+    //         ipcRenderer.on("finished-reading", (event, arg) => {
+    //             this.setState({
+    //                 userNotes: arg.notes,
+    //             });
+    //         });
+    //     } else {
+    //         console.log("Il file è nullo");
+    //     }
+    // }
+
+    onChange = (e) => {
+        if (e.target.files[0]) {
+            const obj = this.getFileInfo(e.target.files[0]);
+            if (obj.extension === "csv") {
+                this.resetState();
+                this.setState({
+                    csvFileInfo: obj,
+                });
+            }
+            if (obj.extension === "json") {
+                this.setState({
+                    jsonFileInfo: obj,
+                });
+            }
+
+            ipcRenderer.send("read-file", {
+                path: obj.path,
+                extension: obj.extension,
+            });
+            ipcRenderer.on("finished-reading", (event, arg) => {
+                if (obj.extension === "csv") {
+                    let array = Object.keys(arg[0]);
+                    this.selectParams(array);
+                    this.setState({
+                        tempData: arg,
+                        paramLength: array.length,
+                    });
+                } else {
+                    this.setState({
+                        userNotes: arg.notes,
+                    });
+                }
+            });
+        } else {
+            console.log("Il file è nullo");
+        }
+    };
 
     getFileInfo = (file) => {
         return {
@@ -337,7 +333,7 @@ export default class App extends React.Component {
                     <div>
                         <Chooser
                             type='csv'
-                            onChange={this.onLoadCsv}
+                            onChange={this.onChange}
                             isFileChosen={!!this.state.csvFileInfo}
                         />
                         <span>
@@ -349,7 +345,7 @@ export default class App extends React.Component {
                     <div>
                         <Chooser
                             type='json'
-                            onChange={this.onLoadJson}
+                            onChange={this.onChange}
                             isFileChosen={!!this.state.jsonFileInfo}
                         />
                         <span>

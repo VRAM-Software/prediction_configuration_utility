@@ -7,11 +7,15 @@ class PerformWriting {
     }
 
     getWriter = () => {
-        throw new TypeError("Do not call abstract method getWriter from child.");
-    }
+        throw new TypeError(
+            "Do not call abstract method getWriter from child."
+        );
+    };
 
     callWrite = () => {
-        throw new TypeError("Do not call abstract method callWrite from child.");
+        throw new TypeError(
+            "Do not call abstract method callWrite from child."
+        );
     };
 }
 
