@@ -29,10 +29,10 @@ describe("Rendering tests for <App /> component", () => {
         component = shallow(<App />);
     });
 
-    test("should render VRAM Software Applicativo Esterno - PoC 3", () => {
+    test("should render VRAM Software Applicativo Esterno", () => {
         expect(
             component.containsMatchingElement(
-                <span>VRAM Software Applicativo Esterno - PoC 3</span>
+                <span>VRAM Software Applicativo Esterno</span>
             )
         ).toBeTruthy();
     });
