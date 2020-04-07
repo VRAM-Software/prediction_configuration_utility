@@ -115,55 +115,6 @@ export default class App extends React.Component {
         });
     };
 
-    // onLoadCsv = (e) => {
-    //     if (e.target.files[0]) {
-    //         const obj = this.getFileInfo(e.target.files[0]);
-    //         this.resetState();
-    //         this.setState({
-    //             csvFileInfo: obj,
-    //         });
-    //         ipcRenderer.send("read-file", {
-    //             path: obj.path,
-    //             extension: obj.extension,
-    //         });
-    //         ipcRenderer.on("finished-reading", (event, arg) => {
-    //             let array = Object.keys(arg[0]);
-    //             this.selectParams(array);
-    //             this.setState({
-    //                 tempData: arg,
-    //                 paramLength: array.length,
-    //             });
-    //         });
-    //     } else {
-    //         console.log("Il file è nullo");
-    //     }
-    // }
-
-    // onLoadJson = (e) => {
-    //     if (e.target.files[0]) {
-    //         const obj = this.getFileInfo(e.target.files[0]);
-    //         if (this.state.jsonFileInfo) {
-    //             this.setState({
-    //                 jsonFileInfo: null
-    //             })
-    //         }
-    //         this.setState({
-    //             jsonFileInfo: obj,
-    //         });
-    //         ipcRenderer.send("read-file", {
-    //             path: obj.path,
-    //             extension: obj.extension,
-    //         });
-    //         ipcRenderer.on("finished-reading", (event, arg) => {
-    //             this.setState({
-    //                 userNotes: arg.notes,
-    //             });
-    //         });
-    //     } else {
-    //         console.log("Il file è nullo");
-    //     }
-    // }
-
     onChange = (e) => {
         if (e.target.files[0]) {
             const obj = this.getFileInfo(e.target.files[0]);
