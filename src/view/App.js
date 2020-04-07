@@ -272,9 +272,9 @@ export default class App extends React.Component {
               ));
 
         return (
-            <div className='App'>
-                <span id='metaText'>
-                    VRAM Software Applicativo Esterno - PoC 3
+            <div className="App">
+                <span id="metaText">
+                    VRAM Software Applicativo Esterno
                 </span>
 
                 <div className='contentContainer'>
