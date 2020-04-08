@@ -134,20 +134,24 @@ export default class App extends React.Component {
                 path: obj.path,
                 extension: obj.extension,
             });
-            ipcRenderer.on("finished-reading", (event, arg) => {
-                if (obj.extension === "csv") {
-                    let array = Object.keys(arg[0]);
-                    this.selectParams(array);
-                    this.setState({
-                        tempData: arg,
-                        paramLength: array.length,
-                    });
-                } else {
+            if (obj.extension === "csv") {
+                ipcRenderer.on("finished-reading", (event, arg) => {
+                    if (arg[0]) {
+                        let array = Object.keys(arg[0]);
+                        this.selectParams(array);
+                        this.setState({
+                            tempData: arg,
+                            paramLength: array.length,
+                        });
+                    }
+                });
+            } else {
+                ipcRenderer.on("finished-reading", (event, arg) => {
                     this.setState({
                         userNotes: arg.notes,
                     });
-                }
-            });
+                });
+            }
         } else {
             console.log("Il file è nullo");
         }
