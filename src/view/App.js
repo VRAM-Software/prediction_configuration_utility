@@ -40,9 +40,16 @@ export default class App extends React.Component {
 
     handleCloseParamModal = (e) => {
         e.preventDefault();
-        this.setState({
-            isParamModalEnabled: false,
-        });
+        if (this.state.userData) {
+            this.setState({
+                isParamModalEnabled: false,
+            });
+        } else {
+            this.setState({
+                isParamModalEnabled: false,
+            });
+            this.resetState();
+        }
     };
 
     handleOpenModal = (e) => {
@@ -168,13 +175,10 @@ export default class App extends React.Component {
 
     handleChangeAlgorithm = (algorithm) => {
         if (algorithm !== this.state.algorithm) {
-            this.setState(
-                {
-                    algorithm: algorithm,
-                    trainedJson: null,
-                },
-                () => {}
-            );
+            this.setState({
+                algorithm: algorithm,
+                trainedJson: null,
+            });
         } else {
             console.log("Algoritmo scelto è già inizializzato");
         }
@@ -348,7 +352,7 @@ export default class App extends React.Component {
                         data={this.state.params}
                         setParams={this.setParams}
                         close={this.handleCloseParamModal}
-                        algorithm={this.state.algorithm}
+                        changeAlgorithm={this.handleChangeAlgorithm}
                     />
                 ) : null}
             </div>

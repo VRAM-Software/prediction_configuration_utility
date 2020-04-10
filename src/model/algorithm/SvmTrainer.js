@@ -31,25 +31,35 @@ class SvmTrainer extends AlgorithmTrainer {
         const temp = [];
         let temp2 = [];
         const labels = [];
-        let array = Object.keys(data[0]);
-        if (array.length > 3) {
-            for (let i = 0; i < data.length; i++) {
-                for(let j = 0; j < this.params.length-1; ++j){
-                    const objToAdd = data[i];
-                    temp2.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
-                }
-                temp.push(temp2);
-                temp2 = [];
-                labels.push(data[i][Object.keys(data[i])[this.params.length-1]]);
+        // let array = Object.keys(data[0]);
+        for (let i=0; i<data.length; i++) {
+            temp2 = [];
+            for (let j=0; j<this.params.length-1; j++) {
+                temp2.push(parseFloat(data[i][this.params[j]]));
             }
-        } else {
-            for (let i = 0; i < data.length; i++) {
-                temp.push([parseFloat(data[i][this.params[0]]), parseFloat(data[i][this.params[1]])]);
-                labels.push(data[i][Object.keys(data[i])[this.params.length-1]]);
-            }
+            temp.push(temp2);
+            labels.push(parseFloat(data[i][this.params[this.params.length-1]]));
         }
+        // if (array.length > 3) {
+        //     for (let i = 0; i < data.length; i++) {
+        //         for(let j = 0; j < this.params.length-1; ++j){
+        //             const objToAdd = data[i];
+        //             temp2.push(parseFloat(objToAdd[Object.keys(objToAdd)[j]]));
+        //         }
+        //         temp.push(temp2);
+        //         temp2 = [];
+        //         labels.push(data[i][Object.keys(data[i])[this.params.length-1]]);
+        //     }
+        // } else {
+        //     for (let i = 0; i < data.length; i++) {
+        //         temp.push([parseFloat(data[i][this.params[0]]), parseFloat(data[i][this.params[1]])]);
+        //         labels.push(data[i][Object.keys(data[i])[this.params.length-1]]);
+        //     }
+        // }
         this.data = temp;
         this.labels = labels;
+        console.log(this.data);
+        console.log(this.labels);
     };
 
     setParams = params => {
