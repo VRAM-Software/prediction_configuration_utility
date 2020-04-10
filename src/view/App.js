@@ -229,6 +229,12 @@ export default class App extends React.Component {
                     {this.state.trainedJson ? (
                         <span className='done'>Addestramento avvenuto</span>
                     ) : null}
+                    <button
+                        className='customButton buttonNormal'
+                        onClick={() => this.selectParams(this.state.params)}
+                    >
+                        Scegli nuovi parametri
+                    </button>
                 </div>
             </>
         );
@@ -276,10 +282,8 @@ export default class App extends React.Component {
               ));
 
         return (
-            <div className="App">
-                <span id="metaText">
-                    VRAM Software Applicativo Esterno
-                </span>
+            <div className='App'>
+                <span id='metaText'>VRAM Software Applicativo Esterno</span>
 
                 <div className='contentContainer'>
                     {this.state.userData !== null ? group : null}
@@ -344,6 +348,7 @@ export default class App extends React.Component {
                         data={this.state.params}
                         setParams={this.setParams}
                         close={this.handleCloseParamModal}
+                        algorithm={this.state.algorithm}
                     />
                 ) : null}
             </div>
