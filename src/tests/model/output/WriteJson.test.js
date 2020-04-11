@@ -14,7 +14,7 @@ describe("Test for WriteJson class", () => {
         jest.restoreAllMocks();
     });
 
-    test("parser function should return array of js objects given csv", () => {
+    test("parser function should return string given js object", () => {
         let result = writer.parser(jsObj);
         expect(result).toEqual('{"a":1,"b":2,"c":3}');
     });
