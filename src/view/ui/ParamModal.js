@@ -24,7 +24,6 @@ export default class Modal extends React.Component {
     addValue(e, index) {
         let array = this.state.selected;
         if (e.target.value !== "null") {
-            // array.length = this.props.data.length;
             array[index] = e.target.value;
             this.setState({
                 selected: array,
@@ -59,7 +58,7 @@ export default class Modal extends React.Component {
         const selects = this.props.data.map((item, index) => (
             <select
                 key={index}
-                onChange={this.addValue, (e) => this.addValue(e, index)}
+                onChange={(e) => this.addValue(e, index)}
             >
                 <option value="null" selected>
                     Seleziona valore
