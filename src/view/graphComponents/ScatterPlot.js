@@ -21,30 +21,30 @@ export default class ScatterPlot extends React.Component {
         let constraints = {
             maxX: Math.max.apply(
                 Math,
-                this.props.data.map(o => {
+                this.props.data.map((o) => {
                     return o[this.props.params[0]];
                 })
             ),
             maxY: Math.max.apply(
                 Math,
-                this.props.data.map(o => {
+                this.props.data.map((o) => {
                     return o[this.props.params[1]];
                 })
             ),
             minX: Math.min.apply(
                 Math,
-                this.props.data.map(o => {
+                this.props.data.map((o) => {
                     return o[this.props.params[0]];
                 })
             ),
             minY: Math.min.apply(
                 Math,
-                this.props.data.map(o => {
+                this.props.data.map((o) => {
                     return o[this.props.params[1]];
                 })
-            )
+            ),
         };
-        
+
         let x = null;
         let y = null;
         x = scaleLinear()
@@ -53,47 +53,55 @@ export default class ScatterPlot extends React.Component {
         y = scaleLinear()
             .domain([constraints.minY - 2, constraints.maxY + 2])
             .range([height, 0]);
-        
 
         return (
             <div>
-                <svg width = {svgWidth} height = {svgHeight} className = "chart">
+                <svg width={svgWidth} height={svgHeight} className='chart'>
                     <g
-                        width = {width}
-                        height = {height}
-                        transform = {gTransform}
-                        className = "main"
+                        width={width}
+                        height={height}
+                        transform={gTransform}
+                        className='main'
                     >
                         {/*{this.props.result && this.props.paramLength < 4 && this.props.algorithm === "svm"? (*/}
-                        {this.props.result && this.props.paramLength < 4 && this.props.algorithm === "svm"? (
+                        {this.props.result &&
+                        this.props.paramLength < 4 &&
+                        this.props.algorithm === "svm" ? (
                             <Grid
-                                result = {this.props.result.result}
-                                paramLength = {this.props.paramLength}
-                                constraints = {constraints}
-                                width = {width}
-                                height = {height}
-                                scale = {{ x, y }}
+                                result={this.props.result.result}
+                                paramLength={this.props.paramLength}
+                                constraints={constraints}
+                                width={width}
+                                height={height}
+                                scale={{ x, y }}
                             />
                         ) : null}
 
-                        {this.props.result && this.props.paramLength < 3 && this.props.algorithm === "rl"? (
+                        {this.props.result &&
+                        this.props.paramLength < 3 &&
+                        this.props.algorithm === "rl" ? (
                             <TrendLine
-                                result = {this.props.result.result}
-                                params = {this.props.params}
-                                data = {data}
-                                scale = {{ x, y }}
+                                result={this.props.result.result}
+                                params={this.props.params}
+                                data={data}
+                                scale={{ x, y }}
                             />
-                        ): null}
+                        ) : null}
 
-                        <RenderCircles data = {data} params = {this.props.params} algorithm = {this.props.algorithm} scale = {{ x, y }} />
+                        <RenderCircles
+                            data={data}
+                            params={this.props.params}
+                            algorithm={this.props.algorithm}
+                            scale={{ x, y }}
+                        />
 
                         <Axis
-                            axis = "x"
-                            transform = {xAxisTransform}
-                            scale = {axisBottom().scale(x)}
+                            axis='x'
+                            transform={xAxisTransform}
+                            scale={axisBottom().scale(x)}
                         />
                         <Axis
-                            axis="y"
+                            axis='y'
                             transform={yAxisTransform}
                             scale={axisLeft().scale(y)}
                         />

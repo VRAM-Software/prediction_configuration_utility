@@ -9,6 +9,10 @@ export default class Modal extends React.Component {
             selectedIndex: null,
             algorithm: null,
         };
+        this.addValue = this.addValue.bind(this);
+        this.selectIndex = this.selectIndex.bind(this);
+        this.changeAlg = this.changeAlg.bind(this);
+        this.sendInfo = this.sendInfo.bind(this);
     }
 
     componentDidMount() {
@@ -18,7 +22,7 @@ export default class Modal extends React.Component {
         });
     }
 
-    addValue = (e) => {
+    addValue(e) {
         let array = this.state.selected;
         if (e.target.value !== "null") {
             // array.length = this.props.data.length;
@@ -29,25 +33,25 @@ export default class Modal extends React.Component {
         } else {
             array[this.state.selectedIndex] = null;
         }
-    };
+    }
 
-    selectIndex = (indx) => {
+    selectIndex(indx) {
         this.setState({
             selectedIndex: indx,
         });
-    };
+    }
 
-    changeAlg = (e) => {
+    changeAlg(e) {
         this.setState({
             algorithm: e.target.value,
         });
-    };
+    }
 
-    sendInfo = (e) => {
+    sendInfo(e) {
         e.preventDefault();
         this.props.changeAlgorithm(this.state.algorithm);
         this.props.setParams(this.state.selected);
-    };
+    }
 
     render() {
         const obj = this.props.data.map((item, index) => (

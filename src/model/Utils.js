@@ -1,4 +1,4 @@
-const config = require("../config/config")
+const config = require("../config/config");
 class Utils {
     static getDate() {
         const today = new Date();
@@ -19,15 +19,14 @@ class Utils {
         );
     }
 
-    static getTemplateTrainedFile = () => {
+    static getTemplateTrainedFile() {
         return {
             author: config.author,
             version: config.version,
             date: Utils.getDate(),
-            time: Utils.getTime()
+            time: Utils.getTime(),
         };
     }
-
 }
 
 module.exports = Utils;

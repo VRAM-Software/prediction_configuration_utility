@@ -6,17 +6,17 @@ class PerformWriting {
         }
     }
 
-    getWriter = () => {
+    getWriter() {
         throw new TypeError(
             "Do not call abstract method getWriter from child."
         );
-    };
+    }
 
-    callWrite = () => {
+    callWrite() {
         throw new TypeError(
             "Do not call abstract method callWrite from child."
         );
-    };
+    }
 }
 
 module.exports = PerformWriting;

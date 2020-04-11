@@ -5,13 +5,13 @@ class PerformReading {
         }
     }
 
-    getReader = () => {
+    getReader() {
         throw new TypeError(
             "Do not call abstract method getReader from child."
         );
     };
 
-    callRead = () => {
+    callRead() {
         throw new TypeError("Do not call abstract method callRead from child.");
     };
 }

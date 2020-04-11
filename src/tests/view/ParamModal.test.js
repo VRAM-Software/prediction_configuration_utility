@@ -17,7 +17,7 @@ describe("Tests for <ParamModal /> component", () => {
 
     test("renders correctly", () => {
     expect(
-        component.containsMatchingElement(<h3>Seleziona i parametri da utilizzare</h3>)
+        component.containsMatchingElement(<h4>Seleziona i parametri da utilizzare</h4>)
         ).toBeTruthy();
     expect(component.containsAllMatchingElements([<option value="weight" />, <option value="weight" />, <option value="size" />, <option value="size" />]));
     })

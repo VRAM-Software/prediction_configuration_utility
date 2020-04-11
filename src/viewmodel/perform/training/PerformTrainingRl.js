@@ -8,18 +8,21 @@ class PerformTrainingRl extends PerformTraining {
     constructor() {
         super();
         this.trainer = new RlTrainer();
+
+        this.getTrainer = this.getTrainer.bind(this);
+        this.callTrain = this.callTrain.bind(this);
     }
 
-    getTrainer = () => {
+    getTrainer() {
         return this.trainer;
-    };
+    }
 
-    callTrain = (params, data, callback) => {
+    callTrain(params, data, callback) {
         this.trainer.setParams(params);
         this.trainer.setOptions({ numX: params.length, numY: 1 });
         this.result = this.trainer.train(data);
         callback(null, this.result);
-    };
+    }
 }
 
 module.exports = PerformTrainingRl;
