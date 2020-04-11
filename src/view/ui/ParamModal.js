@@ -10,7 +10,6 @@ export default class Modal extends React.Component {
             algorithm: null,
         };
         this.addValue = this.addValue.bind(this);
-        this.selectIndex = this.selectIndex.bind(this);
         this.changeAlg = this.changeAlg.bind(this);
         this.sendInfo = this.sendInfo.bind(this);
     }
@@ -22,23 +21,17 @@ export default class Modal extends React.Component {
         });
     }
 
-    addValue(e) {
+    addValue(e, index) {
         let array = this.state.selected;
         if (e.target.value !== "null") {
             // array.length = this.props.data.length;
-            array[this.state.selectedIndex] = e.target.value;
+            array[index] = e.target.value;
             this.setState({
                 selected: array,
             });
         } else {
-            array[this.state.selectedIndex] = null;
+            array[index] = null;
         }
-    }
-
-    selectIndex(indx) {
-        this.setState({
-            selectedIndex: indx,
-        });
     }
 
     changeAlg(e) {
@@ -66,10 +59,9 @@ export default class Modal extends React.Component {
         const selects = this.props.data.map((item, index) => (
             <select
                 key={index}
-                onChange={this.addValue}
-                onClick={() => this.selectIndex(index)}
+                onChange={this.addValue, (e) => this.addValue(e, index)}
             >
-                <option value='null' selected>
+                <option value="null" selected>
                     Seleziona valore
                 </option>
                 {obj}
@@ -77,9 +69,9 @@ export default class Modal extends React.Component {
         ));
 
         return (
-            <div className='modalContainer'>
-                <div className='setParamModal'>
-                    <div id='frame'>
+            <div className="modalContainer">
+                <div className="setParamModal">
+                    <div id="frame">
                         <div onClick={this.props.close}>🗙</div>
                     </div>
                     <h4>Seleziona l'algoritmo da utilizzare</h4>
@@ -88,31 +80,33 @@ export default class Modal extends React.Component {
                             <option value={null} selected disabled>
                                 Seleziona un algoritmo
                             </option>
-                            <option value='svm'>SVM</option>
-                            <option value='rl'>RL</option>
+                            <option value="svm">SVM</option>
+                            <option value="rl">RL</option>
                         </select>
                     </div>
 
                     <h4>Seleziona i parametri da utilizzare</h4>
-                    <span>
-                        Il primi due valori verrano usati rispettivamente come X
-                        e Y mentre l'ultimo rappresenterà la classificazione dei
-                        dati
-                    </span>
-                    <div className='selectContainerParamModal'>{selects}</div>
-                    <div id='paramModalButtonContainer'>
+                    {this.state.algorithm ? (
+                        <span>
+                            Il primi due valori verrano usati rispettivamente
+                            come X e Y mentre l'ultimo rappresenterà la
+                            classificazione dei dati
+                        </span>
+                    ) : null}
+                    <div className="selectContainerParamModal">{selects}</div>
+                    <div id="paramModalButtonContainer">
                         {this.state.selected.includes(undefined) ||
                         this.state.selected.includes(null) ||
                         this.state.algorithm === null ? (
                             <button
-                                className='customButtonDisabled buttonSmaller'
+                                className="customButtonDisabled buttonSmaller"
                                 disabled
                             >
                                 Disabled
                             </button>
                         ) : (
                             <button
-                                className='customButton buttonSmaller'
+                                className="customButton buttonSmaller"
                                 onClick={this.sendInfo}
                             >
                                 Select
@@ -120,7 +114,7 @@ export default class Modal extends React.Component {
                         )}
                     </div>
                 </div>
-                <div className='modalBackground' onClick={this.props.close} />
+                <div className="modalBackground" onClick={this.props.close} />
             </div>
         );
     }
