@@ -54,18 +54,24 @@ ipcMain.on("train-data", (event, arg) => {
 });
 
 ipcMain.on("read-file", (event, arg) => {
-    const processReading = new ProcessReading();
-    processReading.setStrategy(arg.extension);
-    processReading.setPath(arg.path);
-    processReading.startReading((err, res) => {
+    readFile(arg, (err, res) => {
         if (err) {
             throw err;
         }
         event.reply("finished-reading", res);
-    });
+    })
 });
 
 ipcMain.on("read-file-conf", (event, arg) => {
+    readFile(arg, (err, res) => {
+        if (err) {
+            throw err;
+        }
+        event.reply("finished-reading-conf", res);
+    })
+});
+
+function readFile(arg, callback) {
     const processReading = new ProcessReading();
     processReading.setStrategy(arg.extension);
     processReading.setPath(arg.path);
@@ -73,9 +79,9 @@ ipcMain.on("read-file-conf", (event, arg) => {
         if (err) {
             throw err;
         }
-        event.reply("finished-reading-conf", res);
+        callback(null, res);
     });
-});
+}
 
 
 ipcMain.on("write-file", (event, arg) => {
