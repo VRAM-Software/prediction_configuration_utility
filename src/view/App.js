@@ -39,7 +39,7 @@ export default class App extends React.Component {
         this.selectParams = this.selectParams.bind(this);
         this.setParams = this.setParams.bind(this);
         this.resetState = this.resetState.bind(this);
-        this.loadConfiguration = this.loadConfiguration.bind(this);
+        this.loadConf = this.loadConf.bind(this);
         this.loadData = this.loadData.bind(this);
         this.getFileInfo = this.getFileInfo.bind(this);
         this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this);
@@ -144,10 +144,12 @@ export default class App extends React.Component {
             this.setState({
                 csvFileInfo: obj,
             });
+
             ipcRenderer.send("read-file", {
                 path: obj.path,
                 extension: obj.extension,
             });
+
             ipcRenderer.on("finished-reading", (event, arg) => {
                 if (arg[0]) {
                     let array = Object.keys(arg[0]);
@@ -163,16 +165,18 @@ export default class App extends React.Component {
         }
     }
 
-    loadConfiguration(e) {
+    loadConf(e) {
         if (e.target.files[0]) {
             const obj = this.getFileInfo(e.target.files[0]);
             this.setState({
                 jsonFileInfo: obj,
             });
+
             ipcRenderer.send("read-file", {
                 path: obj.path,
                 extension: obj.extension,
             });
+
             ipcRenderer.on("finished-reading", (event, arg) => {
                 if (arg.notes) {
                     this.setState({
@@ -336,7 +340,7 @@ export default class App extends React.Component {
                     <div>
                         <Chooser
                             type='json'
-                            onChange={this.loadConfiguration}
+                            onChange={this.loadConf}
                             isFileChosen={!!this.state.jsonFileInfo}
                         />
                         <span>

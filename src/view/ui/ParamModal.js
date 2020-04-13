@@ -85,7 +85,7 @@ export default class Modal extends React.Component {
                     </div>
 
                     <h4>Seleziona i parametri da utilizzare</h4>
-                    {this.state.algorithm ? (
+                    {this.state.algorithm === "svm" ? (
                         <span>
                             Il primi due valori verrano usati rispettivamente
                             come X e Y mentre l'ultimo rappresenterà la
