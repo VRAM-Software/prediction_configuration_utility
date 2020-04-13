@@ -7,12 +7,12 @@ export default class Chooser extends React.Component {
             <div>
                 <input
                     className='fileChooserInput'
-                    id='fileChooser'
+                    id={'fileChooser'+this.props.type}
                     type='file'
                     name='file'
                     onChange={this.props.onChange}
                 />
-                <label htmlFor='fileChooser' className='fileChooserLabel'>
+                <label htmlFor={'fileChooser'+this.props.type} className='fileChooserLabel'>
                     <div
                         id='fake-button'
                         className={

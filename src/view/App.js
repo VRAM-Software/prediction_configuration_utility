@@ -39,7 +39,8 @@ export default class App extends React.Component {
         this.selectParams = this.selectParams.bind(this);
         this.setParams = this.setParams.bind(this);
         this.resetState = this.resetState.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.loadConf = this.loadConf.bind(this);
+        this.loadData = this.loadData.bind(this);
         this.getFileInfo = this.getFileInfo.bind(this);
         this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this);
         this.startTraining = this.startTraining.bind(this);
@@ -136,52 +137,60 @@ export default class App extends React.Component {
         });
     }
 
-    onChange(e) {
+    loadData(e) {
         if (e.target.files[0]) {
             const obj = this.getFileInfo(e.target.files[0]);
-            if (obj.extension === "csv") {
-                this.resetState();
-                this.setState({
-                    csvFileInfo: obj,
-                });
-            }
-            if (obj.extension === "json") {
-                this.setState({
-                    jsonFileInfo: obj,
-                });
-            }
+            this.resetState();
+            this.setState({
+                csvFileInfo: obj,
+            });
 
             ipcRenderer.send("read-file", {
                 path: obj.path,
                 extension: obj.extension,
             });
-            if (obj.extension === "csv") {
-                ipcRenderer.on("finished-reading", (event, arg) => {
-                    if (arg[0]) {
-                        let array = Object.keys(arg[0]);
-                        this.selectParams(array);
-                        this.setState({
-                            tempData: arg,
-                            paramLength: array.length,
-                        });
-                    }
-                });
-            } else {
-                ipcRenderer.on("finished-reading", (event, arg) => {
-                    if (arg.notes) {
-                        this.setState({
-                            userNotes: arg.notes,
-                        });
-                    } else {
-                        console.error(
-                            "Il file json inserito non è conforme allo standard dell'applicazione"
-                        );
-                        this.setState({
-                            jsonFileInfo: null,
-                        });
-                    }
-                });
-            }
+
+            ipcRenderer.on("finished-reading", (event, arg) => {
+                if (arg[0]) {
+                    let array = Object.keys(arg[0]);
+                    this.selectParams(array);
+                    this.setState({
+                        tempData: arg,
+                        paramLength: array.length,
+                    });
+                }
+            });
+        } else {
+            console.log("Il file è nullo");
+        }
+    }
+
+    loadConf(e) {
+        if (e.target.files[0]) {
+            const obj = this.getFileInfo(e.target.files[0]);
+            this.setState({
+                jsonFileInfo: obj,
+            });
+
+            ipcRenderer.send("read-file", {
+                path: obj.path,
+                extension: obj.extension,
+            });
+
+            ipcRenderer.on("finished-reading", (event, arg) => {
+                if (arg.notes) {
+                    this.setState({
+                        userNotes: arg.notes,
+                    });
+                } else {
+                    console.error(
+                        "Il file json inserito non è conforme allo standard dell'applicazione"
+                    );
+                    this.setState({
+                        jsonFileInfo: null,
+                    });
+                }
+            });
         } else {
             console.log("Il file è nullo");
         }
@@ -319,7 +328,7 @@ export default class App extends React.Component {
                     <div>
                         <Chooser
                             type='csv'
-                            onChange={this.onChange}
+                            onChange={this.loadData}
                             isFileChosen={!!this.state.csvFileInfo}
                         />
                         <span>
@@ -331,7 +340,7 @@ export default class App extends React.Component {
                     <div>
                         <Chooser
                             type='json'
-                            onChange={this.onChange}
+                            onChange={this.loadConf}
                             isFileChosen={!!this.state.jsonFileInfo}
                         />
                         <span>

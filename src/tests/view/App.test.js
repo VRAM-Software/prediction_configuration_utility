@@ -335,8 +335,7 @@ describe("Method tests for <App/> component", () => {
         file.name = "test.json";
         file.path = "/path/to/json";
         mountedComponent
-            .find("#fileChooser")
-            .at(1)
+            .find("#fileChooserjson")
             .simulate("change", { target: { files: [file] } });
         expect(mountedComponent.state("jsonFileInfo")).toEqual({
             name: "test.json",
@@ -354,8 +353,7 @@ describe("Method tests for <App/> component", () => {
         file.name = "test.csv";
         file.path = "/path/to/csv";
         mountedComponent
-            .find("#fileChooser")
-            .at(0)
+            .find("#fileChoosercsv")
             .simulate("change", { target: { files: [file] } });
         expect(mountedComponent.state("csvFileInfo")).toEqual({
             name: "test.csv",
@@ -368,8 +366,12 @@ describe("Method tests for <App/> component", () => {
     test("onChange function should deal with null files correctly", () => {
         console.log = jest.fn();
         mountedComponent
-            .find("#fileChooser")
-            .at(0)
+            .find("#fileChoosercsv")
+            .simulate("change", { target: { files: [null] } });
+
+        expect(console.log).toHaveBeenCalledWith("Il file è nullo");
+        mountedComponent
+            .find("#fileChooserjson")
             .simulate("change", { target: { files: [null] } });
 
         expect(console.log).toHaveBeenCalledWith("Il file è nullo");
