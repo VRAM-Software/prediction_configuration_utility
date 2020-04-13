@@ -65,6 +65,19 @@ ipcMain.on("read-file", (event, arg) => {
     });
 });
 
+ipcMain.on("read-file-conf", (event, arg) => {
+    const processReading = new ProcessReading();
+    processReading.setStrategy(arg.extension);
+    processReading.setPath(arg.path);
+    processReading.startReading((err, res) => {
+        if (err) {
+            throw err;
+        }
+        event.reply("finished-reading-conf", res);
+    });
+});
+
+
 ipcMain.on("write-file", (event, arg) => {
     const processWriting = new ProcessWriting("json");
     processWriting.setStrategy("json");

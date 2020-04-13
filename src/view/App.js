@@ -172,12 +172,12 @@ export default class App extends React.Component {
                 jsonFileInfo: obj,
             });
 
-            ipcRenderer.send("read-file", {
+            ipcRenderer.send("read-file-conf", {
                 path: obj.path,
                 extension: obj.extension,
             });
 
-            ipcRenderer.on("finished-reading", (event, arg) => {
+            ipcRenderer.on("finished-reading-conf", (event, arg) => {
                 if (arg.notes) {
                     this.setState({
                         userNotes: arg.notes,
