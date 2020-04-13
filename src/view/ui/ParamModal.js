@@ -5,67 +5,115 @@ export default class Modal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isXselected: false,
-            selected: []
+            selected: [],
+            selectedIndex: null,
+            algorithm: null,
         };
+        this.addValue = this.addValue.bind(this);
+        this.changeAlg = this.changeAlg.bind(this);
+        this.sendInfo = this.sendInfo.bind(this);
     }
 
-    setX = (e) => {
-        e.preventDefault();
-        let array = this.state.selected;
-        array[0] = e.target.value;
+    componentDidMount() {
+        let array = new Array(this.props.data.length);
         this.setState({
             selected: array,
-            isXselected: true
         });
     }
 
-    setY = (e) => {
-        e.preventDefault();
+    addValue(e, index) {
         let array = this.state.selected;
-        array[1] = e.target.value;
+        if (e.target.value !== "null") {
+            array[index] = e.target.value;
+            this.setState({
+                selected: array,
+            });
+        } else {
+            array[index] = null;
+        }
+    }
+
+    changeAlg(e) {
         this.setState({
-            selected: array
+            algorithm: e.target.value,
         });
     }
-    setOrder = () => {
-        let array = [];
-        array.push(this.state.selected[0]);
-        array.push(this.state.selected[1]);
-        for (let i=0; i<this.props.data.length; i++) {
-            if (!this.state.selected.includes(this.props.data[i])) {
-                array.push(this.props.data[i]);
-            }
-        }
-        this.props.setParams(array);
+
+    sendInfo(e) {
+        e.preventDefault();
+        this.props.changeAlgorithm(this.state.algorithm);
+        this.props.setParams(this.state.selected);
     }
 
     render() {
         const obj = this.props.data.map((item, index) => (
-            <option key={index} disabled={this.state.selected.includes(item) ? true : false}>
+            <option
+                key={index}
+                disabled={this.state.selected.includes(item) ? true : false}
+            >
                 {item}
             </option>
-        ))
+        ));
+
+        const selects = this.props.data.map((item, index) => (
+            <select
+                key={index}
+                onChange={(e) => this.addValue(e, index)}
+            >
+                <option value="null" selected>
+                    Seleziona valore
+                </option>
+                {obj}
+            </select>
+        ));
+
         return (
             <div className="modalContainer">
-                <div className="saveJsonModal">
-                    <h3>Seleziona i parametri da utilizzare</h3>
-                    <div className="selectContainerParamModal">
-                        <select onChange={this.setX}>
-                            <option value={null} disabled selected>Seleziona X</option>
-                            {obj}
-                        </select>
-
-                        <select onChange={this.setY} disabled={this.state.isXselected ? false : true}>
-                            <option value={null} disabled selected>Seleziona Y</option>
-                            {obj}
+                <div className="setParamModal">
+                    <div id="frame">
+                        <div onClick={this.props.close}>🗙</div>
+                    </div>
+                    <h4>Seleziona l'algoritmo da utilizzare</h4>
+                    <div>
+                        <select onChange={this.changeAlg}>
+                            <option value={null} selected disabled>
+                                Seleziona un algoritmo
+                            </option>
+                            <option value="svm">SVM</option>
+                            <option value="rl">RL</option>
                         </select>
                     </div>
+
+                    <h4>Seleziona i parametri da utilizzare</h4>
+                    {this.state.algorithm ? (
+                        <span>
+                            Il primi due valori verrano usati rispettivamente
+                            come X e Y mentre l'ultimo rappresenterà la
+                            classificazione dei dati
+                        </span>
+                    ) : null}
+                    <div className="selectContainerParamModal">{selects}</div>
                     <div id="paramModalButtonContainer">
-                        {this.state.selected.length === 2 ? <button className="customButton buttonSmaller" onClick={() => this.setOrder()}>Select</button> : <button className="customButtonDisabled buttonSmaller" disabled>Selected</button>}
-                    </div>      
+                        {this.state.selected.includes(undefined) ||
+                        this.state.selected.includes(null) ||
+                        this.state.algorithm === null ? (
+                            <button
+                                className="customButtonDisabled buttonSmaller"
+                                disabled
+                            >
+                                Disabled
+                            </button>
+                        ) : (
+                            <button
+                                className="customButton buttonSmaller"
+                                onClick={this.sendInfo}
+                            >
+                                Select
+                            </button>
+                        )}
+                    </div>
                 </div>
-                <div className="modalBackground"/>
+                <div className="modalBackground" onClick={this.props.close} />
             </div>
         );
     }

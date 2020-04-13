@@ -7,15 +7,18 @@ class PerformReadingCsv extends PerformReading {
     constructor() {
         super();
         this.reader = new ReadJson();
+
+        this.getReader = this.getReader.bind(this);
+        this.callRead = this.callRead.bind(this);
     }
 
-    getReader = () => {
+    getReader() {
         return this.reader;
-    };
+    }
 
-    callRead = (path, callback) => {
+    callRead(path, callback) {
         this.reader.readFile(path, callback);
-    };
+    }
 }
 
 module.exports = PerformReadingCsv;

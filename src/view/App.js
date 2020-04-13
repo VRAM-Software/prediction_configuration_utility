@@ -29,49 +29,70 @@ export default class App extends React.Component {
             array: [],
             paramLength: null,
         };
+        this.setUserData = this.setUserData.bind(this);
+        this.handleCloseParamModal = this.handleCloseParamModal.bind(this);
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleChangeNotes = this.handleChangeNotes.bind(this);
+        this.handleChangeFileName = this.handleChangeFileName.bind(this);
+        this.handleSaveJson = this.handleSaveJson.bind(this);
+        this.selectParams = this.selectParams.bind(this);
+        this.setParams = this.setParams.bind(this);
+        this.resetState = this.resetState.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.getFileInfo = this.getFileInfo.bind(this);
+        this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this);
+        this.startTraining = this.startTraining.bind(this);
     }
 
-    setUserData = () => {
+    setUserData() {
         const data = this.state.tempData;
         this.setState({
             userData: data,
         });
-    };
+    }
 
-    handleCloseParamModal = (e) => {
+    handleCloseParamModal(e) {
         e.preventDefault();
-        this.setState({
-            isParamModalEnabled: false,
-        });
-    };
+        if (this.state.userData) {
+            this.setState({
+                isParamModalEnabled: false,
+            });
+        } else {
+            this.setState({
+                isParamModalEnabled: false,
+            });
+            this.resetState();
+        }
+    }
 
-    handleOpenModal = (e) => {
+    handleOpenModal(e) {
         e.preventDefault();
         this.setState({
             isModalEnabled: true,
         });
-    };
+    }
 
-    handleCloseModal = (e) => {
+    handleCloseModal(e) {
         e.preventDefault();
         this.setState({
             isModalEnabled: false,
         });
-    };
+    }
 
-    handleChangeNotes = (e) => {
+    handleChangeNotes(e) {
         this.setState({
             userNotes: e.target.value,
         });
-    };
+    }
 
-    handleChangeFileName = (e) => {
+    handleChangeFileName(e) {
         this.setState({
             fileName: e.target.value,
         });
-    };
+    }
 
-    handleSaveJson = (e) => {
+    handleSaveJson(e) {
         e.preventDefault();
         ipcRenderer.send("write-file", {
             name: this.state.fileName,
@@ -79,24 +100,24 @@ export default class App extends React.Component {
             trainedJson: this.state.trainedJson,
         });
         this.handleCloseModal(e);
-    };
+    }
 
-    selectParams = (data) => {
+    selectParams(data) {
         this.setState({
             isParamModalEnabled: true,
             params: data,
         });
-    };
+    }
 
-    setParams = (data) => {
+    setParams(data) {
         this.setState({
             params: data,
             isParamModalEnabled: false,
         });
         this.setUserData();
-    };
+    }
 
-    resetState = () => {
+    resetState() {
         this.setState({
             userData: null,
             userNotes: "",
@@ -113,9 +134,9 @@ export default class App extends React.Component {
             array: [],
             paramLength: null,
         });
-    };
+    }
 
-    onChange = (e) => {
+    onChange(e) {
         if (e.target.files[0]) {
             const obj = this.getFileInfo(e.target.files[0]);
             if (obj.extension === "csv") {
@@ -134,49 +155,59 @@ export default class App extends React.Component {
                 path: obj.path,
                 extension: obj.extension,
             });
-            ipcRenderer.on("finished-reading", (event, arg) => {
-                if (obj.extension === "csv") {
-                    let array = Object.keys(arg[0]);
-                    this.selectParams(array);
-                    this.setState({
-                        tempData: arg,
-                        paramLength: array.length,
-                    });
-                } else {
-                    this.setState({
-                        userNotes: arg.notes,
-                    });
-                }
-            });
+            if (obj.extension === "csv") {
+                ipcRenderer.on("finished-reading", (event, arg) => {
+                    if (arg[0]) {
+                        let array = Object.keys(arg[0]);
+                        this.selectParams(array);
+                        this.setState({
+                            tempData: arg,
+                            paramLength: array.length,
+                        });
+                    }
+                });
+            } else {
+                ipcRenderer.on("finished-reading", (event, arg) => {
+                    if (arg.notes) {
+                        this.setState({
+                            userNotes: arg.notes,
+                        });
+                    } else {
+                        console.error(
+                            "Il file json inserito non è conforme allo standard dell'applicazione"
+                        );
+                        this.setState({
+                            jsonFileInfo: null,
+                        });
+                    }
+                });
+            }
         } else {
             console.log("Il file è nullo");
         }
-    };
+    }
 
-    getFileInfo = (file) => {
+    getFileInfo(file) {
         return {
             name: file.name,
             path: file.path,
             type: file.type,
             extension: file.name.split(".").pop(),
         };
-    };
+    }
 
-    handleChangeAlgorithm = (algorithm) => {
+    handleChangeAlgorithm(algorithm) {
         if (algorithm !== this.state.algorithm) {
-            this.setState(
-                {
-                    algorithm: algorithm,
-                    trainedJson: null,
-                },
-                () => {}
-            );
+            this.setState({
+                algorithm: algorithm,
+                trainedJson: null,
+            });
         } else {
             console.log("Algoritmo scelto è già inizializzato");
         }
-    };
+    }
 
-    startTraining = (e) => {
+    startTraining(e) {
         e.preventDefault();
         this.setState({
             isTraining: true,
@@ -193,7 +224,7 @@ export default class App extends React.Component {
                 trainedJson: arg,
             });
         });
-    };
+    }
 
     render() {
         const group = (
@@ -225,6 +256,12 @@ export default class App extends React.Component {
                     {this.state.trainedJson ? (
                         <span className='done'>Addestramento avvenuto</span>
                     ) : null}
+                    <button
+                        className='customButton buttonNormal'
+                        onClick={() => this.selectParams(this.state.params)}
+                    >
+                        Scegli nuovi parametri
+                    </button>
                 </div>
             </>
         );
@@ -272,10 +309,8 @@ export default class App extends React.Component {
               ));
 
         return (
-            <div className="App">
-                <span id="metaText">
-                    VRAM Software Applicativo Esterno
-                </span>
+            <div className='App'>
+                <span id='metaText'>VRAM Software Applicativo Esterno</span>
 
                 <div className='contentContainer'>
                     {this.state.userData !== null ? group : null}
@@ -340,6 +375,7 @@ export default class App extends React.Component {
                         data={this.state.params}
                         setParams={this.setParams}
                         close={this.handleCloseParamModal}
+                        changeAlgorithm={this.handleChangeAlgorithm}
                     />
                 ) : null}
             </div>

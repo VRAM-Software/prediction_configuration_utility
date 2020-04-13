@@ -15,7 +15,7 @@ export default class Axis extends React.Component {
     render() {
         return (
             <g
-                className="main axis date"
+                className='main axis date'
                 transform={this.props.transform}
                 ref={this.props.axis}
             />

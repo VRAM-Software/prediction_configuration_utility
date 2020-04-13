@@ -9,7 +9,7 @@ export default class Graph extends React.Component {
                 result={this.props.result}
                 paramLength={this.props.paramLength}
                 algorithm={this.props.algorithm}
-                graph="svm"
+                graph='svm'
             />
         );
     }

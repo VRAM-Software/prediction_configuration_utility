@@ -72,8 +72,6 @@ describe("test for training algorithm's wrapper class", () => {
         expect(result.includes("date")).toBeTruthy();
         expect(result.includes("time")).toBeTruthy();
         expect(result.includes("pluginAim")).toBeTruthy();
-        expect(result.includes("trainData")).toBeTruthy();
-        expect(result.includes("trainLabels")).toBeTruthy();
         expect(result.includes("predictors")).toBeTruthy();
         expect(result.includes("result")).toBeTruthy();
     });

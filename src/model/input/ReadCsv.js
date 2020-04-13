@@ -4,14 +4,15 @@ const csv = require("csvtojson");
 class ReadCsv extends Read {
     constructor() {
         super();
+        this.parser = this.parser.bind(this);
     }
 
-    parser = (data, callback) => {
+    parser(data, callback) {
         csv({
-            delimiter: "auto"
+            delimiter: "auto",
         })
             .fromString(data)
-            .then(res => {
+            .then((res) => {
                 callback(null, res);
             });
     }

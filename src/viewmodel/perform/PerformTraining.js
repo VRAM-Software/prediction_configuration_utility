@@ -7,17 +7,17 @@ class PerformTraining {
         }
     }
 
-    getTrainer = () => {
+    getTrainer() {
         throw new TypeError(
             "Do not call abstract method getTrainer from child."
         );
-    };
+    }
 
-    callTrain = () => {
+    callTrain() {
         throw new TypeError(
             "Do not call abstract method callTrain from child."
         );
-    };
+    }
 }
 
 module.exports = PerformTraining;

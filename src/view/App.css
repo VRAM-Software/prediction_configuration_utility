@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     border-radius: 4px;
+    user-select: none;
 }
 
 .App {
@@ -250,6 +251,26 @@ h3 {
     align-items: center;
 }
 
+.setParamModal {
+    width: 420px;
+    height: 380px;
+    background-color: whitesmoke;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-220px, -190px);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.setParamModal h4, 
+.setParamModal span {
+    width: 95%;
+}
+
 .saveJsonModal h3 {
     width: 90%;
 }
@@ -298,24 +319,58 @@ input:focus {
 
 .selectContainerParamModal {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: auto;
 }
 .selectContainerParamModal select {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 30%;
+    width: 150px;
+    height: 25px;
+    margin: 5px;
 }
 
 #paramModalButtonContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 10%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
 
 .done {
     position: relative;
     margin-top: 20px;
+}
+
+#frame {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 0;
+    height: 25px;
+    width: 100%;
+}
+
+#frame div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 25px;
+    padding-bottom: 2px ;
+}
+
+#frame div:hover {
+    background-color: red;
+}
+
+.setParamModal h4 {
+    margin-top: 5px;
 }

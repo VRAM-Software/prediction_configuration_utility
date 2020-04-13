@@ -6,15 +6,15 @@ export default class Chooser extends React.Component {
         return (
             <div>
                 <input
-                    className="fileChooserInput"
-                    id="fileChooser"
-                    type="file"
-                    name="file"
+                    className='fileChooserInput'
+                    id='fileChooser'
+                    type='file'
+                    name='file'
                     onChange={this.props.onChange}
                 />
-                <label htmlFor="fileChooser" className="fileChooserLabel">
+                <label htmlFor='fileChooser' className='fileChooserLabel'>
                     <div
-                        id="fake-button"
+                        id='fake-button'
                         className={
                             this.props.isFileChosen ? "file-chosen" : "no-file"
                         }
