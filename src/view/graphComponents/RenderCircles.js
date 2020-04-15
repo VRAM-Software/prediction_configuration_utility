@@ -4,7 +4,7 @@ export default class RenderCircles extends React.Component {
         let renderCircles = null;
         if (this.props.algorithm === "svm") {
             renderCircles = this.props.data.map((item, index) =>
-                item.label > 0 ? (
+                item[this.props.params[this.props.params.length-1]] > 0 ? (
                     <circle
                         cx={this.props.scale.x(item[this.props.params[0]])}
                         cy={this.props.scale.y(item[this.props.params[1]])}
