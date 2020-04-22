@@ -39,16 +39,30 @@ export default class Grid extends React.Component {
 
     render() {
         const coords = [];
+        let multiplier = 1;
+        if (this.props.constraints.maxX > 0 && this.props.constraints.minX > 0) {
+            if (this.props.constraints.maxX - this.props.constraints.minX > 80) {
+                multiplier = 10;
+            }
+        } else if (this.props.constraints.maxX < 0 && this.props.constraints.minX < 0) {
+            if (Math.abs(this.props.constraints.minX) - Math.abs(this.props.constraints.maxX) > 80) {
+                multiplier = 10;
+            }
+        } else {
+            if (this.props.constraints.maxX + Math.abs(this.props.constraints.minX) > 80) {
+                multiplier = 10;
+            }
+        }
         if (this.props.result) {
             for (
                 let x = this.props.constraints.minX - 2;
                 x <= this.props.constraints.maxX + 2;
-                x += 0.2
+                x += 0.2 * multiplier
             ) {
                 for (
                     let y = this.props.constraints.minY - 2;
                     y <= this.props.constraints.maxY + 2;
-                    y += 0.2
+                    y += 0.2 * multiplier
                 ) {
                     const predictedClass = this.predictClass([x, y]);
                     const predictedValue = predictedClass;

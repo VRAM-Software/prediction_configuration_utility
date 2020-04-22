@@ -24,12 +24,30 @@ const constraints = {
     minY: 0
 }
 
+const bigConstraints = {
+    maxX: 80,
+    maxY: 80,
+    minX: -50,
+    minY: -50
+}
+
+const cons = {
+    maxX: -80,
+    maxY: -80,
+    minX: -50,
+    minY: -50
+}
+
 configure({ adapter: new Adapter() });
 
 describe("Test per il componente Grid", () => {
     let component;
+    let componentBig;
+    let comp;
     beforeEach(() => {
         component = shallow(<Grid scale={{x, y}} result={result} constraints={constraints}/>);
+        componentBig = shallow(<Grid scale={{x, y}} result={result} constraints={bigConstraints}/>)
+        comp = shallow(<Grid scale={{x, y}} result={result} constraints={cons}/>)
     });
 
     test("should render component properly", () => {
