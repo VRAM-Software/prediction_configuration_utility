@@ -6,8 +6,10 @@ class SvmTrainer {
     svm = null;
     trainedJson = null;
     data = null;
-    labels = null;
-    params = null;
+    dataForTrain = [];
+    dataForQuality = [];
+    labelsForQuality = [];
+    params = [];
     options = null;
 
     constructor() {
@@ -19,37 +21,73 @@ class SvmTrainer {
         };
 
         this.train = this.train.bind(this);
+        this.splitData = this.splitData.bind(this);
         this.translateData = this.translateData.bind(this);
+        this.translateLabels = this.translateLabels.bind(this);
+        //this.translateToQuality = this.translateToQuality.bind(this);
         this.setParams = this.setParams.bind(this);
         this.buildTrainedObject = this.buildTrainedObject.bind(this);
+        this.getDataForQualityMeasure = this.getDataForQualityMeasure.bind(this);
         this.setQualityIndex = this.setQualityIndex.bind(this);
+        this.buildQualityArray = this.buildQualityArray.bind(this);
     }
 
     train(data) {
+        let dataTrain = [];
+        let labelsTrain = [];
+
         this.svm = new SVM();
         this.svm.setOptions(this.options);
-        this.translateData(data);
-        this.svm.train(this.data, this.labels);
+
+        this.splitData(data);
+        dataTrain = this.translateData(this.dataForTrain);
+        labelsTrain = this.translateLabels(this.dataForTrain);
+
+        this.svm.train(dataTrain, labelsTrain);
+
+        //this.setQualityIndex();
+
         this.trainedJson = this.svm.toJSON();
         return this.buildTrainedObject(this.trainedJson);
     }
 
+    splitData(data) {
+        let len = Math.floor(((data.length * 2) / 3));
+        let dataSplitted = [];
+        for(let i = 0; i < len; i++){
+            dataSplitted.push(data[i]);
+        }
+        this.dataForTrain = dataSplitted;
+        dataSplitted = [];
+        for(let i = len; i < data.length; i++){
+            dataSplitted.push(data[i]);
+        }
+        this.dataForQuality = dataSplitted;
+    }
+
     translateData(data) {
-        const temp = [];
-        let temp2 = [];
-        const labels = [];
+        const dataTranslatedMatrix = [];
+        let dataTranslatedArray = [];
         for (let i = 0; i < data.length; i++) {
-            temp2 = [];
+            dataTranslatedArray = [];
             for (let j = 0; j < this.params.length - 1; j++) {
-                temp2.push(parseFloat(data[i][this.params[j]]));
+                dataTranslatedArray.push(
+                    parseFloat(data[i][this.params[j]])
+                );
             }
-            temp.push(temp2);
-            labels.push(
-                parseFloat(data[i][this.params[this.params.length - 1]])
+            dataTranslatedMatrix.push(dataTranslatedArray);
+        }
+        return dataTranslatedMatrix;
+    }
+
+    translateLabels(labels) {
+        let translatedLabel = [];
+        for (let i = 0; i < labels.length; i++) {
+            translatedLabel.push(
+                parseFloat(labels[i][this.params[this.params.length - 1]])
             );
         }
-        this.data = temp;
-        this.labels = labels;
+        return translatedLabel;
     }
 
     setParams(params) {
@@ -66,7 +104,34 @@ class SvmTrainer {
         return file;
     }
 
-    setQualityIndex(data) {}
+    //Costruzione 2 array
+    //Calcolo indice
+    //almeno 3 dati per calcolare indice
+    setQualityIndex(data) {
+        let qualityData = this.translateData(this.dataForQuality);
+        let qualityLabels = this.translateLabels(this.dataForQuality);
+        let qualityDataNew = this.getDataForQualityMeasure(qualityData);
+        let csvIndexArray = this.buildQualityArray(qualityLabels);
+        let predictedIndexArray = this.buildQualityArray(qualityDataNew);
+    }
+
+    buildQualityArray(dataQualityNew) {
+        let indexArray = [];
+        for(let i = 0; i < dataQualityNew.length; i++) {
+            if(dataQualityNew[i] === 1) {
+                indexArray.push(i);
+            }
+        }
+        return indexArray;
+    }
+
+    getDataForQualityMeasure(qualityData) {
+        let qualityDataNew = [];
+        for(let i = 0; i < qualityData.length; i++) {
+            qualityDataNew.push(this.svm.predictClass(qualityData[i]));
+        }
+        return qualityDataNew;
+    }
 }
 
 module.exports = SvmTrainer;
