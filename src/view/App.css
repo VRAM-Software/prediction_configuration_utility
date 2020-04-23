@@ -66,6 +66,7 @@
     color: black;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    height: 50px;
 }
 
 .customButtonDisabled {
@@ -128,7 +129,7 @@
     height: 504px;
 }
 
-.infoContainer h3 {
+.margin-top-medium {
     width: 80%;
 }
 
@@ -147,7 +148,8 @@
 }
 
 .margin-top-medium {
-    margin-top: 25px;
+    margin-top: 15px;
+    margin-bottom: 0px;
 }
 
 #checkContainer {
@@ -156,6 +158,7 @@
 
 #checkContainer h3 {
     width: 100%;
+    margin-bottom: 5px;
 }
 
 #checkBoxInfo {
@@ -374,3 +377,42 @@ input:focus {
 .setParamModal h4 {
     margin-top: 5px;
 }
+
+.quality-index {
+    margin:5px;
+    width: 50%;
+    padding: 5px;
+    margin-top:0px;
+    margin-bottom: 0px;
+}
+.quality-index-h3 {
+    margin-top: 0px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+.quality-index-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.index {
+    background-color: #4392f1;
+    /*background-color: #f9dc5c;*/
+    /*background-color: #D7DEDC;*/
+    margin: 10px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    width: 75px;
+    height: 75px;
+    text-align: center;
+
+
+}
+
+.quality-index-val {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+

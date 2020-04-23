@@ -45,11 +45,11 @@ ipcMain.on("train-data", (event, arg) => {
     processTraining.setStrategy(arg.algorithm);
     processTraining.setParams(arg.params);
     processTraining.setData(arg.data);
-    processTraining.startTraining((err, res) => {
+    processTraining.startTraining((err, res, qualityIndex) => {
         if (err) {
             throw err;
         }
-        event.reply("finished-training", res);
+        event.reply("finished-training", res, qualityIndex);
     });
 });
 

@@ -28,6 +28,7 @@ export default class App extends React.Component {
             params: [],
             array: [],
             paramLength: null,
+            qualityIndex: null,
         };
         this.setUserData = this.setUserData.bind(this);
         this.handleCloseParamModal = this.handleCloseParamModal.bind(this);
@@ -134,6 +135,7 @@ export default class App extends React.Component {
             params: [],
             array: [],
             paramLength: null,
+            qualityIndex: null,
         });
     }
 
@@ -226,11 +228,12 @@ export default class App extends React.Component {
             params: this.state.params,
             algorithm: this.state.algorithm,
         });
-        ipcRenderer.on("finished-training", (event, arg) => {
+        ipcRenderer.on("finished-training", (event, arg, qualityI) => {
             this.setState({
                 isTrainingDone: true,
                 isTraining: false,
                 trainedJson: arg,
+                qualityIndex: qualityI,
             });
         });
     }
@@ -255,6 +258,12 @@ export default class App extends React.Component {
                         handleCheckBox={this.handleChangeAlgorithm}
                         algorithm={this.state.algorithm}
                     />
+                    <button
+                        className='customButton buttonNormal'
+                        onClick={() => this.selectParams(this.state.params)}
+                    >
+                        Scegli nuovi parametri
+                    </button>
                     <h3 className='margin-top-medium'>
                         Inserisci note al file di configurazione
                     </h3>
@@ -265,12 +274,22 @@ export default class App extends React.Component {
                     {this.state.trainedJson ? (
                         <span className='done'>Addestramento avvenuto</span>
                     ) : null}
-                    <button
-                        className='customButton buttonNormal'
-                        onClick={() => this.selectParams(this.state.params)}
-                    >
-                        Scegli nuovi parametri
-                    </button>
+
+                    {this.state.qualityIndex && this.state.algorithm === "svm" ? (
+                        <div className='quality-index'>
+                            <h3 className='quality-index-h3'>Indici di qualità</h3>
+                                <div className='quality-index-text'>
+                                    <div className='index'>
+                                        <p className='quality-index-val'>{this.state.qualityIndex.precision*100}%</p>
+                                        <p>Precision</p>
+                                    </div>
+                                    <div className='index'>
+                                        <p className='quality-index-val'>{this.state.qualityIndex.recall*100}%</p>
+                                        <p>Recall</p>
+                                    </div>
+                                </div>
+                        </div>
+                    ): null}
                 </div>
             </>
         );

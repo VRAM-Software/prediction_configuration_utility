@@ -4,6 +4,7 @@ const SvmTrainer = require("../../../model/algorithm/SvmTrainer");
 class PerformTrainingSvm extends PerformTraining {
     trainer = null;
     result = null;
+    qualityIndex = null;
 
     constructor() {
         super();
@@ -20,8 +21,9 @@ class PerformTrainingSvm extends PerformTraining {
     callTrain(params, data, callback) {
         this.trainer.setParams(params);
         this.result = this.trainer.train(data);
-        console.log(this.trainer.getQualityIndex());
-        callback(null, this.result);
+        this.qualityIndex = this.trainer.getQualityIndex();
+        console.log(this.qualityIndex);
+        callback(null, this.result, this.qualityIndex);
     }
 }
 
