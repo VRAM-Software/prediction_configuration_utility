@@ -279,14 +279,46 @@ export default class App extends React.Component {
                         <div className='quality-index'>
                             <h3 className='quality-index-h3'>Indici di qualità</h3>
                                 <div className='quality-index-text'>
-                                    <div className='index'>
-                                        <p className='quality-index-val'>{this.state.qualityIndex.precision*100}%</p>
-                                        <p>Precision</p>
-                                    </div>
-                                    <div className='index'>
-                                        <p className='quality-index-val'>{this.state.qualityIndex.recall*100}%</p>
-                                        <p>Recall</p>
-                                    </div>
+
+                                    {this.state.qualityIndex.precision>0.6 ? (
+                                        <div className='good-index index'>
+                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.precision*100)}%</p>
+                                            <p>Precision</p>
+                                        </div>
+                                    ): null}
+                                    {this.state.qualityIndex.precision>0.4 && this.state.qualityIndex.precision<=0.6 ? (
+                                        <div className='middle-index index'>
+                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.precision*100)}%</p>
+                                            <p>Precision</p>
+                                        </div>
+                                    ): null}
+                                    {this.state.qualityIndex.precision<=0.4 ? (
+                                        <div className='bad-index index'>
+                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.precision*100)}%</p>
+                                            <p>Precision</p>
+                                        </div>
+                                    ): null}
+
+                                    {this.state.qualityIndex.recall>0.6 ? (
+                                        <div className='good-index index'>
+                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.recall*100)}%</p>
+                                            <p>Recall</p>
+                                        </div>
+                                    ): null}
+                                    {this.state.qualityIndex.recall>0.4 && this.state.qualityIndex.recall<=0.6 ? (
+                                        <div className='middle-index index'>
+                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.recall*100)}%</p>
+                                            <p>Recall</p>
+                                        </div>
+                                    ): null}
+                                    {this.state.qualityIndex.recall<0.4 ? (
+                                        <div className='bad-index index'>
+                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.recall*100)}%</p>
+                                            <p>Recall</p>
+                                        </div>
+                                    ): null}
+
+
                                 </div>
                         </div>
                     ): null}

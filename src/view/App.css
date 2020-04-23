@@ -398,7 +398,6 @@ input:focus {
 
 .index {
     background-color: #4392f1;
-    /*background-color: #f9dc5c;*/
     /*background-color: #D7DEDC;*/
     margin: 10px;
     margin-top: 5px;
@@ -406,8 +405,18 @@ input:focus {
     width: 75px;
     height: 75px;
     text-align: center;
+}
 
+.good-index {
+    background-color: rgb(80,200,80)
+}
 
+.middle-index {
+    background-color: #f9dc5c;
+}
+
+.bad-index {
+    background-color: red;
 }
 
 .quality-index-val {
