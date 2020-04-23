@@ -1,3 +1,4 @@
+const precisionRecallModule = require('precision-recall');
 const modules = require("ml-modules");
 const SVM = modules.SVM;
 const Utils = require("../Utils");
@@ -8,9 +9,9 @@ class SvmTrainer {
     data = null;
     dataForTrain = [];
     dataForQuality = [];
-    labelsForQuality = [];
     params = [];
     options = null;
+    qualityIndex = null;
 
     constructor() {
         this.options = {
@@ -24,12 +25,12 @@ class SvmTrainer {
         this.splitData = this.splitData.bind(this);
         this.translateData = this.translateData.bind(this);
         this.translateLabels = this.translateLabels.bind(this);
-        //this.translateToQuality = this.translateToQuality.bind(this);
         this.setParams = this.setParams.bind(this);
         this.buildTrainedObject = this.buildTrainedObject.bind(this);
         this.getDataForQualityMeasure = this.getDataForQualityMeasure.bind(this);
         this.setQualityIndex = this.setQualityIndex.bind(this);
         this.buildQualityArray = this.buildQualityArray.bind(this);
+        this.getQualityIndex = this.getQualityIndex.bind(this);
     }
 
     train(data) {
@@ -44,9 +45,7 @@ class SvmTrainer {
         labelsTrain = this.translateLabels(this.dataForTrain);
 
         this.svm.train(dataTrain, labelsTrain);
-
-        //this.setQualityIndex();
-
+        this.setQualityIndex();
         this.trainedJson = this.svm.toJSON();
         return this.buildTrainedObject(this.trainedJson);
     }
@@ -104,15 +103,13 @@ class SvmTrainer {
         return file;
     }
 
-    //Costruzione 2 array
-    //Calcolo indice
-    //almeno 3 dati per calcolare indice
-    setQualityIndex(data) {
+    setQualityIndex() {
         let qualityData = this.translateData(this.dataForQuality);
         let qualityLabels = this.translateLabels(this.dataForQuality);
         let qualityDataNew = this.getDataForQualityMeasure(qualityData);
         let csvIndexArray = this.buildQualityArray(qualityLabels);
         let predictedIndexArray = this.buildQualityArray(qualityDataNew);
+        this.qualityIndex = precisionRecallModule.default(csvIndexArray, predictedIndexArray);
     }
 
     buildQualityArray(dataQualityNew) {
@@ -131,6 +128,10 @@ class SvmTrainer {
             qualityDataNew.push(this.svm.predictClass(qualityData[i]));
         }
         return qualityDataNew;
+    }
+
+    getQualityIndex() {
+        return this.qualityIndex;
     }
 }
 

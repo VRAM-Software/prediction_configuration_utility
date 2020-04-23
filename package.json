@@ -27,6 +27,7 @@
     "d3": "^5.15.0",
     "electron-is-dev": "^1.1.0",
     "ml-modules": "https://github.com/Max09081998/ml-modules/tarball/master",
+    "precision-recall": "^1.0.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
