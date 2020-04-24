@@ -1,0 +1,32 @@
+.good {
+  background-color: rgb(80, 200, 80);
+}
+
+.medium {
+  background-color: #f9dc5c;
+}
+
+.bad {
+  background-color: red;
+}
+
+.index-container {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    flex-basis: 70px;
+    height: 70px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.index-container:nth-child(1) {
+    margin-right: 5px;
+}
+
+.index-container:nth-child(2) {
+    margin-left: 5px;
+}
+

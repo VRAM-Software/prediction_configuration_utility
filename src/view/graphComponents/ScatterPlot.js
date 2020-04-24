@@ -4,7 +4,6 @@ import Axis from "./Axis";
 import RenderCircles from "./RenderCircles";
 import Grid from "./Grid";
 import TrendLine from "./TrendLine";
-import Graph from "../ui/Graph";
 import RenderPolygon from "./RenderPolygon";
 
 export default class ScatterPlot extends React.Component {

@@ -1,0 +1,35 @@
+.input {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.label {
+    height: 50px;
+    cursor: pointer;
+}
+
+.button {
+    width: 220px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+    background-color: #4392f1;
+}
+
+.button:hover {
+    background-color: #5FBFF9;
+}
+
+.file-chosen {
+    background-color: #f9dc5c;
+}
+
+.file-chosen:hover {
+    background-color: #f9dc5c;
+}

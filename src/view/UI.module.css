@@ -1,0 +1,200 @@
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 98;
+}
+
+.modal-save-file {
+  width: 500px;
+  height: 380px;
+  background-color: whitesmoke;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-250px, -190px);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.modal-save-file h3 {
+  width: 90%;
+}
+
+.modal-save-file div {
+  flex-basis: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-set-param {
+  width: 500px;
+  height: 380px;
+  background-color: whitesmoke;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-250px, -190px);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.modal-set-param h4,
+.modal-set-param span {
+  width: 95%;
+}
+
+.modal-set-param h4 {
+  margin-top: 5px;
+}
+
+.modal-frame {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 0;
+  height: 25px;
+  width: 100%;
+}
+
+.modal-frame div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 25px;
+  padding-bottom: 2px;
+}
+
+.modal-frame div:hover {
+  background-color: red;
+}
+
+.modal-set-param-select-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow-y: auto;
+}
+.modal-set-param-select-container select {
+  width: 150px;
+  height: 25px;
+  margin: 5px;
+}
+
+.modal-set-param-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.controlPanel-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  flex-direction: column;
+  height: 620px;
+}
+
+.controlPanel-container > h3 {
+  width: 90%;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  font-size: 18px;
+}
+
+.controlPanel-result-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 90%;
+    height: 115px;
+}
+
+.controlPanel-result-container > div {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+
+.resultPanel-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+}
+
+.resultPanel-quality-index-container {
+    height: 100%;
+    width: 100%;
+}
+
+.resultPanel-quality-index-container > h3 {
+    margin-top: 10px;
+    width: 100%;
+    margin-bottom: 0px;
+    font-size: 18px;
+}
+
+.resultPanel-quality-index-container > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.graph-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+}
+
+.graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1.2;
+    flex-shrink: 1.2;
+    flex-basis: 0;
+    background-color: #D7DEDC;
+}
