@@ -1,24 +1,24 @@
-const PerformReading = require("../PerformReading")
-const ReadCsv = require("../../../model/input/ReadCsv")
+const PerformReading = require("../PerformReading");
+const ReadCsv = require("../../../model/input/ReadCsv");
 
 class PerformReadingCsv extends PerformReading {
-    reader
+    reader;
 
     constructor() {
-        super()
-        this.reader = new ReadCsv()
+        super();
+        this.reader = new ReadCsv();
 
-        this.getReader = this.getReader.bind(this)
-        this.callRead = this.callRead.bind(this)
+        this.getReader = this.getReader.bind(this);
+        this.callRead = this.callRead.bind(this);
     }
 
     getReader() {
-        return this.reader
+        return this.reader;
     }
 
     callRead(path, callback) {
-        this.reader.readFile(path, callback)
+        this.reader.readFile(path, callback);
     }
 }
 
-module.exports = PerformReadingCsv
+module.exports = PerformReadingCsv;

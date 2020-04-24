@@ -1,5 +1,5 @@
-import React from "react"
-import styles from "./style/CheckBoxes.module.css"
+import React from "react";
+import styles from "./style/CheckBoxes.module.css";
 
 class CheckBoxes extends React.Component {
     render() {
@@ -17,13 +17,13 @@ class CheckBoxes extends React.Component {
                     {item.desc}
                 </span>
             </div>
-        ))
+        ));
         return (
             <div className={styles["container"]}>
                 <h3>Seleziona un algoritmo di predizione</h3>
                 <div>{list}</div>
             </div>
-        )
+        );
     }
 }
 
@@ -66,8 +66,8 @@ class SetDataCheckBoxes extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export { CheckBoxes, SetDataCheckBoxes }
+export { CheckBoxes, SetDataCheckBoxes };

@@ -1,5 +1,5 @@
-import React from "react"
-import styles from "./style/Input.module.css"
+import React from "react";
+import styles from "./style/Input.module.css";
 
 export default class Input extends React.Component {
     render() {
@@ -10,6 +10,6 @@ export default class Input extends React.Component {
                 value={this.props.value}
                 className={styles["custom-input"]}
             />
-        )
+        );
     }
 }

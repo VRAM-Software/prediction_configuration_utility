@@ -1,5 +1,5 @@
-import React from "react"
-import styles from "./style/SaveFileModal.module.css"
+import React from "react";
+import styles from "./style/SaveFileModal.module.css";
 
 class SaveFileModal extends React.Component {
     render() {
@@ -28,6 +28,6 @@ class SaveFileModal extends React.Component {
                 </div>
                 <div className="modalBackground" onClick={this.props.close} />
             </div>
-        )
+        );
     }
 }

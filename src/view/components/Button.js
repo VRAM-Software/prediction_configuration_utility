@@ -1,5 +1,5 @@
-import React from "react"
-import styles from "./style/Button.module.css"
+import React from "react";
+import styles from "./style/Button.module.css";
 
 export default class Button extends React.Component {
     render() {
@@ -22,6 +22,6 @@ export default class Button extends React.Component {
                     <span>{this.props.customMessage}</span>
                 ) : null}
             </div>
-        )
+        );
     }
 }

@@ -1,15 +1,15 @@
-import React from "react"
-import { select } from "d3"
+import React from "react";
+import { select } from "d3";
 
 export default class Axis extends React.Component {
     componentDidMount() {
-        const node = this.refs[this.props.axis]
-        select(node).call(this.props.scale)
+        const node = this.refs[this.props.axis];
+        select(node).call(this.props.scale);
     }
 
     componentDidUpdate() {
-        const node = this.refs[this.props.axis]
-        select(node).call(this.props.scale)
+        const node = this.refs[this.props.axis];
+        select(node).call(this.props.scale);
     }
 
     render() {
@@ -19,6 +19,6 @@ export default class Axis extends React.Component {
                 transform={this.props.transform}
                 ref={this.props.axis}
             />
-        )
+        );
     }
 }

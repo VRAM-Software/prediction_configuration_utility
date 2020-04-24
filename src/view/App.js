@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 import {
     Content,
@@ -7,14 +7,14 @@ import {
     FileInput,
     ChangeParamModal,
     SaveFileModal,
-} from "./UI"
-import "./AppOLD.css"
-import styles from "./App.module.css"
-const { ipcRenderer } = window.require("electron")
+} from "./UI";
+import "./AppOLD.css";
+import styles from "./App.module.css";
+const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             userData: null,
             userNotes: "",
@@ -35,103 +35,103 @@ export default class App extends React.Component {
             viewDataTraining: true,
             viewDataTest: false,
             userFolder: null,
-        }
-        this.setUserData = this.setUserData.bind(this)
-        this.handleCloseParamModal = this.handleCloseParamModal.bind(this)
-        this.handleOpenModal = this.handleOpenModal.bind(this)
-        this.handleCloseModal = this.handleCloseModal.bind(this)
-        this.handleChangeNotes = this.handleChangeNotes.bind(this)
-        this.handleChangeFileName = this.handleChangeFileName.bind(this)
-        this.handleSaveJson = this.handleSaveJson.bind(this)
-        this.handleViewDataTraining = this.handleViewDataTraining.bind(this)
-        this.handleViewDataTest = this.handleViewDataTest.bind(this)
-        this.selectParams = this.selectParams.bind(this)
-        this.setParams = this.setParams.bind(this)
-        this.resetState = this.resetState.bind(this)
-        this.loadConf = this.loadConf.bind(this)
-        this.loadData = this.loadData.bind(this)
-        this.getFileInfo = this.getFileInfo.bind(this)
-        this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this)
-        this.startTraining = this.startTraining.bind(this)
-        this.trainReset = this.trainReset.bind(this)
-        this.handleChangeFolder = this.handleChangeFolder.bind(this)
+        };
+        this.setUserData = this.setUserData.bind(this);
+        this.handleCloseParamModal = this.handleCloseParamModal.bind(this);
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleChangeNotes = this.handleChangeNotes.bind(this);
+        this.handleChangeFileName = this.handleChangeFileName.bind(this);
+        this.handleSaveJson = this.handleSaveJson.bind(this);
+        this.handleViewDataTraining = this.handleViewDataTraining.bind(this);
+        this.handleViewDataTest = this.handleViewDataTest.bind(this);
+        this.selectParams = this.selectParams.bind(this);
+        this.setParams = this.setParams.bind(this);
+        this.resetState = this.resetState.bind(this);
+        this.loadConf = this.loadConf.bind(this);
+        this.loadData = this.loadData.bind(this);
+        this.getFileInfo = this.getFileInfo.bind(this);
+        this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this);
+        this.startTraining = this.startTraining.bind(this);
+        this.trainReset = this.trainReset.bind(this);
+        this.handleChangeFolder = this.handleChangeFolder.bind(this);
     }
 
     setUserData() {
-        const data = this.state.tempData
+        const data = this.state.tempData;
         this.setState({
             userData: data,
-        })
+        });
     }
 
     handleCloseParamModal(e) {
-        e.preventDefault()
+        e.preventDefault();
         if (this.state.userData) {
             this.setState({
                 isParamModalEnabled: false,
-            })
+            });
         } else {
             this.setState({
                 isParamModalEnabled: false,
-            })
-            this.resetState()
+            });
+            this.resetState();
         }
     }
 
     handleOpenModal(e) {
-        e.preventDefault()
+        e.preventDefault();
         this.setState({
             isModalEnabled: true,
-        })
+        });
     }
 
     handleCloseModal(e) {
-        e.preventDefault()
+        e.preventDefault();
         this.setState({
             isModalEnabled: false,
-        })
+        });
     }
 
     handleChangeNotes(e) {
         this.setState({
             userNotes: e.target.value,
-        })
+        });
     }
 
     handleChangeFileName(e) {
         this.setState({
             fileName: e.target.value,
-        })
+        });
     }
 
     handleSaveJson(e) {
-        e.preventDefault()
+        e.preventDefault();
         ipcRenderer.send("write-file", {
             name: this.state.fileName,
             path: this.state.userFolder,
             notes: this.state.userNotes,
             trainedJson: this.state.trainedJson,
-        })
-        this.handleCloseModal(e)
+        });
+        this.handleCloseModal(e);
     }
 
     handleViewDataTraining(e) {
         this.setState({
             viewDataTraining: !this.state.viewDataTraining,
-        })
+        });
     }
 
     handleViewDataTest(e) {
         this.setState({
             viewDataTest: !this.state.viewDataTest,
-        })
+        });
     }
 
     selectParams(data) {
         this.setState({
             isParamModalEnabled: true,
             params: data,
-        })
+        });
     }
 
     trainReset() {
@@ -139,15 +139,15 @@ export default class App extends React.Component {
             isTrainingDone: false,
             qualityIndex: null,
             trainedJson: null,
-        })
+        });
     }
 
     setParams(data) {
         this.setState({
             params: data,
             isParamModalEnabled: false,
-        })
-        this.setUserData()
+        });
+        this.setUserData();
     }
 
     resetState() {
@@ -167,65 +167,65 @@ export default class App extends React.Component {
             array: [],
             paramLength: null,
             qualityIndex: null,
-        })
+        });
     }
 
     loadData(e) {
         if (e.target.files[0]) {
-            const obj = this.getFileInfo(e.target.files[0])
-            this.resetState()
+            const obj = this.getFileInfo(e.target.files[0]);
+            this.resetState();
             this.setState({
                 csvFileInfo: obj,
-            })
+            });
 
             ipcRenderer.send("read-file", {
                 path: obj.path,
                 extension: obj.extension,
-            })
+            });
 
             ipcRenderer.on("finished-reading", (event, arg) => {
                 if (arg[0]) {
-                    let array = Object.keys(arg[0])
-                    this.selectParams(array)
+                    let array = Object.keys(arg[0]);
+                    this.selectParams(array);
                     this.setState({
                         tempData: arg,
                         paramLength: array.length,
-                    })
+                    });
                 }
-            })
+            });
         } else {
-            console.log("Il file è nullo")
+            console.log("Il file è nullo");
         }
     }
 
     loadConf(e) {
         if (e.target.files[0]) {
-            const obj = this.getFileInfo(e.target.files[0])
+            const obj = this.getFileInfo(e.target.files[0]);
             this.setState({
                 jsonFileInfo: obj,
-            })
+            });
 
             ipcRenderer.send("read-file-conf", {
                 path: obj.path,
                 extension: obj.extension,
-            })
+            });
 
             ipcRenderer.on("finished-reading-conf", (event, arg) => {
                 if (arg.notes) {
                     this.setState({
                         userNotes: arg.notes,
-                    })
+                    });
                 } else {
                     console.error(
                         "Il file json inserito non è conforme allo standard dell'applicazione"
-                    )
+                    );
                     this.setState({
                         jsonFileInfo: null,
-                    })
+                    });
                 }
-            })
+            });
         } else {
-            console.log("Il file è nullo")
+            console.log("Il file è nullo");
         }
     }
 
@@ -235,7 +235,7 @@ export default class App extends React.Component {
             path: file.path,
             type: file.type,
             extension: file.name.split(".").pop(),
-        }
+        };
     }
 
     handleChangeAlgorithm(algorithm) {
@@ -243,41 +243,41 @@ export default class App extends React.Component {
             this.setState({
                 algorithm: algorithm,
                 trainedJson: null,
-            })
+            });
         } else {
-            console.log("Algoritmo scelto è già inizializzato")
+            console.log("Algoritmo scelto è già inizializzato");
         }
     }
 
     startTraining(e) {
-        e.preventDefault()
+        e.preventDefault();
         this.setState({
             isTraining: true,
-        })
+        });
         ipcRenderer.send("train-data", {
             data: this.state.userData,
             params: this.state.params,
             algorithm: this.state.algorithm,
-        })
+        });
         ipcRenderer.on("finished-training", (event, arg, qualityI) => {
             this.setState({
                 isTrainingDone: true,
                 isTraining: false,
                 trainedJson: arg,
                 qualityIndex: qualityI,
-            })
-        })
+            });
+        });
     }
 
     handleChangeFolder(e) {
-        e.preventDefault()
-        ipcRenderer.send("set-save-folder")
+        e.preventDefault();
+        ipcRenderer.send("set-save-folder");
         ipcRenderer.on("folder-selected", (event, arg) => {
             this.setState({
                 userFolder: arg[0],
-            })
-            console.log("ciao")
-        })
+            });
+            console.log("ciao");
+        });
     }
 
     render() {
@@ -308,7 +308,7 @@ export default class App extends React.Component {
                     qualityIndex={this.state.qualityIndex}
                 />
             </>
-        )
+        );
 
         const buttonSvm = (
             <Button
@@ -320,7 +320,7 @@ export default class App extends React.Component {
                 showMessage={this.state.trainedJson}
                 customMessage="Addestramento effettuato"
             />
-        )
+        );
 
         const buttonRl = (
             <Button
@@ -330,7 +330,7 @@ export default class App extends React.Component {
                 onClick={this.startTraining}
                 disabled={!this.state.csvFileInfo}
             />
-        )
+        );
 
         return (
             <div className={styles["container"]}>
@@ -378,6 +378,6 @@ export default class App extends React.Component {
                     />
                 ) : null}
             </div>
-        )
+        );
     }
 }

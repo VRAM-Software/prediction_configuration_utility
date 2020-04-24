@@ -1,5 +1,5 @@
-import React from "react"
-import styles from "./style/FileInput.module.css"
+import React from "react";
+import styles from "./style/FileInput.module.css";
 
 export default class FileInput extends React.Component {
     render() {
@@ -34,6 +34,6 @@ export default class FileInput extends React.Component {
                         : "Nessun file selezionato"}
                 </span>
             </div>
-        )
+        );
     }
 }

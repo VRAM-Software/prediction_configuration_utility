@@ -1,5 +1,5 @@
-import React from "react"
-import styles from "./style/TextArea.module.css"
+import React from "react";
+import styles from "./style/TextArea.module.css";
 
 export default class TextArea extends React.Component {
     render() {
@@ -10,6 +10,6 @@ export default class TextArea extends React.Component {
                 value={this.props.value}
                 className={styles["custom-textarea"]}
             />
-        )
+        );
     }
 }

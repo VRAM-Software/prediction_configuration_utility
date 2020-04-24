@@ -12,4 +12,4 @@ Object.defineProperty(window, "require", {
             send: jest.fn(),
         },
     })),
-})
+});

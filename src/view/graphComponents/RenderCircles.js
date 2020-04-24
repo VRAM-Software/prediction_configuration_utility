@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 export default class RenderCircles extends React.Component {
     render() {
-        let renderCirclesTrain = null
+        let renderCirclesTrain = null;
         if (this.props.algorithm === "svm") {
             if (this.props.viewDataTraining) {
                 renderCirclesTrain = this.props.dataForTraining.map(
@@ -36,7 +36,7 @@ export default class RenderCircles extends React.Component {
                                 key={index}
                             />
                         )
-                )
+                );
             }
         } else {
             renderCirclesTrain = this.props.dataForTraining.map(
@@ -51,9 +51,9 @@ export default class RenderCircles extends React.Component {
                         key={index}
                     />
                 )
-            )
+            );
         }
 
-        return <g>{renderCirclesTrain}</g>
+        return <g>{renderCirclesTrain}</g>;
     }
 }

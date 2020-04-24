@@ -1,22 +1,22 @@
-import React from "react"
-import config from "../config/config.json"
-import ScatterPlot from "./graphComponents/ScatterPlot"
-import { CheckBoxes, SetDataCheckBoxes } from "./components/CheckBoxes"
-import Button from "./components/Button"
-import FileInput from "./components/FileInput"
-import TextArea from "./components/TextArea"
-import Input from "./components/Input"
-import SvmQualityIndex from "./components/SvmQualityIndex"
-import FolderInput from "./components/FolderInput"
-import styles from "./UI.module.css"
+import React from "react";
+import config from "../config/config.json";
+import ScatterPlot from "./graphComponents/ScatterPlot";
+import { CheckBoxes, SetDataCheckBoxes } from "./components/CheckBoxes";
+import Button from "./components/Button";
+import FileInput from "./components/FileInput";
+import TextArea from "./components/TextArea";
+import Input from "./components/Input";
+import SvmQualityIndex from "./components/SvmQualityIndex";
+import FolderInput from "./components/FolderInput";
+import styles from "./UI.module.css";
 
 class SaveFileModal extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             userFolder: "",
             userName: "",
-        }
+        };
     }
     render() {
         return (
@@ -51,53 +51,53 @@ class SaveFileModal extends React.Component {
                     onClick={this.props.close}
                 />
             </div>
-        )
+        );
     }
 }
 
 class ChangeParamModal extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             selected: [],
             selectedIndex: null,
             algorithm: null,
-        }
-        this.addValue = this.addValue.bind(this)
-        this.changeAlg = this.changeAlg.bind(this)
-        this.sendInfo = this.sendInfo.bind(this)
+        };
+        this.addValue = this.addValue.bind(this);
+        this.changeAlg = this.changeAlg.bind(this);
+        this.sendInfo = this.sendInfo.bind(this);
     }
 
     componentDidMount() {
-        let array = new Array(this.props.data.length)
+        let array = new Array(this.props.data.length);
         this.setState({
             selected: array,
-        })
+        });
     }
 
     addValue(e, index) {
-        let array = this.state.selected
+        let array = this.state.selected;
         if (e.target.value !== "null") {
-            array[index] = e.target.value
+            array[index] = e.target.value;
             this.setState({
                 selected: array,
-            })
+            });
         } else {
-            array[index] = null
+            array[index] = null;
         }
     }
 
     changeAlg(e) {
         this.setState({
             algorithm: e.target.value,
-        })
+        });
     }
 
     sendInfo(e) {
-        e.preventDefault()
-        this.props.changeAlgorithm(this.state.algorithm)
-        this.props.setParams(this.state.selected)
-        this.props.trainReset()
+        e.preventDefault();
+        this.props.changeAlgorithm(this.state.algorithm);
+        this.props.setParams(this.state.selected);
+        this.props.trainReset();
     }
 
     render() {
@@ -108,7 +108,7 @@ class ChangeParamModal extends React.Component {
             >
                 {item}
             </option>
-        ))
+        ));
 
         const selects = this.props.data.map((item, index) => (
             <select key={index} onChange={(e) => this.addValue(e, index)}>
@@ -117,7 +117,7 @@ class ChangeParamModal extends React.Component {
                 </option>
                 {obj}
             </select>
-        ))
+        ));
 
         return (
             <div className={styles["modal-container"]}>
@@ -167,7 +167,7 @@ class ChangeParamModal extends React.Component {
                     onClick={this.props.close}
                 />
             </div>
-        )
+        );
     }
 }
 
@@ -196,7 +196,7 @@ class ResultPanel extends React.Component {
                     </div>
                 ) : null}
             </div>
-        )
+        );
     }
 }
 
@@ -241,7 +241,7 @@ class ControlPanel extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
@@ -261,7 +261,7 @@ class Content extends React.Component {
                     />
                 </div>
             </div>
-        )
+        );
     }
 }
 
@@ -276,4 +276,4 @@ export {
     ControlPanel,
     Button,
     Content,
-}
+};

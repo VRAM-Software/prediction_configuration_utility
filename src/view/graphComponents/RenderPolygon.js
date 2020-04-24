@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 export default class RenderPolygon extends React.Component {
     render() {
-        let renderPolygonTest = null
+        let renderPolygonTest = null;
         if (this.props.algorithm === "svm") {
             if (this.props.viewDataTest) {
                 renderPolygonTest = this.props.dataForTest.map((item, index) =>
@@ -29,7 +29,7 @@ export default class RenderPolygon extends React.Component {
                             key={index}
                         />
                     )
-                )
+                );
             }
         } else {
             renderPolygonTest = this.props.dataForTest.map((item, index) => (
@@ -43,9 +43,9 @@ export default class RenderPolygon extends React.Component {
                     style={{ fill: "white" }}
                     key={index}
                 />
-            ))
+            ));
         }
 
-        return <g>{renderPolygonTest}</g>
+        return <g>{renderPolygonTest}</g>;
     }
 }

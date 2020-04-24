@@ -1,5 +1,5 @@
-import React from "react"
-import styles from "./style/FolderInput.module.css"
+import React from "react";
+import styles from "./style/FolderInput.module.css";
 
 export default class FolderInput extends React.Component {
     render() {
@@ -13,6 +13,6 @@ export default class FolderInput extends React.Component {
                     onClick={this.props.onClick}
                 />
             </div>
-        )
+        );
     }
 }
