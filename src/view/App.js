@@ -5,6 +5,7 @@ import UserNotes from "./ui/UserNotes";
 import Modal from "./ui/Modal";
 import ParamModal from "./ui/ParamModal";
 import CheckBox from "./ui/CheckBox";
+import ViewDataCheckBox from "./ui/ViewDataCheckBox";
 import config from "../config/config";
 import "./App.css";
 const { ipcRenderer } = window.require("electron");
@@ -29,6 +30,8 @@ export default class App extends React.Component {
             array: [],
             paramLength: null,
             qualityIndex: null,
+            viewDataTraining: false,
+            viewDataTest: false,
         };
         this.setUserData = this.setUserData.bind(this);
         this.handleCloseParamModal = this.handleCloseParamModal.bind(this);
@@ -37,6 +40,8 @@ export default class App extends React.Component {
         this.handleChangeNotes = this.handleChangeNotes.bind(this);
         this.handleChangeFileName = this.handleChangeFileName.bind(this);
         this.handleSaveJson = this.handleSaveJson.bind(this);
+        this.handleViewDataTraining = this.handleViewDataTraining.bind(this);
+        this.handleViewDataTest = this.handleViewDataTest.bind(this);
         this.selectParams = this.selectParams.bind(this);
         this.setParams = this.setParams.bind(this);
         this.resetState = this.resetState.bind(this);
@@ -45,6 +50,7 @@ export default class App extends React.Component {
         this.getFileInfo = this.getFileInfo.bind(this);
         this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this);
         this.startTraining = this.startTraining.bind(this);
+        this.trainReset = this.trainReset.bind(this);
     }
 
     setUserData() {
@@ -104,10 +110,30 @@ export default class App extends React.Component {
         this.handleCloseModal(e);
     }
 
+    handleViewDataTraining(e) {
+        this.setState({
+            viewDataTraining: !this.state.viewDataTraining,
+        })
+    }
+
+    handleViewDataTest(e) {
+        this.setState({
+            viewDataTest: !this.state.viewDataTest,
+        })
+    }
+
     selectParams(data) {
         this.setState({
             isParamModalEnabled: true,
             params: data,
+        });
+    }
+
+    trainReset() {
+        this.setState({
+            isTrainDone: false,
+            qualityIndex: null,
+            trainedJson: null,
         });
     }
 
@@ -241,15 +267,23 @@ export default class App extends React.Component {
     render() {
         const group = (
             <>
-                <div className='graphContainer'>
-                    <Graph
-                        data={this.state.userData}
-                        params={this.state.params}
-                        result={this.state.trainedJson}
-                        axisControl={this.state.axisControl}
-                        paramLength={this.state.paramLength}
-                        algorithm={this.state.algorithm}
-                    />
+                <div className='graphInfoContainer'>
+                    <div className='graphContainer'>
+                        <Graph
+                            data={this.state.userData}
+                            params={this.state.params}
+                            result={this.state.trainedJson}
+                            axisControl={this.state.axisControl}
+                            paramLength={this.state.paramLength}
+                            algorithm={this.state.algorithm}
+                        />
+                    </div>
+                        <ViewDataCheckBox
+                            viewDataTraining = {this.state.viewDataTraining}
+                            viewDataTest = {this.state.viewDataTest}
+                            handleViewDataTraining = {this.handleViewDataTraining}
+                            handleViewDataTest = {this.handleViewDataTest}
+                        />
                 </div>
 
                 <div className='infoContainer'>
@@ -272,7 +306,7 @@ export default class App extends React.Component {
                         value={this.state.userNotes}
                     />
                     {this.state.trainedJson ? (
-                        <span className='done'>Addestramento avvenuto</span>
+                        <h3 className='done'>Addestramento avvenuto</h3>
                     ) : null}
 
                     {this.state.qualityIndex && this.state.algorithm === "svm" ? (
@@ -280,15 +314,15 @@ export default class App extends React.Component {
                             <h3 className='quality-index-h3'>Indici di qualità</h3>
                                 <div className='quality-index-text'>
 
-                                    {this.state.qualityIndex.precision>0.6 ? (
+                                    {this.state.qualityIndex.precision > 0.6 ? (
                                         <div className='good-index index'>
                                             <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.precision*100)}%</p>
                                             <p>Precision</p>
                                         </div>
                                     ): null}
-                                    {this.state.qualityIndex.precision>0.4 && this.state.qualityIndex.precision<=0.6 ? (
+                                    {this.state.qualityIndex.precision > 0.4 && this.state.qualityIndex.precision <= 0.6 ? (
                                         <div className='middle-index index'>
-                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.precision*100)}%</p>
+                                            <p className='quality-index-val'>{Math.trunc(this.state.qualityIndex.precision * 100)} % </p>
                                             <p>Precision</p>
                                         </div>
                                     ): null}
@@ -436,6 +470,7 @@ export default class App extends React.Component {
                         setParams={this.setParams}
                         close={this.handleCloseParamModal}
                         changeAlgorithm={this.handleChangeAlgorithm}
+                        trainReset={this.trainReset}
                     />
                 ) : null}
             </div>

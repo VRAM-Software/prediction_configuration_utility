@@ -22,7 +22,7 @@ export default class CheckBox extends React.Component {
         return (
             <div id='checkContainer'>
                 <h3 id='checkBoxInfo'>
-                    Scegliere l'algoritmo di predizione da utilizzare per
+                    Seleziona l'algoritmo di predizione da utilizzare per
                     l'addestramento
                 </h3>
                 <div>{list}</div>

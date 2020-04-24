@@ -43,6 +43,7 @@ export default class Modal extends React.Component {
         e.preventDefault();
         this.props.changeAlgorithm(this.state.algorithm);
         this.props.setParams(this.state.selected);
+        this.props.trainReset();
     }
 
     render() {

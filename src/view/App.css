@@ -83,11 +83,11 @@
 }
 
 .fileChooserContainer {
-    height: 10%;
+    height: 5%;
     width: 100%;
-    position: absolute;
     bottom: 5%;
     display: flex;
+    position: absolute;
     justify-content: center;
     align-items: center;
 }
@@ -102,10 +102,16 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    margin-top: 30px;
+    margin-top: 5px;
     width: 100%;
 }
 
+.graphInfoContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+    /*padding-bottom: 20px;*/
+}
 
 .graphContainer {
     display: flex;
@@ -114,8 +120,21 @@
     flex-grow: 1.2;
     flex-shrink: 1.2;
     flex-basis: 0;
-    margin-left: 24px;
     background-color: #D7DEDC;
+}
+
+.viewDataCheckBoxContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8px;
+}
+
+.viewDataCheckBoxContainer span {
+    margin-left: 10px;
+}
+
+.checkBoxGraph {
+    display: block;
 }
 
 .infoContainer {
@@ -126,7 +145,7 @@
     flex-shrink: 1;
     flex-basis: 0;
     flex-direction: column;
-    height: 504px;
+    height: 620px;
 }
 
 .margin-top-medium {
@@ -347,7 +366,8 @@ input:focus {
 
 .done {
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;
 }
 
 #frame {
