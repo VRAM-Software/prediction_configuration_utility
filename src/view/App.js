@@ -30,7 +30,7 @@ export default class App extends React.Component {
             array: [],
             paramLength: null,
             qualityIndex: null,
-            viewDataTraining: false,
+            viewDataTraining: true,
             viewDataTest: false,
         };
         this.setUserData = this.setUserData.bind(this);
@@ -276,6 +276,8 @@ export default class App extends React.Component {
                             axisControl={this.state.axisControl}
                             paramLength={this.state.paramLength}
                             algorithm={this.state.algorithm}
+                            viewDataTraining={this.state.viewDataTraining}
+                            viewDataTest={this.state.viewDataTest}
                         />
                     </div>
                         <ViewDataCheckBox

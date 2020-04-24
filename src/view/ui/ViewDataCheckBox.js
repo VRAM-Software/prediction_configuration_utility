@@ -14,9 +14,10 @@ export default class ViewDataCheckBox extends React.Component {
                             }
                             onClick={() => this.props.handleViewDataTraining()}
                         ></div>
-                        <span onClick={() => this.props.handleViewDataTraining()}>
+                        <div className='viewDataCheckBoxContainerText' onClick={() => this.props.handleViewDataTraining()}>
                             Dati per l'addestramento
-                        </span>
+                            <span id='circle'></span>
+                        </div>
                     </div>
 
                     <div className='viewDataCheckBoxContainer'>
@@ -28,9 +29,10 @@ export default class ViewDataCheckBox extends React.Component {
                             }
                             onClick={() => this.props.handleViewDataTest()}
                         ></div>
-                        <span onClick={() => this.props.handleViewDataTest()}>
+                        <div className='viewDataCheckBoxContainerText' onClick={() => this.props.handleViewDataTest()}>
                             Dati per il calcolo degli indici di qualità
-                        </span>
+                            <span id='rect'></span>
+                        </div>
                     </div>
                 </>
         );

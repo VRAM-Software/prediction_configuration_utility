@@ -4,6 +4,8 @@ import Axis from "./Axis";
 import RenderCircles from "./RenderCircles";
 import Grid from "./Grid";
 import TrendLine from "./TrendLine";
+import Graph from "../ui/Graph";
+import RenderPolygon from "./RenderPolygon";
 
 export default class ScatterPlot extends React.Component {
     render() {
@@ -44,6 +46,16 @@ export default class ScatterPlot extends React.Component {
                 })
             ),
         };
+
+        let len = Math.floor(((this.props.data.length * 2) / 3));
+        let dataForTraining = [];
+        for(let i = 0; i < len; i++){
+            dataForTraining.push(this.props.data[i]);
+        }
+        let dataForQuality = [];
+        for(let i = len; i < this.props.data.length; i++){
+            dataForQuality.push(this.props.data[i]);
+        }
 
         let x = null;
         let y = null;
@@ -89,11 +101,23 @@ export default class ScatterPlot extends React.Component {
                         ) : null}
 
                         <RenderCircles
-                            data={data}
+                            dataForTraining={dataForTraining}
                             params={this.props.params}
                             algorithm={this.props.algorithm}
                             scale={{ x, y }}
+                            viewDataTraining={this.props.viewDataTraining}
+                            viewDataTest={this.props.viewDataTest}
                         />
+
+                        <RenderPolygon
+                            dataForTest={dataForQuality}
+                            params={this.props.params}
+                            algorithm={this.props.algorithm}
+                            scale={{ x, y }}
+                            viewDataTraining={this.props.viewDataTraining}
+                            viewDataTest={this.props.viewDataTest}
+                        />
+
 
                         <Axis
                             axis='x'
