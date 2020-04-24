@@ -9,6 +9,8 @@ export default class Graph extends React.Component {
                 result={this.props.result}
                 paramLength={this.props.paramLength}
                 algorithm={this.props.algorithm}
+                viewDataTraining={this.props.viewDataTraining}
+                viewDataTest={this.props.viewDataTest}
                 graph='svm'
             />
         );
