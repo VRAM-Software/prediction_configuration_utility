@@ -12,27 +12,27 @@
     width: 20px;
     height: 20px;
     flex-basis: 20px;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
-    border: solid 1px #D7DEDC;
+    border: solid 1px #d7dedc;
 }
 
 .checkbox-container > span {
-    margin-left: 10px; 
+    margin-left: 10px;
 }
 
 .checkbox-selected {
     background-color: #4392f1;
-    border: solid 1px #D7DEDC;
+    border: solid 1px #d7dedc;
 }
 
 .checkbox-not-selected {
-    background-color: #D7DEDC;
+    background-color: #d7dedc;
 }
 
 .checkbox-not-selected:hover {
     background-color: #4392f1;
-    border: solid 1px #D7DEDC;
+    border: solid 1px #d7dedc;
 }
 
 .container {
@@ -45,4 +45,3 @@
     font-size: 18px;
     font-weight: bold;
 }
-

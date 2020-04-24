@@ -1,10 +1,10 @@
-const Read = require("../Read");
-const csv = require("csvtojson");
+const Read = require("../Read")
+const csv = require("csvtojson")
 
 class ReadCsv extends Read {
     constructor() {
-        super();
-        this.parser = this.parser.bind(this);
+        super()
+        this.parser = this.parser.bind(this)
     }
 
     parser(data, callback) {
@@ -13,9 +13,9 @@ class ReadCsv extends Read {
         })
             .fromString(data)
             .then((res) => {
-                callback(null, res);
-            });
+                callback(null, res)
+            })
     }
 }
 
-module.exports = ReadCsv;
+module.exports = ReadCsv

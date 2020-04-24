@@ -2,11 +2,11 @@
     width: 85%;
     height: 100px;
     resize: none;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    border: 1px solid #D7DEDC;
-    background-color: #D7DEDC;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    border: 1px solid #d7dedc;
+    background-color: #d7dedc;
     transition: 0.2s all ease-in-out;
     font-size: 1.2em;
     padding: 0.5em;

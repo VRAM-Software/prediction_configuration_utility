@@ -1,23 +1,29 @@
-const PerformWriting = require("../../viewmodel/perform/PerformWriting");
+const PerformWriting = require("../../viewmodel/perform/PerformWriting")
 
 class ChildPerformWriting extends PerformWriting {
     constructor() {
-        super();
+        super()
     }
 }
 
 describe("Tests for class AlgorithmTrainer class", () => {
     test("should throw an error if initialising AlgorithmTrainer", () => {
-        expect(() => new PerformWriting()).toThrowError("Can not construct abstract class.");
-    });
+        expect(() => new PerformWriting()).toThrowError(
+            "Can not construct abstract class."
+        )
+    })
 
     test("should return error if function callWrite are not implemented in child class", () => {
-        let child = new ChildPerformWriting();
-        expect(() => child.callWrite()).toThrow("Do not call abstract method callWrite from child.");
-    });
+        let child = new ChildPerformWriting()
+        expect(() => child.callWrite()).toThrow(
+            "Do not call abstract method callWrite from child."
+        )
+    })
 
     test("should return error if function getWriter are not implemented in child class", () => {
-        let child = new ChildPerformWriting();
-        expect(() => child.getWriter()).toThrow("Do not call abstract method getWriter from child.");
-    });
-});
+        let child = new ChildPerformWriting()
+        expect(() => child.getWriter()).toThrow(
+            "Do not call abstract method getWriter from child."
+        )
+    })
+})

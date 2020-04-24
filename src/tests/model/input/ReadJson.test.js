@@ -1,18 +1,20 @@
-const ReadJson = require("../../../model/input/ReadJson");
+const ReadJson = require("../../../model/input/ReadJson")
 
-const jsObjString = '{"a":1,"b":2,"c":3}';
+const jsObjString = '{"a":1,"b":2,"c":3}'
 
 describe("Test for ReadJson class", () => {
-    let reader;
+    let reader
     beforeEach(() => {
-        reader = new ReadJson();
-    });
+        reader = new ReadJson()
+    })
 
     test("parser function should return array of js objects given csv", () => {
         reader.parser(jsObjString, (err, res) => {
             expect(res).toEqual({
-                a: 1, b: 2, c: 3
+                a: 1,
+                b: 2,
+                c: 3,
             })
-        });
+        })
     })
-});
+})

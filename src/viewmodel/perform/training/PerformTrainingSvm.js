@@ -1,30 +1,30 @@
-const PerformTraining = require("../PerformTraining");
-const SvmTrainer = require("../../../model/algorithm/SvmTrainer");
+const PerformTraining = require("../PerformTraining")
+const SvmTrainer = require("../../../model/algorithm/SvmTrainer")
 
 class PerformTrainingSvm extends PerformTraining {
-    trainer = null;
-    result = null;
-    qualityIndex = null;
+    trainer = null
+    result = null
+    qualityIndex = null
 
     constructor() {
-        super();
-        this.trainer = new SvmTrainer();
+        super()
+        this.trainer = new SvmTrainer()
 
-        this.getTrainer = this.getTrainer.bind(this);
-        this.callTrain = this.callTrain.bind(this);
+        this.getTrainer = this.getTrainer.bind(this)
+        this.callTrain = this.callTrain.bind(this)
     }
 
     getTrainer() {
-        return this.trainer;
+        return this.trainer
     }
 
     callTrain(params, data, callback) {
-        this.trainer.setParams(params);
-        this.result = this.trainer.train(data);
-        this.qualityIndex = this.trainer.getQualityIndex();
-        console.log(this.qualityIndex);
-        callback(null, this.result, this.qualityIndex);
+        this.trainer.setParams(params)
+        this.result = this.trainer.train(data)
+        this.qualityIndex = this.trainer.getQualityIndex()
+        console.log(this.qualityIndex)
+        callback(null, this.result, this.qualityIndex)
     }
 }
 
-module.exports = PerformTrainingSvm;
+module.exports = PerformTrainingSvm

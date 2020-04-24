@@ -1,48 +1,48 @@
-const PerformReadingCsv = require("./perform/reading/PerformReadingCsv");
-const PerformReadingJson = require("./perform/reading/PerformReadingJson");
+const PerformReadingCsv = require("./perform/reading/PerformReadingCsv")
+const PerformReadingJson = require("./perform/reading/PerformReadingJson")
 
 class ProcessReading {
-    strategy;
-    path;
-    extension;
+    strategy
+    path
+    extension
 
     constructor() {
-        this.strategy = null;
-        this.path = null;
-        this.extension = null;
+        this.strategy = null
+        this.path = null
+        this.extension = null
 
-        this.setStrategy = this.setStrategy.bind(this);
-        this.getStrategy = this.getStrategy.bind(this);
-        this.getPath = this.getPath.bind(this);
-        this.setPath = this.setPath.bind(this);
-        this.startReading = this.startReading.bind(this);
+        this.setStrategy = this.setStrategy.bind(this)
+        this.getStrategy = this.getStrategy.bind(this)
+        this.getPath = this.getPath.bind(this)
+        this.setPath = this.setPath.bind(this)
+        this.startReading = this.startReading.bind(this)
     }
 
     setStrategy(extension) {
-        this.extension = extension;
+        this.extension = extension
         if (extension === "json") {
-            this.strategy = new PerformReadingJson();
+            this.strategy = new PerformReadingJson()
         }
         if (extension === "csv") {
-            this.strategy = new PerformReadingCsv();
+            this.strategy = new PerformReadingCsv()
         }
     }
 
     getStrategy() {
-        return this.strategy;
+        return this.strategy
     }
 
     getPath() {
-        return this.path;
+        return this.path
     }
 
     setPath(path) {
-        this.path = path;
+        this.path = path
     }
 
     startReading(callback) {
-        this.strategy.callRead(this.path, callback);
+        this.strategy.callRead(this.path, callback)
     }
 }
 
-module.exports = ProcessReading;
+module.exports = ProcessReading

@@ -1,13 +1,13 @@
 .good {
-  background-color: rgb(80, 200, 80);
+    background-color: rgb(80, 200, 80);
 }
 
 .medium {
-  background-color: #f9dc5c;
+    background-color: #f9dc5c;
 }
 
 .bad {
-  background-color: red;
+    background-color: red;
 }
 
 .index-container {
@@ -29,4 +29,3 @@
 .index-container:nth-child(2) {
     margin-left: 5px;
 }
-

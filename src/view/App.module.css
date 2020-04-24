@@ -1,27 +1,27 @@
 * {
-  margin: 0;
-  padding: 0;
-  border-radius: 4px;
-  user-select: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
+    user-select: none;
 }
 
 .container {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
 }
 
 .content-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: row;
-  width: 100%;
-  height: calc(100% - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100% - 100px);
 }
 
 .content-container > div {
@@ -29,16 +29,16 @@
 }
 
 .buttons-container {
-  position: absolute;
-  display: flex;
-  bottom: 0px;
-  height: 100px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+    position: absolute;
+    display: flex;
+    bottom: 0px;
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .buttons-container > * {
-  margin-left: 15px;
-  margin-right: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
