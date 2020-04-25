@@ -1,7 +1,9 @@
 const PerformReadingCsv = require("../../viewmodel/perform/reading/PerformReadingCsv");
 const PerformReadingJson = require("../../viewmodel/perform/reading/PerformReadingJson");
 const ProcessReading = require("../../viewmodel/ProcessReading");
-
+const mockedCallback = jest.fn();
+jest.mock("../../viewmodel/perform/reading/PerformReadingCsv");
+jest.mock("../../viewmodel/perform/reading/PerformReadingJson");
 describe("Tests for ProcessReading class", () => {
     let readerCsv;
     let readerJson;
@@ -23,6 +25,25 @@ describe("Tests for ProcessReading class", () => {
 
     test("getPath should set the right path", () => {
         readerCsv.setPath("testPath");
+        readerJson.setPath("testPath");
         expect(readerCsv.getPath()).toEqual("testPath");
+        expect(readerJson.getPath()).toEqual("testPath");
+    });
+
+    test("should call strategy callRead", () => {
+        readerCsv.setPath("testPath");
+        readerJson.setPath("testPath");
+        readerCsv.setStrategy("csv");
+        readerJson.setStrategy("json");
+        readerCsv.startReading(mockedCallback);
+        readerJson.startReading(mockedCallback);
+        expect(PerformReadingCsv.prototype.callRead).toBeCalledWith(
+            readerCsv.path,
+            mockedCallback
+        );
+        expect(PerformReadingJson.prototype.callRead).toBeCalledWith(
+            readerJson.path,
+            mockedCallback
+        );
     });
 });

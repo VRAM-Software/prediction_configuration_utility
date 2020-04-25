@@ -1,7 +1,9 @@
 const PerformTrainingRl = require("../../viewmodel/perform/training/PerformTrainingRl");
 const PerformTrainingSvm = require("../../viewmodel/perform/training/PerformTrainingSvm");
 const ProcessTraining = require("../../viewmodel/ProcessTraining");
-
+const mockedCallback = jest.fn();
+jest.mock("../../viewmodel/perform/training/PerformTrainingRl");
+jest.mock("../../viewmodel/perform/training/PerformTrainingSvm");
 describe("Tests for ProcessTraining class", () => {
     let trainerSvm;
     let trainerRl;
@@ -31,6 +33,46 @@ describe("Tests for ProcessTraining class", () => {
             [1, 2],
             [2, 3],
         ]);
-        expect(trainerSvm.getParams()).toEqual(["x", "y", "l"]);
+        trainerRl.setData([
+            [1, 2],
+            [2, 3],
+        ]);
+        trainerRl.setParams(["x", "y", "l"]);
+        expect(trainerRl.getData()).toEqual([
+            [1, 2],
+            [2, 3],
+        ]);
+        expect(trainerRl.getParams()).toEqual(["x", "y", "l"]);
+    });
+
+    test("should call strategy callWrite", () => {
+        trainerSvm.setStrategy("svm");
+        trainerRl.setStrategy("rl");
+        trainerSvm.setData([
+            [1, 2],
+            [2, 3],
+        ]);
+        trainerSvm.setParams(["x", "y", "l"]);
+        trainerRl.setData([
+            [1, 2],
+            [2, 3],
+        ]);
+        trainerRl.setParams(["x", "y", "l"]);
+        expect(trainerRl.getData()).toEqual([
+            [1, 2],
+            [2, 3],
+        ]);
+        trainerRl.startTraining(mockedCallback);
+        trainerSvm.startTraining(mockedCallback);
+        expect(PerformTrainingRl.prototype.callTrain).toBeCalledWith(
+            trainerRl.params,
+            trainerRl.data,
+            mockedCallback
+        );
+        expect(PerformTrainingSvm.prototype.callTrain).toBeCalledWith(
+            trainerSvm.params,
+            trainerSvm.data,
+            mockedCallback
+        );
     });
 });
