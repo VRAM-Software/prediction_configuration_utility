@@ -16,6 +16,7 @@ class SaveFileModal extends React.Component {
                         handleChange={this.props.change}
                     />
                     <FolderInput
+                        id="folder-input"
                         folderPath={this.props.userFolder}
                         onClick={this.props.setFolder}
                     />

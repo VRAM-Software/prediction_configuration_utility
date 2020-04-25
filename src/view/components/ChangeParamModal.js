@@ -59,7 +59,7 @@ class ChangeParamModal extends React.Component {
 
         const selects = this.props.data.map((item, index) => (
             <select key={index} onChange={(e) => this.addValue(e, index)}>
-                <option value="null" selected>
+                <option value="null" selected={true}>
                     Seleziona valore
                 </option>
                 {obj}

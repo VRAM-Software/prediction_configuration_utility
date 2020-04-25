@@ -36,8 +36,17 @@ describe("Tests for <CheckBoxes /> component", () => {
         ).toBeTruthy();
     });
 
-    test("Clicking on the text / button should call method passed as prop", () => {
+    test("Clicking on button should call method passed as prop", () => {
         component.find(".checkbox-not-selected").simulate("click");
+        component.find(".checkbox-selected").simulate("click");
+        expect(func2).toBeCalled();
         expect(func1).toBeCalled();
+    });
+
+    test("Clicking on text should call method passed as prop", () => {
+        component.find("span").at(0).simulate("click");
+        component.find("span").at(1).simulate("click");
+        expect(func1).toBeCalled();
+        expect(func2).toBeCalled();
     });
 });

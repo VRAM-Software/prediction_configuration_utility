@@ -33,9 +33,8 @@ export default class App extends React.Component {
             qualityIndex: null,
             viewDataTraining: true,
             viewDataTest: false,
-            userFolder: null,
+            userFolder: "",
         };
-        this.setUserData = this.setUserData.bind(this);
         this.handleCloseParamModal = this.handleCloseParamModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -54,13 +53,6 @@ export default class App extends React.Component {
         this.startTraining = this.startTraining.bind(this);
         this.trainReset = this.trainReset.bind(this);
         this.handleChangeFolder = this.handleChangeFolder.bind(this);
-    }
-
-    setUserData() {
-        const data = this.state.tempData;
-        this.setState({
-            userData: data,
-        });
     }
 
     handleCloseParamModal(e) {
@@ -142,11 +134,12 @@ export default class App extends React.Component {
     }
 
     setParams(data) {
+        const tempData = this.state.tempData;
         this.setState({
             params: data,
             isParamModalEnabled: false,
+            userData: tempData,
         });
-        this.setUserData();
     }
 
     resetState() {
@@ -275,7 +268,6 @@ export default class App extends React.Component {
             this.setState({
                 userFolder: arg[0],
             });
-            console.log("ciao");
         });
     }
 
