@@ -11,15 +11,18 @@
 }
 
 .resultPanel-quality-index-container {
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 115px;
     width: 100%;
+    margin-left: 5px;
 }
 
 .resultPanel-quality-index-container > h3 {
-    margin-top: 10px;
     width: 100%;
     margin-bottom: 0px;
-    font-size: 18px;
 }
 
 .resultPanel-quality-index-container > div {

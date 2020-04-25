@@ -31,12 +31,7 @@ class ControlPanel extends React.Component {
                 />
 
                 <div className={styles["controlPanel-result-container"]}>
-                    <ResultPanel
-                        isTrainingFinished={this.props.isTrainingFinished}
-                        qualityIndex={this.props.qualityIndex}
-                        algorithmChosen={this.props.algorithm}
-                    />
-                    <div>
+                    <div className={styles["button-select-new-params"]}>
                         <h3>Scegli nuovi parametri</h3>
                         <Button
                             loading={false}
@@ -45,6 +40,11 @@ class ControlPanel extends React.Component {
                             onClick={this.props.selectParams}
                         />
                     </div>
+                    <ResultPanel
+                        isTrainingFinished={this.props.isTrainingFinished}
+                        qualityIndex={this.props.qualityIndex}
+                        algorithmChosen={this.props.algorithm}
+                    />
                 </div>
             </div>
         );

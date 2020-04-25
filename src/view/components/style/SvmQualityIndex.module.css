@@ -13,9 +13,11 @@
 .index-container {
     margin-top: 5px;
     margin-bottom: 0px;
-    flex-basis: 70px;
-    height: 70px;
+    height: 90px;
+    width: 90px;
     text-align: center;
+    font-size: 19px;
+    font-weight: bold;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,4 +30,8 @@
 
 .index-container:nth-child(2) {
     margin-left: 5px;
+}
+
+.quality-index-perc {
+    font-size: 30px;
 }

@@ -8,12 +8,12 @@ const isDev = require("electron-is-dev");
 const dialog = require("electron").dialog;
 function createWindow() {
     let mainWindow = new BrowserWindow({
-        width: 1024,
-        height: 768,
+        minWidth: 1024,
+        minHeight: 768,
         webPreferences: {
             nodeIntegration: true,
         },
-        resizable: false,
+        //resizable: false,
     });
 
     mainWindow.loadURL(

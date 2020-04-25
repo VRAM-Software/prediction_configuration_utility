@@ -21,6 +21,10 @@
     margin-left: 10px;
 }
 
+.radio-button {
+    border-radius: 30px;
+}
+
 .checkbox-selected {
     background-color: #4392f1;
     border: solid 1px #d7dedc;

@@ -6,7 +6,7 @@ class CheckBoxes extends React.Component {
         const list = this.props.algorithms.map((item, index) => (
             <div key={index} className={styles["checkbox-container"]}>
                 <div
-                    className={`${styles["checkbox"]} ${
+                    className={`${styles["checkbox"]} ${styles["radio-button"]} ${
                         item.name === this.props.algorithm
                             ? styles["checkbox-selected"]
                             : styles["checkbox-not-selected"]
