@@ -10,17 +10,20 @@ class SaveFileModal extends React.Component {
             <div className={styles["modal-container"]}>
                 <div className={styles["modal-save-file"]}>
                     <h3>Salva con nome:</h3>
-                    <Input
-                        placeholder="Scrivi nome file .json"
-                        id="inputSaveName"
-                        handleChange={this.props.change}
-                    />
-                    <FolderInput
-                        id="folder-input"
-                        folderPath={this.props.userFolder}
-                        onClick={this.props.setFolder}
-                    />
-                    <div>
+                    <div className={styles["input-container"]}>
+                        <Input
+                            placeholder="Scrivi nome file .json"
+                            id="inputSaveName"
+                            handleChange={this.props.change}
+                        />
+                        <FolderInput
+                            id="folder-input"
+                            folderPath={this.props.userFolder}
+                            onClick={this.props.setFolder}
+                        />
+                    </div>
+
+                    <div className={styles["button-container"]}>
                         <Button
                             loading={false}
                             loadingText={null}
