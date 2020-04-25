@@ -321,4 +321,45 @@ describe("Method tests for <App/> component", () => {
             "Algoritmo scelto è già inizializzato"
         );
     });
+
+    test("component <ChangeParamModal/> should be closed if isParamModalEnabled state is false", () => {
+        component.setState({
+            isParamModalEnabled: false,
+        });
+        expect(
+            component.containsMatchingElement(<ChangeParamModal />)
+        ).toBeFalsy();
+    });
+
+    test("component <ChangeParamModal/> should be closed if handleCloseParamModal is called", () => {
+        mountedComponent.setState({
+            isParamModalEnabled: true,
+            userData: null,
+        });
+        mountedComponent
+            .find(".modal-background")
+            .simulate("click", { preventDefault: () => {} });
+        expect(
+            mountedComponent.containsMatchingElement(<ChangeParamModal />)
+        ).toBeFalsy();
+        expect(mountedComponent.state("userData")).toEqual(null);
+        expect(mountedComponent.state("fileName")).toEqual("addestramento");
+        expect(mountedComponent.state("userNotes")).toEqual("");
+        expect(mountedComponent.state("tempData")).toEqual([]);
+        expect(mountedComponent.state("params")).toEqual([]);
+        expect(mountedComponent.state("array")).toEqual([]);
+    });
+
+    test("component <ChangeParamModal/> should be closed if handleCloseParamModal is called", () => {
+        mountedComponent.setState({
+            isParamModalEnabled: true,
+            userData: [1, 2, 3, 4],
+        });
+        mountedComponent
+            .find(".modal-background")
+            .simulate("click", { preventDefault: () => {} });
+        expect(
+            mountedComponent.containsMatchingElement(<ChangeParamModal />)
+        ).toBeFalsy();
+    });
 });
