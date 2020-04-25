@@ -13,7 +13,7 @@ export default class RenderPolygon extends React.Component {
                             height="8"
                             width="8"
                             stroke="black"
-                            stroke-width="1"
+                            strokeWidth="1"
                             style={{ fill: "green" }}
                             key={index}
                         />
@@ -24,7 +24,7 @@ export default class RenderPolygon extends React.Component {
                             height="8"
                             width="8"
                             stroke="black"
-                            stroke-width="1"
+                            strokeWidth="1"
                             style={{ fill: "red" }}
                             key={index}
                         />
@@ -39,7 +39,7 @@ export default class RenderPolygon extends React.Component {
                     height="8"
                     width="8"
                     stroke="black"
-                    stroke-width="1"
+                    strokeWidth="1"
                     style={{ fill: "white" }}
                     key={index}
                 />

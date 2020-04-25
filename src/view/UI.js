@@ -25,6 +25,7 @@ class SaveFileModal extends React.Component {
                     <h3>Salva con nome:</h3>
                     <Input
                         placeholder="Scrivi nome file .json"
+                        id="inputSaveName"
                         handleChange={this.props.change}
                     />
                     <FolderInput
@@ -276,4 +277,6 @@ export {
     ControlPanel,
     Button,
     Content,
+    SvmQualityIndex,
+    FolderInput,
 };

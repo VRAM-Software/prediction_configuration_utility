@@ -1,16 +1,16 @@
 import React from "react";
-import ParamModal from "../../view/ui/ParamModal";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
+import { ChangeParamModal } from "../../view/UI";
 
 configure({
     adapter: new Adapter(),
 });
 
-describe("Tests for <ParamModal /> component", () => {
+describe("Tests for <ChangeParamModal /> component", () => {
     let component;
     beforeEach(() => {
-        component = shallow(<ParamModal data={["weight", "size"]} />);
+        component = shallow(<ChangeParamModal data={["weight", "size"]} />);
     });
 
     test("renders correctly", () => {

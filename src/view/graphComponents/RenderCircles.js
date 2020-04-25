@@ -17,7 +17,7 @@ export default class RenderCircles extends React.Component {
                                 )}
                                 r="4"
                                 stroke="black"
-                                stroke-width="1"
+                                strokeWidth="1"
                                 style={{ fill: "green" }}
                                 key={index}
                             />
@@ -31,7 +31,7 @@ export default class RenderCircles extends React.Component {
                                 )}
                                 r="4"
                                 stroke="black"
-                                stroke-width="1"
+                                strokeWidth="1"
                                 style={{ fill: "red" }}
                                 key={index}
                             />
@@ -46,7 +46,7 @@ export default class RenderCircles extends React.Component {
                         cy={this.props.scale.y(item[this.props.params[1]])}
                         r="4"
                         stroke="black"
-                        stroke-width="1"
+                        strokeWidth="1"
                         style={{ fill: "white" }}
                         key={index}
                     />

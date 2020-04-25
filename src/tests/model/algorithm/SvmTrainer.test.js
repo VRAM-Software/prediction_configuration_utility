@@ -4,12 +4,14 @@ const SVM = require("ml-modules").SVM;
 const mockedTrain = jest.fn();
 const mockedToJSON = jest.fn();
 const mockedSetOptions = jest.fn();
+const mockedPredict = jest.fn();
 
 jest.mock("ml-modules", () => ({
     SVM: jest.fn(() => ({
         train: mockedTrain,
         toJSON: mockedToJSON,
         setOptions: mockedSetOptions,
+        predictClass: mockedPredict,
     })),
 }));
 
@@ -25,12 +27,11 @@ describe("test for training algorithm's wrapper class", () => {
             { weight: 1, size: 1, label: 1 },
             { weight: 2, size: 2, label: -1 },
         ];
-        trainer.translateData(data);
-        expect(trainer.data).toEqual([
+        expect(trainer.translateData(data)).toEqual([
             [1, 1],
             [2, 2],
         ]);
-        expect(trainer.labels).toEqual([1, -1]);
+        expect(trainer.translateLabels(data)).toEqual([1, -1]);
     });
 
     test("translateData should return expected array with number of params >= 4", () => {
@@ -39,12 +40,11 @@ describe("test for training algorithm's wrapper class", () => {
             { weight: 2, size: 2, height: 2, label: -1 },
         ];
         trainer.setParams(["weight", "size", "height", "label"]);
-        trainer.translateData(data);
-        expect(trainer.data).toEqual([
+        expect(trainer.translateData(data)).toEqual([
             [1, 1, 1],
             [2, 2, 2],
         ]);
-        expect(trainer.labels).toEqual([1, -1]);
+        expect(trainer.translateLabels(data)).toEqual([1, -1]);
     });
 
     test("train method should call train method from ml-modules", () => {
@@ -55,7 +55,7 @@ describe("test for training algorithm's wrapper class", () => {
         const res = trainer.train(data);
 
         expect(mockedSetOptions).toHaveBeenCalledWith(trainer.options);
-        expect(mockedTrain).toHaveBeenCalledWith(trainer.data, trainer.labels);
+        expect(mockedTrain).toHaveBeenCalled();
         expect(mockedToJSON).toHaveBeenCalled();
         expect(res).toEqual(trainer.buildTrainedObject(trainer.trainedJson));
     });

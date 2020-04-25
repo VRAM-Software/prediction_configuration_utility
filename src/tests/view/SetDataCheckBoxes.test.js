@@ -1,7 +1,7 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
-import { CheckBoxes } from "../../view/UI";
+import { SetDataCheckBoxes } from "../../view/UI";
 
 configure({
     adapter: new Adapter(),
@@ -11,15 +11,15 @@ describe("Tests for <CheckBoxes /> component", () => {
     let component;
 
     const func = jest.fn();
+    const func1 = jest.fn();
+    const func2 = jest.fn();
     beforeEach(() => {
         component = shallow(
-            <CheckBoxes
-                algorithms={[
-                    { name: "svm", desc: "Support Vector Machine" },
-                    { name: "rl", desc: "Regressione Lineare" },
-                ]}
-                handleCheckBox={func}
+            <SetDataCheckBoxes
+                viewDataTraining={true}
                 algorithm="svm"
+                handleViewDataTest={func1}
+                handleViewDataTraining={func2}
             />
         );
     });
@@ -30,15 +30,15 @@ describe("Tests for <CheckBoxes /> component", () => {
 
     test("Should render two elements that represent the algorithm", () => {
         expect(
-            component.find("span[children='Support Vector Machine']")
-        ).toBeTruthy();
-        expect(
-            component.find("span[children='Regressione Lineare']")
+            component.containsMatchingElement([
+                <div className="checkbox-container"></div>,
+                <div className="checkbox-container"></div>,
+            ])
         ).toBeTruthy();
     });
 
-    test("Clickin on the text / button should call method passed as prop", () => {
+    test("Clicking on the text / button should call method passed as prop", () => {
         component.find(".checkbox-not-selected").simulate("click");
-        expect(func).toBeCalled();
+        expect(func1).toBeCalled();
     });
 });

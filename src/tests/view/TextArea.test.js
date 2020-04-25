@@ -1,5 +1,5 @@
 import React from "react";
-import UserNotes from "../../view/ui/UserNotes";
+import { TextArea } from "../../view/UI";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
@@ -7,11 +7,11 @@ configure({
     adapter: new Adapter(),
 });
 
-describe("Tests for <UserNotes /> component", () => {
+describe("Tests for <TextArea /> component", () => {
     let component;
     const func = jest.fn();
     beforeEach(() => {
-        component = shallow(<UserNotes handleChange={func} />);
+        component = shallow(<TextArea onChange={func} />);
     });
 
     test("should render textarea", () => {

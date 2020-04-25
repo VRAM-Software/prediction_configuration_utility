@@ -1,20 +1,24 @@
 import React from "react";
-import Modal from "../../view/ui/Modal";
 import Adapter from "enzyme-adapter-react-16";
-import { shallow, configure } from "enzyme";
+import { configure, mount } from "enzyme";
+import { SaveFileModal } from "../../view/UI";
 
 configure({
     adapter: new Adapter(),
 });
 
-describe("Tests for <Modal /> component", () => {
+describe("Tests for <SaveFileModal /> component", () => {
     let component;
     const funcClose = jest.fn();
     const funcSave = jest.fn();
     const funcChange = jest.fn();
     beforeEach(() => {
-        component = shallow(
-            <Modal close={funcClose} save={funcSave} change={funcChange} />
+        component = mount(
+            <SaveFileModal
+                close={funcClose}
+                save={funcSave}
+                change={funcChange}
+            />
         );
     });
 
@@ -37,7 +41,7 @@ describe("Tests for <Modal /> component", () => {
         expect(funcSave).toHaveBeenCalled();
     });
     test("close function should be called on click on background", () => {
-        component.find(".modalBackground").simulate("click");
+        component.find(".modal-background").simulate("click");
         expect(funcClose).toHaveBeenCalled();
     });
 });

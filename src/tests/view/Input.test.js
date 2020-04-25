@@ -1,5 +1,5 @@
 import React from "react";
-import SaveFileName from "../../view/ui/SaveFileName";
+import { Input } from "../../view/UI";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
@@ -11,7 +11,7 @@ describe("Tests for <SaveFileName /> component", () => {
     let component;
     const func = jest.fn();
     beforeEach(() => {
-        component = shallow(<SaveFileName handleChange={func} />);
+        component = shallow(<Input handleChange={func} />);
     });
 
     test("should render input", () => {

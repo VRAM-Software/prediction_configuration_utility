@@ -8,7 +8,6 @@ import {
     ChangeParamModal,
     SaveFileModal,
 } from "./UI";
-import "./AppOLD.css";
 import styles from "./App.module.css";
 const { ipcRenderer } = window.require("electron");
 
@@ -329,6 +328,8 @@ export default class App extends React.Component {
                 text="Inizia addestramento RL"
                 onClick={this.startTraining}
                 disabled={!this.state.csvFileInfo}
+                showMessage={this.state.trainedJson}
+                customMessage="Addestramento effettuato"
             />
         );
 
