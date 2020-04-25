@@ -1,6 +1,7 @@
 const PerformReadingCsv = require("../../viewmodel/perform/reading/PerformReadingCsv");
 const ReadCsv = require("../../model/input/ReadCsv");
-
+const mockedCallback = jest.fn();
+jest.mock("../../model/input/ReadCsv");
 describe("Tests for class PerformReadingCsv class", () => {
     let readerCsv;
     beforeEach(() => {
@@ -9,5 +10,13 @@ describe("Tests for class PerformReadingCsv class", () => {
 
     test("should create ReadCsv reader", () => {
         expect(readerCsv.getReader() instanceof ReadCsv).toBeTruthy();
+    });
+
+    test("should call ReadCsv.readFile", () => {
+        readerCsv.callRead("test", mockedCallback);
+        expect(ReadCsv.prototype.readFile).toBeCalledWith(
+            "test",
+            mockedCallback
+        );
     });
 });

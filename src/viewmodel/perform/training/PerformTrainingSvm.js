@@ -9,7 +9,6 @@ class PerformTrainingSvm extends PerformTraining {
     constructor() {
         super();
         this.trainer = new SvmTrainer();
-
         this.getTrainer = this.getTrainer.bind(this);
         this.callTrain = this.callTrain.bind(this);
     }
@@ -22,7 +21,6 @@ class PerformTrainingSvm extends PerformTraining {
         this.trainer.setParams(params);
         this.result = this.trainer.train(data);
         this.qualityIndex = this.trainer.getQualityIndex();
-        console.log(this.qualityIndex);
         callback(null, this.result, this.qualityIndex);
     }
 }
