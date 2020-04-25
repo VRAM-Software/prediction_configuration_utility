@@ -39,19 +39,21 @@ export default class RenderCircles extends React.Component {
                 );
             }
         } else {
-            renderCirclesTrain = this.props.dataForTraining.map(
-                (item, index) => (
-                    <circle
-                        cx={this.props.scale.x(item[this.props.params[0]])}
-                        cy={this.props.scale.y(item[this.props.params[1]])}
-                        r="4"
-                        stroke="black"
-                        strokeWidth="1"
-                        style={{ fill: "#4392f1" }}
-                        key={index}
-                    />
-                )
-            );
+            if (this.props.viewDataTraining) {
+                renderCirclesTrain = this.props.dataForTraining.map(
+                    (item, index) => (
+                        <circle
+                            cx={this.props.scale.x(item[this.props.params[0]])}
+                            cy={this.props.scale.y(item[this.props.params[1]])}
+                            r="4"
+                            stroke="black"
+                            strokeWidth="1"
+                            style={{ fill: "#4392f1" }}
+                            key={index}
+                        />
+                    )
+                );
+            }
         }
 
         return <g>{renderCirclesTrain}</g>;

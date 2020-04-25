@@ -61,7 +61,11 @@ export default class ScatterPlot extends React.Component {
             let dataSplittedOne = [];
             let dataSplittedNotOne = [];
             for (let i = 0; i < this.props.data.length; i++) {
-                if(this.props.data[i][this.props.params[this.props.params.length - 1]] === '1') {
+                if (
+                    this.props.data[i][
+                        this.props.params[this.props.params.length - 1]
+                    ] === "1"
+                ) {
                     dataSplittedOne.push(this.props.data[i]);
                 } else {
                     dataSplittedNotOne.push(this.props.data[i]);
@@ -69,22 +73,21 @@ export default class ScatterPlot extends React.Component {
             }
             let lenOne = Math.floor((dataSplittedOne.length * 2) / 3);
             let lenNotOne = Math.floor((dataSplittedNotOne.length * 2) / 3);
-            for(let i = 0; i < dataSplittedOne.length; i++) {
-                if(i < lenOne) {
+            for (let i = 0; i < dataSplittedOne.length; i++) {
+                if (i < lenOne) {
                     dataForTraining.push(dataSplittedOne[i]);
                 } else {
                     dataForQuality.push(dataSplittedOne[i]);
                 }
             }
-            for(let i = 0; i < dataSplittedNotOne.length; i++) {
-                if(i < lenNotOne) {
+            for (let i = 0; i < dataSplittedNotOne.length; i++) {
+                if (i < lenNotOne) {
                     dataForTraining.push(dataSplittedNotOne[i]);
                 } else {
                     dataForQuality.push(dataSplittedNotOne[i]);
                 }
             }
         }
-
 
         let x = null;
         let y = null;

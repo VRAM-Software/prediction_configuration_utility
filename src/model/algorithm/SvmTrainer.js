@@ -56,7 +56,7 @@ class SvmTrainer {
         let dataSplittedOne = [];
         let dataSplittedNotOne = [];
         for (let i = 0; i < data.length; i++) {
-            if(data[i][this.params[this.params.length - 1]] === '1') {
+            if (data[i][this.params[this.params.length - 1]] === "1") {
                 dataSplittedOne.push(data[i]);
             } else {
                 dataSplittedNotOne.push(data[i]);
@@ -66,15 +66,15 @@ class SvmTrainer {
         let dataSplittedQuality = [];
         let lenOne = Math.floor((dataSplittedOne.length * 2) / 3);
         let lenNotOne = Math.floor((dataSplittedNotOne.length * 2) / 3);
-        for(let i = 0; i < dataSplittedOne.length; i++) {
-            if(i < lenOne) {
+        for (let i = 0; i < dataSplittedOne.length; i++) {
+            if (i < lenOne) {
                 dataSplittedTrain.push(dataSplittedOne[i]);
             } else {
                 dataSplittedQuality.push(dataSplittedOne[i]);
             }
         }
-        for(let i = 0; i < dataSplittedNotOne.length; i++) {
-            if(i < lenNotOne) {
+        for (let i = 0; i < dataSplittedNotOne.length; i++) {
+            if (i < lenNotOne) {
                 dataSplittedTrain.push(dataSplittedNotOne[i]);
             } else {
                 dataSplittedQuality.push(dataSplittedNotOne[i]);

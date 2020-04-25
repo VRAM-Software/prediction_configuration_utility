@@ -6,25 +6,40 @@ class ResultPanel extends React.Component {
     render() {
         return (
             <div className={styles["resultPanel-container"]}>
-                {this.props.qualityIndex &&
-                this.props.algorithmChosen === "svm" ? (
-                    <div
-                        className={
-                            styles["resultPanel-quality-index-container"]
-                        }
-                    >
-                        <h3>Indici di qualità</h3>
-                        <div>
-                            <SvmQualityIndex
-                                text="Precision"
-                                index={this.props.qualityIndex.precision}
-                            />
-                            <SvmQualityIndex
-                                text="Recall"
-                                index={this.props.qualityIndex.recall}
-                            />
+                {this.props.qualityIndex ? (
+                    this.props.algorithmChosen === "svm" ? (
+                        <div
+                            className={
+                                styles["resultPanel-quality-index-container"]
+                            }
+                        >
+                            <h3>Indici di qualità</h3>
+                            <div>
+                                <SvmQualityIndex
+                                    text="Precision"
+                                    index={this.props.qualityIndex.precision}
+                                />
+                                <SvmQualityIndex
+                                    text="Recall"
+                                    index={this.props.qualityIndex.recall}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div
+                            className={
+                                styles["resultPanel-quality-index-container"]
+                            }
+                        >
+                            <h3>Indici di qualità</h3>
+                            <div>
+                                <SvmQualityIndex
+                                    text="RSquared"
+                                    index={this.props.qualityIndex.rSquared}
+                                />
+                            </div>
+                        </div>
+                    )
                 ) : null}
             </div>
         );

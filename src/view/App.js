@@ -32,7 +32,7 @@ export default class App extends React.Component {
             paramLength: null,
             qualityIndex: null,
             viewDataTraining: true,
-            viewDataTest: false,
+            viewDataTest: true,
             userFolder: "",
         };
         this.handleCloseParamModal = this.handleCloseParamModal.bind(this);
@@ -235,6 +235,8 @@ export default class App extends React.Component {
             this.setState({
                 algorithm: algorithm,
                 trainedJson: null,
+                qualityIndex: null,
+                isTrainingDone: false,
             });
         } else {
             console.log("Algoritmo scelto è già inizializzato");

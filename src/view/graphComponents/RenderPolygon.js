@@ -32,18 +32,22 @@ export default class RenderPolygon extends React.Component {
                 );
             }
         } else {
-            renderPolygonTest = this.props.dataForTest.map((item, index) => (
-                <rect
-                    x={this.props.scale.x(item[this.props.params[0]])}
-                    y={this.props.scale.y(item[this.props.params[1]])}
-                    height="8"
-                    width="8"
-                    stroke="black"
-                    strokeWidth="1"
-                    style={{ fill: "#4392f1" }}
-                    key={index}
-                />
-            ));
+            if (this.props.viewDataTest) {
+                renderPolygonTest = this.props.dataForTest.map(
+                    (item, index) => (
+                        <rect
+                            x={this.props.scale.x(item[this.props.params[0]])}
+                            y={this.props.scale.y(item[this.props.params[1]])}
+                            height="8"
+                            width="8"
+                            stroke="black"
+                            strokeWidth="1"
+                            style={{ fill: "#4392f1" }}
+                            key={index}
+                        />
+                    )
+                );
+            }
         }
 
         return <g>{renderPolygonTest}</g>;

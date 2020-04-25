@@ -16,7 +16,9 @@ export default class SvmQualityIndex extends React.Component {
         return (
             <div className={`${classname} ${styles["index-container"]}`}>
                 <p>{this.props.text}</p>
-                <p className={styles["quality-index-perc"]}>{Math.trunc(this.props.index * 100)}%</p>
+                <p className={styles["quality-index-perc"]}>
+                    {Math.trunc(this.props.index * 100)}%
+                </p>
             </div>
         );
     }
