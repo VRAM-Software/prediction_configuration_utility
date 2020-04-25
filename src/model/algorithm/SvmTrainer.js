@@ -53,17 +53,35 @@ class SvmTrainer {
     }
 
     splitData(data) {
-        let len = Math.floor((data.length * 2) / 3);
-        let dataSplitted = [];
-        for (let i = 0; i < len; i++) {
-            dataSplitted.push(data[i]);
+        let dataSplittedOne = [];
+        let dataSplittedNotOne = [];
+        for (let i = 0; i < data.length; i++) {
+            if(data[i][this.params[this.params.length - 1]] === '1') {
+                dataSplittedOne.push(data[i]);
+            } else {
+                dataSplittedNotOne.push(data[i]);
+            }
         }
-        this.dataForTrain = dataSplitted;
-        dataSplitted = [];
-        for (let i = len; i < data.length; i++) {
-            dataSplitted.push(data[i]);
+        let dataSplittedTrain = [];
+        let dataSplittedQuality = [];
+        let lenOne = Math.floor((dataSplittedOne.length * 2) / 3);
+        let lenNotOne = Math.floor((dataSplittedNotOne.length * 2) / 3);
+        for(let i = 0; i < dataSplittedOne.length; i++) {
+            if(i < lenOne) {
+                dataSplittedTrain.push(dataSplittedOne[i]);
+            } else {
+                dataSplittedQuality.push(dataSplittedOne[i]);
+            }
         }
-        this.dataForQuality = dataSplitted;
+        for(let i = 0; i < dataSplittedNotOne.length; i++) {
+            if(i < lenNotOne) {
+                dataSplittedTrain.push(dataSplittedNotOne[i]);
+            } else {
+                dataSplittedQuality.push(dataSplittedNotOne[i]);
+            }
+        }
+        this.dataForTrain = dataSplittedTrain;
+        this.dataForQuality = dataSplittedQuality;
     }
 
     translateData(data) {

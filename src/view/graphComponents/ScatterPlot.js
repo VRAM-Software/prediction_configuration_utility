@@ -46,15 +46,45 @@ export default class ScatterPlot extends React.Component {
             ),
         };
 
-        let len = Math.floor((this.props.data.length * 2) / 3);
         let dataForTraining = [];
-        for (let i = 0; i < len; i++) {
-            dataForTraining.push(this.props.data[i]);
-        }
         let dataForQuality = [];
-        for (let i = len; i < this.props.data.length; i++) {
-            dataForQuality.push(this.props.data[i]);
+
+        if (this.props.algorithm === "rl") {
+            let len = Math.floor((this.props.data.length * 2) / 3);
+            for (let i = 0; i < len; i++) {
+                dataForTraining.push(this.props.data[i]);
+            }
+            for (let i = len; i < this.props.data.length; i++) {
+                dataForQuality.push(this.props.data[i]);
+            }
+        } else {
+            let dataSplittedOne = [];
+            let dataSplittedNotOne = [];
+            for (let i = 0; i < this.props.data.length; i++) {
+                if(this.props.data[i][this.props.params[this.props.params.length - 1]] === '1') {
+                    dataSplittedOne.push(this.props.data[i]);
+                } else {
+                    dataSplittedNotOne.push(this.props.data[i]);
+                }
+            }
+            let lenOne = Math.floor((dataSplittedOne.length * 2) / 3);
+            let lenNotOne = Math.floor((dataSplittedNotOne.length * 2) / 3);
+            for(let i = 0; i < dataSplittedOne.length; i++) {
+                if(i < lenOne) {
+                    dataForTraining.push(dataSplittedOne[i]);
+                } else {
+                    dataForQuality.push(dataSplittedOne[i]);
+                }
+            }
+            for(let i = 0; i < dataSplittedNotOne.length; i++) {
+                if(i < lenNotOne) {
+                    dataForTraining.push(dataSplittedNotOne[i]);
+                } else {
+                    dataForQuality.push(dataSplittedNotOne[i]);
+                }
+            }
         }
+
 
         let x = null;
         let y = null;
@@ -74,7 +104,6 @@ export default class ScatterPlot extends React.Component {
                         transform={gTransform}
                         className="main"
                     >
-                        {/*{this.props.result && this.props.paramLength < 4 && this.props.algorithm === "svm"? (*/}
                         {this.props.result &&
                         this.props.paramLength < 4 &&
                         this.props.algorithm === "svm" ? (

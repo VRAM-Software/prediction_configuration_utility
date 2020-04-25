@@ -40,7 +40,7 @@ export default class RenderPolygon extends React.Component {
                     width="8"
                     stroke="black"
                     strokeWidth="1"
-                    style={{ fill: "white" }}
+                    style={{ fill: "#4392f1" }}
                     key={index}
                 />
             ));

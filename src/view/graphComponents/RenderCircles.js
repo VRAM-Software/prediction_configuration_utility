@@ -47,7 +47,7 @@ export default class RenderCircles extends React.Component {
                         r="4"
                         stroke="black"
                         strokeWidth="1"
-                        style={{ fill: "white" }}
+                        style={{ fill: "#4392f1" }}
                         key={index}
                     />
                 )
