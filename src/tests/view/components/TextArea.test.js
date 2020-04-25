@@ -1,5 +1,5 @@
 import React from "react";
-import { TextArea } from "../../view/UI";
+import { TextArea } from "../../../view/UI";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

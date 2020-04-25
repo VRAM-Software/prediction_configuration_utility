@@ -1,5 +1,5 @@
 import React from "react";
-import RenderPolygon from "../../view/graphComponents/RenderPolygon";
+import RenderCircles from "../../../view/graphComponents/RenderCircles";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure, mount } from "enzyme";
 
@@ -23,72 +23,73 @@ describe("<RenderCircles /> component", () => {
     let component;
     beforeEach(() => {
         component = shallow(
-            <RenderPolygon
+            <RenderCircles
                 scale={propScale}
                 params={params}
-                dataForTest={[propData[0]]}
+                dataForTraining={[propData[0]]}
+                dataForTesting={[propData[0]]}
             />
         );
     });
 
     // ================ COMPONENT RENDERING ================
 
-    test("renders rect", () => {
-        expect(component.containsMatchingElement(<rect />)).toEqual(true);
+    test("renders circle", () => {
+        expect(component.containsMatchingElement(<circle />)).toEqual(true);
     });
 
-    test("renders green rect if algorithm is svm and label is 1", () => {
+    test("renders green circle if algorithm is svm and label is 1", () => {
         const component = mount(
             <svg>
-                <RenderPolygon
-                    viewDataTest={true}
+                <RenderCircles
+                    viewDataTraining={true}
                     params={params}
                     algorithm="svm"
                     scale={propScale}
                     dataForTraining={[propData[0]]}
-                    dataForTest={[propData[0]]}
+                    dataForTesting={[propData[0]]}
                 />
             </svg>
         );
-        expect(component.find("rect").prop("style")).toHaveProperty(
+        expect(component.find("circle").prop("style")).toHaveProperty(
             "fill",
             "green"
         );
     });
 
-    test("renders red rect if algorithm is svm and label is different from 1", () => {
+    test("renders red circle if algorithm is svm and label is different from 1", () => {
         const component = mount(
             <svg>
-                <RenderPolygon
-                    viewDataTest={true}
+                <RenderCircles
+                    viewDataTraining={true}
                     params={params}
                     algorithm="svm"
                     scale={propScale}
                     dataForTraining={[propData[1]]}
-                    dataForTest={[propData[1]]}
+                    dataForTesting={[propData[0]]}
                 />
             </svg>
         );
-        expect(component.find("rect").prop("style")).toHaveProperty(
+        expect(component.find("circle").prop("style")).toHaveProperty(
             "fill",
             "red"
         );
     });
 
-    test("renders black rect if algorithm is rl", () => {
+    test("renders black circle if algorithm is rl", () => {
         const component = mount(
             <svg>
-                <RenderPolygon
-                    viewDataTest={true}
+                <RenderCircles
+                    viewDataTraining={true}
                     params={params}
                     algorithm="rl"
                     scale={propScale}
                     dataForTraining={[propData[0]]}
-                    dataForTest={[propData[0]]}
+                    dataForTesting={[propData[0]]}
                 />
             </svg>
         );
-        expect(component.find("rect").prop("style")).toHaveProperty(
+        expect(component.find("circle").prop("style")).toHaveProperty(
             "fill",
             "white"
         );

@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-    Content,
+    Graph,
     ControlPanel,
     Button,
     FileInput,
@@ -282,7 +282,7 @@ export default class App extends React.Component {
     render() {
         const group = (
             <>
-                <Content
+                <Graph
                     data={this.state.userData}
                     params={this.state.params}
                     result={this.state.trainedJson}

@@ -1,7 +1,7 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
-import { ChangeParamModal } from "../../view/UI";
+import { ChangeParamModal } from "../../../view/UI";
 
 configure({
     adapter: new Adapter(),

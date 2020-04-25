@@ -1,5 +1,5 @@
 import React from "react";
-import { SvmQualityIndex } from "../../view/UI";
+import { SvmQualityIndex } from "../../../view/UI";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, mount } from "enzyme";
 

@@ -1,0 +1,92 @@
+.modal-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 98;
+}
+
+.modal-set-param {
+    width: 500px;
+    height: 380px;
+    background-color: whitesmoke;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-250px, -190px);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
+}
+
+.modal-set-param h4,
+.modal-set-param span {
+    width: 95%;
+}
+
+.modal-set-param h4 {
+    margin-top: 5px;
+}
+
+.modal-frame {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 0;
+    height: 25px;
+    width: 100%;
+}
+
+.modal-frame div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 25px;
+    padding-bottom: 2px;
+}
+
+.modal-frame div:hover {
+    background-color: red;
+}
+
+.modal-set-param-select-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: auto;
+}
+.modal-set-param-select-container select {
+    width: 150px;
+    height: 25px;
+    margin: 5px;
+}
+
+.modal-set-param-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}

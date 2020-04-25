@@ -5,11 +5,10 @@ import "../mocks/mockFile";
 import App from "../../view/App";
 import {
     FileInput,
-    TextArea,
     SaveFileModal,
     ChangeParamModal,
-    CheckBoxes,
-    Content,
+    Graph,
+    Button,
     ControlPanel,
 } from "../../view/UI";
 import { configure, shallow, mount } from "enzyme";
@@ -48,24 +47,18 @@ describe("Render tests for <App /> component", () => {
         ).toBeTruthy();
     });
 
-    test("should render <Content/> and two <ControlPanel/> if userData exists", () => {
+    test("should render <Graph/> and two <ControlPanel/> if userData exists", () => {
         component.setState({
             userData: [1, 2, 3, 4],
         });
         expect(
-            component.containsAllMatchingElements([
-                <Content />,
-                <ControlPanel />,
-            ])
+            component.containsAllMatchingElements([<Graph />, <ControlPanel />])
         ).toBeTruthy();
     });
 
-    test("should not render render <Content/> and <ControlPanel/> when component is rendered", () => {
+    test("should not render render <Graph/> and <ControlPanel/> when component is rendered", () => {
         expect(
-            component.containsAllMatchingElements([
-                <Content />,
-                <ControlPanel />,
-            ])
+            component.containsAllMatchingElements([<Graph />, <ControlPanel />])
         ).toBeFalsy();
     });
 
@@ -93,80 +86,23 @@ describe("Render tests for <App /> component", () => {
         ).toBeTruthy();
     });
 
-    // test("button 'Inizia addestramento svm' should be disabled when <App /> is rendered", () => {
-    //     expect(
-    //         component
-    //             .find("button[children='Inizia addestramento svm']")
-    //             .is("[disabled]")
-    //     ).toBeTruthy();
-    // });
+    test("should render start training SVM button and save json button at all times", () => {
+        component.setState({
+            algorithm: "svm",
+        });
+        expect(
+            component.containsAllMatchingElements([<Button />, <Button />])
+        ).toBeTruthy();
+    });
 
-    // test("button 'Inizia addestramento rl' should be disabled when <App /> is rendered", () => {
-    //     component.setState({
-    //         algorithm: "rl",
-    //     });
-    //     expect(
-    //         component
-    //             .find("button[children='Inizia addestramento rl']")
-    //             .is("[disabled]")
-    //     ).toBeTruthy();
-    // });
-
-    // test("button 'Inizia addestramento svm' should be enabled when csvFile exists", () => {
-    //     component.setState({
-    //         csvFileInfo: "test",
-    //     });
-    //     expect(
-    //         component
-    //             .find("button[children='Inizia addestramento svm']")
-    //             .is("[disabled]")
-    //     ).toBeFalsy();
-    // });
-
-    // test("button 'Inizia addestramento rl' should be enabled when csvFile exists", () => {
-    //     component.setState({
-    //         csvFileInfo: "test",
-    //         algorithm: "rl",
-    //     });
-    //     expect(
-    //         component
-    //             .find("button[children='Inizia addestramento rl']")
-    //             .is("[disabled]")
-    //     ).toBeFalsy();
-    // });
-
-    // test("button 'Salva' should be disabled when <App /> is rendered", () => {
-    //     expect(
-    //         component.find("button[children='Salva json']").is("[disabled]")
-    //     ).toBeTruthy();
-    // });
-
-    // test("button 'Salva json' should be enabled after training is done", () => {
-    //     component.setState({
-    //         isTrainingDone: true,
-    //     });
-    //     expect(
-    //         component.find("button[children='Salva json']").is("[disabled]")
-    //     ).toBeFalsy();
-    // });
-
-    // test("should render button with 'Addestrando...' when component is busy training", () => {
-    //     component.setState({
-    //         isTraining: true,
-    //     });
-    //     expect(
-    //         component.find("button[children='Addestrando...']")
-    //     ).toBeTruthy();
-    // });
-
-    // test("should not render button with 'Addestrando...' when component is not training", () => {
-    //     component.setState({
-    //         isTraining: false,
-    //     });
-    //     expect(
-    //         component.find("button[children='Inizia addestramento']")
-    //     ).toBeTruthy();
-    // });
+    test("should render start training RL button and save json button at all times", () => {
+        component.setState({
+            algorithm: "rl  ",
+        });
+        expect(
+            component.containsAllMatchingElements([<Button />, <Button />])
+        ).toBeTruthy();
+    });
 });
 
 describe("Method tests for <App/> component", () => {

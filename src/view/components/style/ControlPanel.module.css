@@ -1,0 +1,32 @@
+.controlPanel-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    flex-direction: column;
+    height: 620px;
+}
+
+.controlPanel-container > h3 {
+    width: 90%;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    font-size: 18px;
+}
+
+.controlPanel-result-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 90%;
+    height: 115px;
+}
+
+.controlPanel-result-container > div {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}

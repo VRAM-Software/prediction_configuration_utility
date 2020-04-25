@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../../view/UI";
+import { Button } from "../../../view/UI";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
@@ -66,9 +66,10 @@ describe("Tests for <Button /> component", () => {
         expect(
             componentDisabled.containsMatchingElement(<button>disabled</button>)
         ).toBeTruthy();
+        expect(componentDisabled.find("button").is("[disabled]")).toBeTruthy();
     });
 
-    test("button should render custom message", () => {
+    test("button should render custom message if showMessage is true", () => {
         const componentCustom = shallow(
             <Button
                 showMessage={true}
@@ -84,5 +85,23 @@ describe("Tests for <Button /> component", () => {
         expect(
             componentCustom.containsMatchingElement(<span>custom</span>)
         ).toBeTruthy();
+    });
+
+    test("button should not render custom message if showMessage is false", () => {
+        const componentCustom = shallow(
+            <Button
+                showMessage={false}
+                customMessage="custom"
+                onClick={func}
+                loading={false}
+                text="test"
+                loadingText="loading"
+                disabledText="disabled"
+                disabled={false}
+            />
+        );
+        expect(
+            componentCustom.containsMatchingElement(<span>custom</span>)
+        ).toBeFalsy();
     });
 });

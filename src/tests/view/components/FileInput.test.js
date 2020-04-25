@@ -1,5 +1,5 @@
 import React from "react";
-import { FileInput } from "../../view/UI";
+import { FileInput } from "../../../view/UI";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
-import { SetDataCheckBoxes } from "../../view/UI";
+import { SetDataCheckBoxes } from "../../../view/UI";
 
 configure({
     adapter: new Adapter(),
@@ -10,7 +10,6 @@ configure({
 describe("Tests for <CheckBoxes /> component", () => {
     let component;
 
-    const func = jest.fn();
     const func1 = jest.fn();
     const func2 = jest.fn();
     beforeEach(() => {
