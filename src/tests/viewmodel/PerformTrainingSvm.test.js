@@ -12,7 +12,7 @@ describe("Tests for class PerformTrainingSvm class", () => {
         trainer = new PerformTrainingSvm();
     });
 
-    test("should create ReadCsv reader", () => {
+    test("should create SvmTrainer object", () => {
         expect(trainer.getTrainer() instanceof SvmTrainer).toBeTruthy();
     });
 

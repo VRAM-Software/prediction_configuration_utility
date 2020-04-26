@@ -14,11 +14,8 @@ describe("Tests for <Graph /> component", () => {
         component = shallow(<Graph />);
     });
 
-    test("should render <ScatterPlot /> correctly", () => {
-        expect(component.containsMatchingElement(<ScatterPlot />)).toBeTruthy();
-    });
-
     test("should render component correctly", () => {
         expect(component).toBeTruthy();
+        expect(component.containsMatchingElement(<ScatterPlot />)).toBeTruthy();
     });
 });

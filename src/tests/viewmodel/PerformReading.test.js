@@ -6,8 +6,8 @@ class ChildPerformReading extends PerformReading {
     }
 }
 
-describe("Tests for class AlgorithmTrainer class", () => {
-    test("should throw an error if initialising AlgorithmTrainer", () => {
+describe("Tests for class PerformReading class", () => {
+    test("should throw an error if initialising PerformReading", () => {
         expect(() => new PerformReading()).toThrowError(
             "Can not construct abstract class."
         );

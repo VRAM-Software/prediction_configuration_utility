@@ -14,17 +14,17 @@ describe("Tests for <FileInput /> component", () => {
         component = shallow(<FileInput type="test" onChange={func} />);
     });
 
-    test("should render type button correctly", () => {
+    test("should render component correctly", () => {
         expect(
             component.containsMatchingElement(<div>Seleziona un file test</div>)
         ).toBeTruthy();
-    });
-
-    test("should render component correctly", () => {
         expect(component).toBeTruthy();
+        expect(
+            component.find("span[children='Nessun file selezionato']").length
+        ).toEqual(1);
     });
 
-    test("function passed as prop should be called on event change", () => {
+    test("function passed as prop should be called on change event", () => {
         component.find("input").simulate("change");
         expect(func).toHaveBeenCalled();
     });
@@ -34,11 +34,5 @@ describe("Tests for <FileInput /> component", () => {
             <FileInput type="test" onChange={func} isFileChosen={true} />
         );
         expect(componentFileChosen.find(".file-chosen").exists()).toBeTruthy();
-    });
-
-    test("should not render file path if file is not selected", () => {
-        expect(
-            component.find("span[children='Nessun file selezionato']").length
-        ).toEqual(1);
     });
 });

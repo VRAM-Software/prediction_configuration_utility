@@ -2,13 +2,13 @@ const PerformReadingJson = require("../../viewmodel/perform/reading/PerformReadi
 const ReadJson = require("../../model/input/ReadJson");
 const mockedCallback = jest.fn();
 jest.mock("../../model/input/ReadJson");
-describe("Tests for class PerformReadingCsv class", () => {
+describe("Tests for class PerformReadingJson class", () => {
     let readerJson;
     beforeEach(() => {
         readerJson = new PerformReadingJson();
     });
 
-    test("should create ReadCsv reader", () => {
+    test("should create ReadJson object", () => {
         expect(readerJson.getReader() instanceof ReadJson).toBeTruthy();
     });
 

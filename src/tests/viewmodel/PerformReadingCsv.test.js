@@ -8,7 +8,7 @@ describe("Tests for class PerformReadingCsv class", () => {
         readerCsv = new PerformReadingCsv();
     });
 
-    test("should create ReadCsv reader", () => {
+    test("should create ReadCsv object", () => {
         expect(readerCsv.getReader() instanceof ReadCsv).toBeTruthy();
     });
 

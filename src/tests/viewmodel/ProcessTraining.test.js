@@ -23,7 +23,7 @@ describe("Tests for ProcessTraining class", () => {
         ).toBeTruthy();
     });
 
-    test("getPath should set the right information", () => {
+    test("getParams should return the right information", () => {
         trainerSvm.setData([
             [1, 2],
             [2, 3],
@@ -45,7 +45,7 @@ describe("Tests for ProcessTraining class", () => {
         expect(trainerRl.getParams()).toEqual(["x", "y", "l"]);
     });
 
-    test("should call strategy callWrite", () => {
+    test("should call strategy's callTrain", () => {
         trainerSvm.setStrategy("svm");
         trainerRl.setStrategy("rl");
         trainerSvm.setData([

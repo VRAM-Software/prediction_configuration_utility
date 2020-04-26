@@ -20,7 +20,8 @@ describe("Tests for <ControlPanel /> component", () => {
         component = shallow(<ControlPanel />);
     });
 
-    test("should render all elements correctly", () => {
+    test("should render component correctly", () => {
+        expect(component).toBeTruthy();
         expect(
             component.containsAllMatchingElements([
                 <CheckBoxes />,
@@ -30,9 +31,5 @@ describe("Tests for <ControlPanel /> component", () => {
                 <Button />,
             ])
         ).toBeTruthy();
-    });
-
-    test("should render component correctly", () => {
-        expect(component).toBeTruthy();
     });
 });

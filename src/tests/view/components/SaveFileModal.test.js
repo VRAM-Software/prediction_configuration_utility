@@ -22,7 +22,8 @@ describe("Tests for <SaveFileModal /> component", () => {
         );
     });
 
-    test("should render buttons correctly", () => {
+    test("should render component correctly", () => {
+        expect(component).toBeTruthy();
         expect(
             component.containsAllMatchingElements([
                 <button>Chiudi</button>,
@@ -31,16 +32,16 @@ describe("Tests for <SaveFileModal /> component", () => {
         ).toBeTruthy();
     });
 
-    test("close function should be called on button 'Chiudi'", () => {
+    test("close function should be called on clicking button 'Chiudi'", () => {
         component.find("button[children='Chiudi']").simulate("click");
         expect(funcClose).toHaveBeenCalled();
     });
 
-    test("save function should be called on button 'Salva Json'", () => {
+    test("save function should be called on clicking button 'Salva Json'", () => {
         component.find("button[children='Salva Json']").simulate("click");
         expect(funcSave).toHaveBeenCalled();
     });
-    test("close function should be called on click on background", () => {
+    test("close function should be called on clicking background", () => {
         component.find(".modal-background").simulate("click");
         expect(funcClose).toHaveBeenCalled();
     });

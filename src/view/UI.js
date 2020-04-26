@@ -3,7 +3,7 @@ import Button from "./components/Button";
 import FileInput from "./components/FileInput";
 import TextArea from "./components/TextArea";
 import Input from "./components/Input";
-import SvmQualityIndex from "./components/SvmQualityIndex";
+import QualityIndex from "./components/QualityIndex";
 import FolderInput from "./components/FolderInput";
 import SaveFileModal from "./components/SaveFileModal";
 import ChangeParamModal from "./components/ChangeParamModal";
@@ -22,7 +22,7 @@ export {
     ControlPanel,
     Button,
     Graph,
-    SvmQualityIndex,
+    QualityIndex,
     FolderInput,
     ResultPanel,
 };

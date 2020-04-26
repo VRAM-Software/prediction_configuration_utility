@@ -8,12 +8,12 @@ describe("Tests for ProcessWriting class", () => {
         writer = new ProcessWriting();
     });
 
-    test("should create the right object based on extension", () => {
+    test("should create the right object based on file extension", () => {
         writer.setStrategy("json");
         expect(writer.getStrategy() instanceof PerformWritingJson).toBeTruthy();
     });
 
-    test("getPath should set the right path", () => {
+    test("getFileInfo should return the right informations", () => {
         writer.setPath("testPath");
         writer.setName("testName");
         writer.setTrainingResult({ result: 42 });
@@ -26,7 +26,7 @@ describe("Tests for ProcessWriting class", () => {
         });
     });
 
-    test("should call strategy callWrite", () => {
+    test("should call strategy's callWrite", () => {
         writer.setPath("testPath");
         writer.setName("testName");
         writer.setTrainingResult({ result: 42 });

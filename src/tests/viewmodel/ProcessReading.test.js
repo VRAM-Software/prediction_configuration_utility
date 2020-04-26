@@ -12,7 +12,7 @@ describe("Tests for ProcessReading class", () => {
         readerJson = new ProcessReading();
     });
 
-    test("should create the right object based on extension", () => {
+    test("should create the right object based on file extension", () => {
         readerCsv.setStrategy("csv");
         readerJson.setStrategy("json");
         expect(
@@ -30,7 +30,7 @@ describe("Tests for ProcessReading class", () => {
         expect(readerJson.getPath()).toEqual("testPath");
     });
 
-    test("should call strategy callRead", () => {
+    test("should call strategy's callRead", () => {
         readerCsv.setPath("testPath");
         readerJson.setPath("testPath");
         readerCsv.setStrategy("csv");

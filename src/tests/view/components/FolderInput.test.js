@@ -14,11 +14,8 @@ describe("Tests for <FolderInput /> component", () => {
         component = shallow(<FolderInput folderPath="test" onClick={func} />);
     });
 
-    test("should render input element", () => {
+    test("should render component correctly", () => {
         expect(component.find("input").exists()).toBeTruthy();
-    });
-
-    test("should render folder path", () => {
         expect(component.find("input").props().value).toEqual("test");
     });
 });

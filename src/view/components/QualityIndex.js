@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./style/SvmQualityIndex.module.css";
+import styles from "./style/QualityIndex.module.css";
 
-export default class SvmQualityIndex extends React.Component {
+export default class QualityIndex extends React.Component {
     render() {
         let classname = null;
         if (this.props.index > 0.6) {

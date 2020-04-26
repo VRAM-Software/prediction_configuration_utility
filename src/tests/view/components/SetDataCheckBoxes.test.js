@@ -7,7 +7,7 @@ configure({
     adapter: new Adapter(),
 });
 
-describe("Tests for <CheckBoxes /> component", () => {
+describe("Tests for <SetDataCheckBoxes /> component", () => {
     let component;
 
     const func1 = jest.fn();
@@ -23,11 +23,8 @@ describe("Tests for <CheckBoxes /> component", () => {
         );
     });
 
-    test("Should render correctly", () => {
+    test("should render component correctly", () => {
         expect(component).toBeTruthy();
-    });
-
-    test("Should render two elements that represent the algorithm", () => {
         expect(
             component.containsMatchingElement([
                 <div className="checkbox-container"></div>,
@@ -36,14 +33,12 @@ describe("Tests for <CheckBoxes /> component", () => {
         ).toBeTruthy();
     });
 
-    test("Clicking on button should call method passed as prop", () => {
+    test("function passed as prop should be called on click event", () => {
         component.find(".checkbox-not-selected").simulate("click");
         component.find(".checkbox-selected").simulate("click");
         expect(func2).toBeCalled();
         expect(func1).toBeCalled();
-    });
 
-    test("Clicking on text should call method passed as prop", () => {
         component.find("span").at(1).simulate("click");
         component.find("span").at(2).simulate("click");
         expect(func1).toBeCalled();

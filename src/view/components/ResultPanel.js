@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./style/ResultPanel.module.css";
-import SvmQualityIndex from "./SvmQualityIndex";
+import QualityIndex from "./QualityIndex";
 
 class ResultPanel extends React.Component {
     render() {
@@ -15,11 +15,11 @@ class ResultPanel extends React.Component {
                         >
                             <h3>Indici di qualità</h3>
                             <div>
-                                <SvmQualityIndex
+                                <QualityIndex
                                     text="Precision"
                                     index={this.props.qualityIndex.precision}
                                 />
-                                <SvmQualityIndex
+                                <QualityIndex
                                     text="Recall"
                                     index={this.props.qualityIndex.recall}
                                 />
@@ -33,7 +33,7 @@ class ResultPanel extends React.Component {
                         >
                             <h3>Indici di qualità</h3>
                             <div>
-                                <SvmQualityIndex
+                                <QualityIndex
                                     text="RSquared"
                                     index={this.props.qualityIndex.rSquared}
                                 />

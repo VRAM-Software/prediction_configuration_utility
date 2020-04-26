@@ -26,7 +26,7 @@ describe("Tests for <ChangeParamModal /> component", () => {
         );
     });
 
-    test("renders correctly", () => {
+    test("should render component correctly", () => {
         expect(
             component.containsMatchingElement(
                 <h4>Seleziona i parametri da utilizzare</h4>
@@ -42,7 +42,7 @@ describe("Tests for <ChangeParamModal /> component", () => {
         );
     });
 
-    test("Should call props functions", () => {
+    test("function passed as prop should be called on click event", () => {
         component.setState({
             selected: ["weight", "size", "label"],
             algorithm: "svm",
@@ -55,7 +55,7 @@ describe("Tests for <ChangeParamModal /> component", () => {
         expect(trainResetFunc).toBeCalled();
     });
 
-    test("Should add element to array onChange select", () => {
+    test("should add elements in the correct order to state variable", () => {
         component.setState({
             selected: [],
             algorithm: "svm",
@@ -70,7 +70,7 @@ describe("Tests for <ChangeParamModal /> component", () => {
         expect(component.state("selected")).toEqual(["weight"]);
     });
 
-    test("Should add null element if selected 'seleziona un algoritmo' option to array onChange select", () => {
+    test("should add null element if selected 'seleziona un algoritmo' option to state variable", () => {
         component.setState({
             selected: [],
             algorithm: "svm",

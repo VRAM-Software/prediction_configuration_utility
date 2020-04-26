@@ -14,11 +14,12 @@ describe("Tests for <SaveFileName /> component", () => {
         component = shallow(<Input handleChange={func} />);
     });
 
-    test("should render input", () => {
+    test("should render component correctly", () => {
+        expect(component).toBeTruthy();
         expect(component.find("input").exists()).toBeTruthy();
     });
 
-    test("should call function passed as prop on change", () => {
+    test("function passed as prop should be called on change event", () => {
         component.find("input").simulate("change");
         expect(func).toHaveBeenCalled();
     });

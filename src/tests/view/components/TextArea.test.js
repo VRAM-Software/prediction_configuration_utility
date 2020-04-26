@@ -14,11 +14,12 @@ describe("Tests for <TextArea /> component", () => {
         component = shallow(<TextArea onChange={func} />);
     });
 
-    test("should render textarea", () => {
+    test("should render component correctly", () => {
+        expect(component).toBeTruthy();
         expect(component.find("textarea").exists()).toBeTruthy();
     });
 
-    test("should call function passed as prop on change", () => {
+    test("function passed as prop should be called on change event", () => {
         component.find("textarea").simulate("change");
         expect(func).toHaveBeenCalled();
     });

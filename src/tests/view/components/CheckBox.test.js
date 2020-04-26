@@ -24,11 +24,8 @@ describe("Tests for <CheckBoxes /> component", () => {
         );
     });
 
-    test("Should render correctly", () => {
+    test("should render component correctly", () => {
         expect(component).toBeTruthy();
-    });
-
-    test("Should render two elements that represent the algorithm", () => {
         expect(
             component.find("span[children='Support Vector Machine']")
         ).toBeTruthy();
@@ -37,7 +34,7 @@ describe("Tests for <CheckBoxes /> component", () => {
         ).toBeTruthy();
     });
 
-    test("Clicking on the button should call method passed as prop", () => {
+    test("function passed as prop should be called on click event", () => {
         component.find(".checkbox-not-selected").simulate("click");
         expect(func).toBeCalled();
     });

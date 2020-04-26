@@ -25,14 +25,14 @@ describe("Tests for class Write class", () => {
         );
     });
 
-    test("should return error if functions are not implemented in child class", () => {
+    test("should return error if parser function is not implemented in child class", () => {
         let child = new ChildWrite();
         expect(() => child.parser({ a: 1, b: 2, c: 3 })).toThrow(
             "Do not call abstract method parser from child."
         );
     });
 
-    test("method buildTrainedFile should return js object with correct parametres", () => {
+    test("method buildTrainedFile should return js object with correct parameters", () => {
         let json = writer.buildTrainedFile(
             {
                 author: "VRAM Software",

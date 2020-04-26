@@ -14,7 +14,7 @@ describe("Tests for class PerformWritingJson class", () => {
         jsonWriter = new PerformWritingJson();
     });
 
-    test("should create ReadCsv reader", () => {
+    test("should create WriteJson object", () => {
         expect(jsonWriter.getWriter() instanceof WriteJson).toBeTruthy();
     });
 

@@ -3,11 +3,6 @@ import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 import Grid from "../../../view/graphComponents/Grid";
 
-const data = [
-    { weight: 1, size: 1, label: 1 },
-    { weight: 2, size: 2, label: -1 },
-];
-
 const result = {
     w: [1, 1],
     b: 1,
@@ -40,7 +35,7 @@ const cons = {
 
 configure({ adapter: new Adapter() });
 
-describe("Test per il componente Grid", () => {
+describe("Tests for <Grid /> component", () => {
     let component;
     let componentBig;
     let comp;
@@ -60,11 +55,8 @@ describe("Test per il componente Grid", () => {
         );
     });
 
-    test("should render component properly", () => {
+    test("should render component correctly", () => {
         expect(component).toBeTruthy();
-    });
-
-    test("should render rect component", () => {
         expect(component.containsMatchingElement(<rect />)).toBeTruthy();
     });
 });

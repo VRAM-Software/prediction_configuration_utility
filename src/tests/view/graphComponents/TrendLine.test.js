@@ -24,7 +24,7 @@ const propResult = [[0], [2]];
 
 const propParams = ["x", "y"];
 
-describe("Test per il componente TrendLine", () => {
+describe("Tests for <TrendLine /> component", () => {
     let component;
     beforeEach(() => {
         component = shallow(
@@ -37,18 +37,15 @@ describe("Test per il componente TrendLine", () => {
         );
     });
 
-    test("Render della linea", () => {
+    test("should render component correctly", () => {
+        expect(component).toBeTruthy();
         expect(component.containsMatchingElement(<line />)).toEqual(true);
     });
 
-    test("Chiamate d3", () => {
+    test("function passed as prop should be called", () => {
         expect(propScale.x).toHaveBeenNthCalledWith(1, 1);
         expect(propScale.y).toHaveBeenNthCalledWith(1, 2);
         expect(propScale.x).toHaveBeenNthCalledWith(2, 5);
         expect(propScale.y).toHaveBeenNthCalledWith(2, 10);
-    });
-
-    test("should render component properly", () => {
-        expect(component).toBeTruthy();
     });
 });

@@ -22,17 +22,14 @@ describe("Tests for <Button /> component", () => {
         );
     });
 
-    test("should render type button correctly", () => {
+    test("should render component correctly", () => {
+        expect(component).toBeTruthy();
         expect(
             component.containsMatchingElement(<button>test</button>)
         ).toBeTruthy();
     });
 
-    test("should render component correctly", () => {
-        expect(component).toBeTruthy();
-    });
-
-    test("function passed as prop should be called on event change", () => {
+    test("function passed as prop should be called on click event", () => {
         component.find("button").simulate("click");
         expect(func).toHaveBeenCalled();
     });

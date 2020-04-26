@@ -6,13 +6,13 @@ const data = [{ a: 1, b: 1, c: 1 }];
 const mockedCallback = jest.fn();
 jest.mock("../../model/algorithm/RlTrainer");
 
-describe("Tests for class PerformTrainingCsv class", () => {
+describe("Tests for class PerformTrainingRl class", () => {
     let trainer;
     beforeEach(() => {
         trainer = new PerformTrainingRl();
     });
 
-    test("should create ReadCsv reader", () => {
+    test("should create RlTrainer object", () => {
         expect(trainer.getTrainer() instanceof RlTrainer).toBeTruthy();
     });
 
@@ -24,6 +24,10 @@ describe("Tests for class PerformTrainingCsv class", () => {
             numY: 1,
         });
         expect(RlTrainer.prototype.train).toBeCalledWith(data);
-        expect(mockedCallback).toBeCalledWith(null, trainer.result);
+        expect(mockedCallback).toBeCalledWith(
+            null,
+            trainer.result,
+            trainer.qualityIndex
+        );
     });
 });

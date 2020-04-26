@@ -1,20 +1,14 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure, mount } from "enzyme";
-import { ResultPanel, SvmQualityIndex } from "../../../view/UI";
+import { ResultPanel, QualityIndex } from "../../../view/UI";
 
 configure({
     adapter: new Adapter(),
 });
 
 describe("Tests for <ResultPanel /> component", () => {
-    let component;
-
-    const func1 = jest.fn();
-    const func2 = jest.fn();
-    beforeEach(() => {});
-
-    test("Should render correctly if quality indexes exists", () => {
+    test("should render component correctly if quality indexes of svm exists", () => {
         const component = mount(
             <ResultPanel
                 isTrainingFinished={true}
@@ -27,43 +21,40 @@ describe("Tests for <ResultPanel /> component", () => {
         ).toBeTruthy();
         expect(
             component.containsAllMatchingElements([
-                <SvmQualityIndex />,
-                <SvmQualityIndex />,
+                <QualityIndex />,
+                <QualityIndex />,
             ])
         ).toBeTruthy();
     });
 
-    test("Should not render quality indexes are null", () => {
+    test("should render component correctly if quality indexes are null", () => {
         const component = mount(
-            <ResultPanel
-                isTrainingFinished={true}
-                qualityIndex={null}
-                algorithmChosen="svm"
-            />
+            <ResultPanel isTrainingFinished={true} qualityIndex={null} />
         );
         expect(
             component.containsMatchingElement(<h3>Indici di qualità</h3>)
         ).toBeFalsy();
         expect(
             component.containsAllMatchingElements([
-                <SvmQualityIndex />,
-                <SvmQualityIndex />,
+                <QualityIndex />,
+                <QualityIndex />,
             ])
         ).toBeFalsy();
     });
 
-    test("Should not render quality indexes with RL", () => {
+    test("should render component correctly if quality indexes of rl exists", () => {
         const component = mount(
-            <ResultPanel isTrainingFinished={true} algorithmChosen="rl" />
+            <ResultPanel
+                isTrainingFinished={true}
+                qualityIndex={{ rSquared: 0.2 }}
+                algorithmChosen="rl"
+            />
         );
         expect(
             component.containsMatchingElement(<h3>Indici di qualità</h3>)
-        ).toBeFalsy();
+        ).toBeTruthy();
         expect(
-            component.containsAllMatchingElements([
-                <SvmQualityIndex />,
-                <SvmQualityIndex />,
-            ])
-        ).toBeFalsy();
+            component.containsAllMatchingElements([<QualityIndex />])
+        ).toBeTruthy();
     });
 });

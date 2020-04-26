@@ -9,8 +9,6 @@ class ChildRead extends Read {
     }
 }
 
-const mockedCallback = jest.fn();
-
 describe("Tests for class Read class", () => {
     let reader;
     beforeEach(() => {
