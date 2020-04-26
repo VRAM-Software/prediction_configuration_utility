@@ -1,0 +1,32 @@
+.resultPanel-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+}
+
+.resultPanel-quality-index-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 115px;
+    width: 100%;
+    margin-left: 5px;
+}
+
+.resultPanel-quality-index-container > h3 {
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+.resultPanel-quality-index-container > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}

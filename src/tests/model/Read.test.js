@@ -20,12 +20,16 @@ describe("Tests for class Read class", () => {
     });
 
     test("should throw an error if initialising Read", () => {
-        expect(() => new Read()).toThrowError("Can not construct abstract class Read.");
+        expect(() => new Read()).toThrowError(
+            "Can not construct abstract class Read."
+        );
     });
 
     test("should return error if functions are not implemented in child class", () => {
         let child = new ChildRead();
-        expect(() => child.parser({a:1,b:2,c:3})).toThrow("Do not call abstract method parser from child.");
+        expect(() => child.parser({ a: 1, b: 2, c: 3 })).toThrow(
+            "Do not call abstract method parser from child."
+        );
     });
 
     test("method readFile should read file correctly", () => {
@@ -47,7 +51,7 @@ describe("Tests for class Read class", () => {
 
     test("method readFile should throw error when read file failed", () => {
         let callbackFs;
-        jest.spyOn(fs, 'readFile').mockImplementation((path, data, cb) => {
+        jest.spyOn(fs, "readFile").mockImplementation((path, data, cb) => {
             callbackFs = cb;
         });
         const myError = new Error("read file failed");

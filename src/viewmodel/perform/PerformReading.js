@@ -9,11 +9,11 @@ class PerformReading {
         throw new TypeError(
             "Do not call abstract method getReader from child."
         );
-    };
+    }
 
     callRead() {
         throw new TypeError("Do not call abstract method callRead from child.");
-    };
+    }
 }
 
 module.exports = PerformReading;

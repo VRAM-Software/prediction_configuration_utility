@@ -1,12 +1,14 @@
 import React from "react";
-import Chooser from "./ui/Chooser";
-import Graph from "./ui/Graph";
-import UserNotes from "./ui/UserNotes";
-import Modal from "./ui/Modal";
-import ParamModal from "./ui/ParamModal";
-import CheckBox from "./ui/CheckBox";
-import config from "../config/config";
-import "./App.css";
+
+import {
+    Graph,
+    ControlPanel,
+    Button,
+    FileInput,
+    ChangeParamModal,
+    SaveFileModal,
+} from "./UI";
+import styles from "./App.module.css";
 const { ipcRenderer } = window.require("electron");
 
 export default class App extends React.Component {
@@ -28,14 +30,19 @@ export default class App extends React.Component {
             params: [],
             array: [],
             paramLength: null,
+            qualityIndex: null,
+            viewDataTraining: true,
+            viewDataTest: true,
+            userFolder: "",
         };
-        this.setUserData = this.setUserData.bind(this);
         this.handleCloseParamModal = this.handleCloseParamModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleChangeNotes = this.handleChangeNotes.bind(this);
         this.handleChangeFileName = this.handleChangeFileName.bind(this);
         this.handleSaveJson = this.handleSaveJson.bind(this);
+        this.handleViewDataTraining = this.handleViewDataTraining.bind(this);
+        this.handleViewDataTest = this.handleViewDataTest.bind(this);
         this.selectParams = this.selectParams.bind(this);
         this.setParams = this.setParams.bind(this);
         this.resetState = this.resetState.bind(this);
@@ -44,13 +51,8 @@ export default class App extends React.Component {
         this.getFileInfo = this.getFileInfo.bind(this);
         this.handleChangeAlgorithm = this.handleChangeAlgorithm.bind(this);
         this.startTraining = this.startTraining.bind(this);
-    }
-
-    setUserData() {
-        const data = this.state.tempData;
-        this.setState({
-            userData: data,
-        });
+        this.trainReset = this.trainReset.bind(this);
+        this.handleChangeFolder = this.handleChangeFolder.bind(this);
     }
 
     handleCloseParamModal(e) {
@@ -97,10 +99,23 @@ export default class App extends React.Component {
         e.preventDefault();
         ipcRenderer.send("write-file", {
             name: this.state.fileName,
+            path: this.state.userFolder,
             notes: this.state.userNotes,
             trainedJson: this.state.trainedJson,
         });
         this.handleCloseModal(e);
+    }
+
+    handleViewDataTraining(e) {
+        this.setState({
+            viewDataTraining: !this.state.viewDataTraining,
+        });
+    }
+
+    handleViewDataTest(e) {
+        this.setState({
+            viewDataTest: !this.state.viewDataTest,
+        });
     }
 
     selectParams(data) {
@@ -110,12 +125,21 @@ export default class App extends React.Component {
         });
     }
 
+    trainReset() {
+        this.setState({
+            isTrainingDone: false,
+            qualityIndex: null,
+            trainedJson: null,
+        });
+    }
+
     setParams(data) {
+        const tempData = this.state.tempData;
         this.setState({
             params: data,
             isParamModalEnabled: false,
+            userData: tempData,
         });
-        this.setUserData();
     }
 
     resetState() {
@@ -134,6 +158,7 @@ export default class App extends React.Component {
             params: [],
             array: [],
             paramLength: null,
+            qualityIndex: null,
         });
     }
 
@@ -210,6 +235,8 @@ export default class App extends React.Component {
             this.setState({
                 algorithm: algorithm,
                 trainedJson: null,
+                qualityIndex: null,
+                isTrainingDone: false,
             });
         } else {
             console.log("Algoritmo scelto è già inizializzato");
@@ -226,11 +253,22 @@ export default class App extends React.Component {
             params: this.state.params,
             algorithm: this.state.algorithm,
         });
-        ipcRenderer.on("finished-training", (event, arg) => {
+        ipcRenderer.on("finished-training", (event, arg, qualityI) => {
             this.setState({
                 isTrainingDone: true,
                 isTraining: false,
                 trainedJson: arg,
+                qualityIndex: qualityI,
+            });
+        });
+    }
+
+    handleChangeFolder(e) {
+        e.preventDefault();
+        ipcRenderer.send("set-save-folder");
+        ipcRenderer.on("folder-selected", (event, arg) => {
+            this.setState({
+                userFolder: arg[0],
             });
         });
     }
@@ -238,153 +276,100 @@ export default class App extends React.Component {
     render() {
         const group = (
             <>
-                <div className='graphContainer'>
-                    <Graph
-                        data={this.state.userData}
-                        params={this.state.params}
-                        result={this.state.trainedJson}
-                        axisControl={this.state.axisControl}
-                        paramLength={this.state.paramLength}
-                        algorithm={this.state.algorithm}
-                    />
-                </div>
+                <Graph
+                    data={this.state.userData}
+                    params={this.state.params}
+                    result={this.state.trainedJson}
+                    paramLength={this.state.paramLength}
+                    algorithm={this.state.algorithm}
+                    viewDataTraining={this.state.viewDataTraining}
+                    viewDataTest={this.state.viewDataTest}
+                />
 
-                <div className='infoContainer'>
-                    <CheckBox
-                        algorithms={config.algorithms}
-                        handleCheckBox={this.handleChangeAlgorithm}
-                        algorithm={this.state.algorithm}
-                    />
-                    <h3 className='margin-top-medium'>
-                        Inserisci note al file di configurazione
-                    </h3>
-                    <UserNotes
-                        handleChange={this.handleChangeNotes}
-                        value={this.state.userNotes}
-                    />
-                    {this.state.trainedJson ? (
-                        <span className='done'>Addestramento avvenuto</span>
-                    ) : null}
-                    <button
-                        className='customButton buttonNormal'
-                        onClick={() => this.selectParams(this.state.params)}
-                    >
-                        Scegli nuovi parametri
-                    </button>
-                </div>
+                <ControlPanel
+                    handleCheckBox={this.handleChangeAlgorithm}
+                    algorithm={this.state.algorithm}
+                    selectParams={() => this.selectParams(this.state.params)}
+                    buttonText="Scegli nuovi parametri"
+                    viewDataTraining={this.state.viewDataTraining}
+                    viewDataTest={this.state.viewDataTest}
+                    toggleDataTraining={this.handleViewDataTraining}
+                    toggleDataTest={this.handleViewDataTest}
+                    onChangeNotes={this.handleChangeNotes}
+                    notes={this.state.userNotes}
+                    isTrainingFinished={this.state.trainedJson}
+                    qualityIndex={this.state.qualityIndex}
+                />
             </>
         );
 
-        let buttonSvm = null;
-        this.state.csvFileInfo
-            ? (buttonSvm = (
-                  <button
-                      className='customButton buttonNormal'
-                      onClick={this.startTraining}
-                  >
-                      {this.state.isTraining
-                          ? "Addestrando..."
-                          : "Inizia addestramento svm"}
-                  </button>
-              ))
-            : (buttonSvm = (
-                  <button
-                      className='customButtonDisabled buttonNormal'
-                      disabled
-                  >
-                      Inizia addestramento svm
-                  </button>
-              ));
+        const buttonSvm = (
+            <Button
+                loading={this.state.isTraining}
+                loadingText="Addestrando..."
+                text="Inizia addestramento SVM"
+                onClick={this.startTraining}
+                disabled={!this.state.csvFileInfo}
+                showMessage={this.state.trainedJson}
+                customMessage="Addestramento effettuato"
+            />
+        );
 
-        let buttonRl = null;
-        this.state.csvFileInfo
-            ? (buttonRl = (
-                  <button
-                      className='customButton buttonNormal'
-                      onClick={this.startTraining}
-                  >
-                      {this.state.isTraining
-                          ? "Addestrando..."
-                          : "Inizia addestramento rl"}
-                  </button>
-              ))
-            : (buttonRl = (
-                  <button
-                      className='customButtonDisabled buttonNormal'
-                      disabled
-                  >
-                      Inizia addestramento rl
-                  </button>
-              ));
+        const buttonRl = (
+            <Button
+                loading={this.state.isTraining}
+                loadingText="Addestrando..."
+                text="Inizia addestramento RL"
+                onClick={this.startTraining}
+                disabled={!this.state.csvFileInfo}
+                showMessage={this.state.trainedJson}
+                customMessage="Addestramento effettuato"
+            />
+        );
 
         return (
-            <div className='App'>
-                <span id='metaText'>VRAM Software Applicativo Esterno</span>
-
-                <div className='contentContainer'>
+            <div className={styles["container"]}>
+                <span id="metaText">VRAM Software Applicativo Esterno</span>
+                <div className={styles["content-container"]}>
                     {this.state.userData !== null ? group : null}
                 </div>
-                <div className='fileChooserContainer'>
-                    <div>
-                        <Chooser
-                            type='csv'
-                            onChange={this.loadData}
-                            isFileChosen={!!this.state.csvFileInfo}
-                        />
-                        <span>
-                            {this.state.csvFileInfo
-                                ? this.state.csvFileInfo.name
-                                : "Nessun file selezionato"}
-                        </span>
-                    </div>
-                    <div>
-                        <Chooser
-                            type='json'
-                            onChange={this.loadConf}
-                            isFileChosen={!!this.state.jsonFileInfo}
-                        />
-                        <span>
-                            {this.state.jsonFileInfo
-                                ? this.state.jsonFileInfo.name
-                                : "Nessun file selezionato"}
-                        </span>
-                    </div>
-                    <div>
-                        {this.state.algorithm === "rl" ? buttonRl : null}
-                        {this.state.algorithm === "svm" ? buttonSvm : null}
-                    </div>
-                    <div>
-                        {this.state.isTrainingDone ? (
-                            <button
-                                className='customButton buttonNormal'
-                                onClick={this.handleOpenModal}
-                            >
-                                Salva json
-                            </button>
-                        ) : (
-                            <button
-                                className='customButtonDisabled buttonNormal'
-                                disabled
-                            >
-                                Salva json
-                            </button>
-                        )}
-                    </div>
-                </div>
-                {this.state.isModalEnabled ? (
-                    <Modal
-                        close={this.handleCloseModal}
-                        change={this.handleChangeFileName}
-                        save={this.handleSaveJson}
-                        value={this.state.fileName}
+                <div className={styles["buttons-container"]}>
+                    <FileInput
+                        type="csv"
+                        onChange={this.loadData}
+                        isFileChosen={this.state.csvFileInfo}
                     />
-                ) : null}
+                    <FileInput
+                        type="json"
+                        onChange={this.loadConf}
+                        isFileChosen={this.state.jsonFileInfo}
+                    />
+                    {this.state.algorithm === "rl" ? buttonRl : null}
+                    {this.state.algorithm === "svm" ? buttonSvm : null}
+                    <Button
+                        loading={false}
+                        text="Salva json"
+                        onClick={this.handleOpenModal}
+                        disabled={!this.state.isTrainingDone}
+                    />
+                </div>
                 {this.state.isParamModalEnabled ? (
-                    <ParamModal
+                    <ChangeParamModal
                         data={this.state.params}
                         setParams={this.setParams}
                         close={this.handleCloseParamModal}
                         changeAlgorithm={this.handleChangeAlgorithm}
+                        trainReset={this.trainReset}
+                    />
+                ) : null}
+                {this.state.isModalEnabled ? (
+                    <SaveFileModal
+                        close={this.handleCloseModal}
+                        change={this.handleChangeFileName}
+                        save={this.handleSaveJson}
+                        value={this.state.fileName}
+                        setFolder={this.handleChangeFolder}
+                        userFolder={this.state.userFolder}
                     />
                 ) : null}
             </div>

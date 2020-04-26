@@ -11,7 +11,7 @@ describe("Test for ReadCsv class", () => {
 
     test("parser function should return array of js objects given csv", () => {
         reader.parser(csvString, (err, res) => {
-            expect(res).toEqual({a:1,b:2,c:3});
-        })
-    })
+            expect(res).toEqual({ a: 1, b: 2, c: 3 });
+        });
+    });
 });

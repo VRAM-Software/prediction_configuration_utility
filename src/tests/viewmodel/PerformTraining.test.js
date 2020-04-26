@@ -6,18 +6,24 @@ class ChildPerformTraining extends PerformTraining {
     }
 }
 
-describe("Tests for class AlgorithmTrainer class", () => {
-    test("should throw an error if initialising AlgorithmTrainer", () => {
-        expect(() => new PerformTraining()).toThrowError("Can not construct abstract class.");
+describe("Tests for class PerformTraining class", () => {
+    test("should throw an error if initialising PerformTraining", () => {
+        expect(() => new PerformTraining()).toThrowError(
+            "Can not construct abstract class."
+        );
     });
 
     test("should return error if function callTrain is not implemented in child class", () => {
         let child = new ChildPerformTraining();
-        expect(() => child.callTrain()).toThrow("Do not call abstract method callTrain from child.");
+        expect(() => child.callTrain()).toThrow(
+            "Do not call abstract method callTrain from child."
+        );
     });
 
     test("should return error if function getTrainer is not implemented in child class", () => {
         let child = new ChildPerformTraining();
-        expect(() => child.getTrainer()).toThrow("Do not call abstract method getTrainer from child.");
+        expect(() => child.getTrainer()).toThrow(
+            "Do not call abstract method getTrainer from child."
+        );
     });
 });

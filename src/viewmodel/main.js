@@ -5,14 +5,15 @@ const ProcessWriting = require("./ProcessWriting");
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
-
+const dialog = require("electron").dialog;
 function createWindow() {
     let mainWindow = new BrowserWindow({
-        width: 1024,
-        height: 768,
+        minWidth: 1024,
+        minHeight: 768,
         webPreferences: {
             nodeIntegration: true,
         },
+        //resizable: false,
     });
 
     mainWindow.loadURL(
@@ -45,11 +46,11 @@ ipcMain.on("train-data", (event, arg) => {
     processTraining.setStrategy(arg.algorithm);
     processTraining.setParams(arg.params);
     processTraining.setData(arg.data);
-    processTraining.startTraining((err, res) => {
+    processTraining.startTraining((err, res, qualityIndex) => {
         if (err) {
             throw err;
         }
-        event.reply("finished-training", res);
+        event.reply("finished-training", res, qualityIndex);
     });
 });
 
@@ -59,7 +60,7 @@ ipcMain.on("read-file", (event, arg) => {
             throw err;
         }
         event.reply("finished-reading", res);
-    })
+    });
 });
 
 ipcMain.on("read-file-conf", (event, arg) => {
@@ -68,8 +69,28 @@ ipcMain.on("read-file-conf", (event, arg) => {
             throw err;
         }
         event.reply("finished-reading-conf", res);
-    })
+    });
 });
+
+ipcMain.on("set-save-folder", (event, arg) => {
+    selectPath((result) => {
+        event.reply("folder-selected", result);
+    });
+});
+
+function selectPath(callback) {
+    let options = { properties: ["openDirectory"] };
+    console.log("i am called");
+    dialog
+        .showOpenDialog(options)
+        .then((result) => {
+            console.log(result.filePaths);
+            callback(result.filePaths);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 
 function readFile(arg, callback) {
     const processReading = new ProcessReading();
@@ -83,11 +104,10 @@ function readFile(arg, callback) {
     });
 }
 
-
 ipcMain.on("write-file", (event, arg) => {
     const processWriting = new ProcessWriting("json");
     processWriting.setStrategy("json");
-    processWriting.setPath("src/output");
+    processWriting.setPath(arg.path);
     processWriting.setName(arg.name);
     processWriting.setTrainingResult(arg.trainedJson);
     processWriting.setNotes(arg.notes);

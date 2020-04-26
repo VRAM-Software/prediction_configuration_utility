@@ -1,7 +1,9 @@
 const WriteJson = require("../../../model/output/WriteJson");
 
 const jsObj = {
-    a: 1, b: 2, c: 3
+    a: 1,
+    b: 2,
+    c: 3,
 };
 
 describe("Test for WriteJson class", () => {

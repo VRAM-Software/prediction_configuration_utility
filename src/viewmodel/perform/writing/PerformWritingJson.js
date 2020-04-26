@@ -1,4 +1,4 @@
-const PerformWriting = require("../PerformWriting")
+const PerformWriting = require("../PerformWriting");
 const WriteJson = require("../../../model/output/WriteJson");
 
 class PerformWritingJson extends PerformWriting {
@@ -17,7 +17,13 @@ class PerformWritingJson extends PerformWriting {
     }
 
     callWrite(fileInfo, callback) {
-        this.writer.writeToDisk(fileInfo.path, fileInfo.name, fileInfo.trainedJson, fileInfo.notes, callback);
+        this.writer.writeToDisk(
+            fileInfo.path,
+            fileInfo.name,
+            fileInfo.trainedJson,
+            fileInfo.notes,
+            callback
+        );
     }
 }
 

@@ -1,0 +1,39 @@
+.custom-button {
+    width: 220px;
+    height: 50px;
+    background-color: #4392f1;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+.container span {
+    position: absolute;
+    bottom: 5px;
+    align-self: flex-start;
+}
+
+.custom-button:hover {
+    background-color: #5fbff9;
+}
+
+.disabled {
+    opacity: 0.5;
+}
+
+.disabled:hover {
+    background-color: #4392f1;
+    cursor: auto;
+}

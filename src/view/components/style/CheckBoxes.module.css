@@ -1,0 +1,51 @@
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border: solid 1px #d7dedc;
+}
+
+.checkbox-container > span {
+    margin-left: 10px;
+}
+
+.radio-button {
+    border-radius: 30px;
+}
+
+.checkbox-selected {
+    background-color: #4392f1;
+    border: solid 1px #d7dedc;
+}
+
+.checkbox-not-selected {
+    background-color: #d7dedc;
+}
+
+.checkbox-not-selected:hover {
+    background-color: #4392f1;
+    border: solid 1px #d7dedc;
+}
+
+.container {
+    width: 90%;
+}
+
+.container h3 {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}

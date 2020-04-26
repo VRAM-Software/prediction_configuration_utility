@@ -40,16 +40,33 @@ export default class Grid extends React.Component {
     render() {
         const coords = [];
         let multiplier = 1;
-        if (this.props.constraints.maxX > 0 && this.props.constraints.minX > 0) {
-            if (this.props.constraints.maxX - this.props.constraints.minX > 80) {
+        if (
+            this.props.constraints.maxX > 0 &&
+            this.props.constraints.minX > 0
+        ) {
+            if (
+                this.props.constraints.maxX - this.props.constraints.minX >
+                80
+            ) {
                 multiplier = 10;
             }
-        } else if (this.props.constraints.maxX < 0 && this.props.constraints.minX < 0) {
-            if (Math.abs(this.props.constraints.minX) - Math.abs(this.props.constraints.maxX) > 80) {
+        } else if (
+            this.props.constraints.maxX < 0 &&
+            this.props.constraints.minX < 0
+        ) {
+            if (
+                Math.abs(this.props.constraints.minX) -
+                    Math.abs(this.props.constraints.maxX) >
+                80
+            ) {
                 multiplier = 10;
             }
         } else {
-            if (this.props.constraints.maxX + Math.abs(this.props.constraints.minX) > 80) {
+            if (
+                this.props.constraints.maxX +
+                    Math.abs(this.props.constraints.minX) >
+                80
+            ) {
                 multiplier = 10;
             }
         }
@@ -82,13 +99,13 @@ export default class Grid extends React.Component {
                 x={item.x}
                 y={item.y}
                 fill={item.color}
-                width='20'
-                height='20'
+                width="20"
+                height="20"
             />
         ));
 
         return (
-            <svg width={this.props.width} height={this.props.height} id='grid'>
+            <svg width={this.props.width} height={this.props.height} id="grid">
                 {objs}
             </svg>
         );

@@ -21,7 +21,8 @@ class PerformTrainingRl extends PerformTraining {
         this.trainer.setParams(params);
         this.trainer.setOptions({ numX: params.length, numY: 1 });
         this.result = this.trainer.train(data);
-        callback(null, this.result);
+        this.qualityIndex = this.trainer.getQualityIndex();
+        callback(null, this.result, this.qualityIndex);
     }
 }
 

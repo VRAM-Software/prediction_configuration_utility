@@ -1,0 +1,16 @@
+{
+    "author": "VRAMSoftware",
+    "version": "1.0.0",
+    "date": "2020/04/23",
+    "time": "18:2:12",
+    "pluginAim": "svm",
+    "predictors": ["pH", "water_level"],
+    "result": {
+        "N": 18,
+        "D": 2,
+        "b": 1.6641287042783386,
+        "kernelType": "linear",
+        "w": [0.025600794085943457, -0.3966765112323344]
+    },
+    "notes": ""
+}
