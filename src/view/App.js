@@ -102,7 +102,7 @@ export default class App extends React.Component {
 
     handleSaveJson(e) {
         e.preventDefault();
-        if (/([a-zA-Z0-9\s_\\.\-\(\):])/.test(this.state.fileName)) {
+        if (/([a-zA-Z0-9\s_\\.\-():])/.test(this.state.fileName)) {
             console.log("ciao");
             dialog.showErrorBox(
                 "Input error",
