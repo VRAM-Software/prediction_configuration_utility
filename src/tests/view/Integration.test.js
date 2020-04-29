@@ -95,25 +95,6 @@ describe("Component's integration tests", () => {
         expect(mountedComponent.state("isModalEnabled")).toEqual(false);
     });
 
-    test("when <SaveFileModal/> is open clicking the button 'Salva Json' should trigger state change  in <App/> component", () => {
-        mountedComponent.setState({
-            isModalEnabled: true,
-            fileName: "test",
-            userFolder: "src/output",
-            trainedJson: "asd",
-            userData: [1, 2, 3],
-            csvFileInfo: {
-                name: "test",
-                path: "asd/asd",
-                extension: "csv",
-            },
-        });
-        mountedComponent
-            .find("button[children='Salva Json']")
-            .simulate("click", { preventDefault: () => {} });
-        expect(mountedComponent.state("isModalEnabled")).toEqual(false);
-    });
-
     test("when <SaveFileModal/> is open changing text input should trigger state change in <App/> component", () => {
         mountedComponent.setState({
             isModalEnabled: true,
