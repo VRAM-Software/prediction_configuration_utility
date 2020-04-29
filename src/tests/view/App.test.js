@@ -12,13 +12,6 @@ import {
 } from "../../view/UI";
 import { configure, shallow } from "enzyme";
 
-// jest.mock("electron", () => ({
-//     ipcRenderer: {
-//         on: jest.fn(),
-//         send: jest.fn(),
-//     },
-// }));
-
 configure({
     adapter: new Adapter(),
 });

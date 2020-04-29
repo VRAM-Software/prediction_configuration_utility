@@ -37,6 +37,7 @@ class SetDataCheckBoxes extends React.Component {
                 <div>
                     <div className={styles["checkbox-container"]}>
                         <div
+                            id="checkboxTrain"
                             className={`${styles["checkbox"]} ${
                                 this.props.viewDataTraining
                                     ? styles["checkbox-selected"]
@@ -54,6 +55,7 @@ class SetDataCheckBoxes extends React.Component {
 
                     <div className={styles["checkbox-container"]}>
                         <div
+                            id="checkboxTest"
                             className={`${styles["checkbox"]} ${
                                 this.props.viewDataTest
                                     ? styles["checkbox-selected"]

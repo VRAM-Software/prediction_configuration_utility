@@ -102,13 +102,8 @@ export default class App extends React.Component {
 
     handleSaveJson(e) {
         e.preventDefault();
+        console.log(this.state.fileName);
         if (/([a-zA-Z0-9\s_\\.\-():])/.test(this.state.fileName)) {
-            console.log("ciao");
-            dialog.showErrorBox(
-                "Input error",
-                "Il nome del file contiene caratteri non riconosciuti. Correggere e riprovare."
-            );
-        } else {
             ipcRenderer.send("write-file", {
                 name: this.state.fileName,
                 path: this.state.userFolder,
@@ -116,6 +111,12 @@ export default class App extends React.Component {
                 trainedJson: this.state.trainedJson,
             });
             this.handleCloseModal(e);
+        } else {
+            console.log("Input Error");
+            dialog.showErrorBox(
+                "Input error",
+                "Il nome del file contiene caratteri non riconosciuti. Correggere e riprovare."
+            );
         }
     }
 
