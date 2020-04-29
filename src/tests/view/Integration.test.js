@@ -4,14 +4,9 @@ import "../mocks/mockFile";
 
 import App from "../../view/App";
 import { ChangeParamModal } from "../../view/UI";
-import { configure, shallow, mount } from "enzyme";
+import { configure, mount } from "enzyme";
 
-jest.mock("electron", () => ({
-    ipcRenderer: {
-        on: jest.fn(),
-        send: jest.fn(),
-    },
-}));
+const { dialog } = window.require("electron").remote;
 
 configure({
     adapter: new Adapter(),
@@ -103,6 +98,15 @@ describe("Component's integration tests", () => {
     test("when <SaveFileModal/> is open clicking the button 'Salva Json' should trigger state change  in <App/> component", () => {
         mountedComponent.setState({
             isModalEnabled: true,
+            fileName: "test",
+            userFolder: "src/output",
+            trainedJson: "asd",
+            userData: [1, 2, 3],
+            csvFileInfo: {
+                name: "test",
+                path: "asd/asd",
+                extension: "csv",
+            },
         });
         mountedComponent
             .find("button[children='Salva Json']")
@@ -191,12 +195,12 @@ describe("Component's integration tests", () => {
             .find("#fileChoosercsv")
             .simulate("change", { target: { files: [null] } });
 
-        expect(console.log).toHaveBeenCalledWith("Il file è nullo");
+        expect(console.log).toHaveBeenCalled();
         mountedComponent
             .find("#fileChooserjson")
             .simulate("change", { target: { files: [null] } });
 
-        expect(console.log).toHaveBeenCalledWith("Il file è nullo");
+        expect(console.log).toHaveBeenCalled();
     });
 
     test("handleChangeAlgorithm should output to console if algorithm chosen is already chosen", () => {

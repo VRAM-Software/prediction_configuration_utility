@@ -1,7 +1,6 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import "../mocks/mockFile";
-
 import App from "../../view/App";
 import {
     FileInput,
@@ -13,12 +12,12 @@ import {
 } from "../../view/UI";
 import { configure, shallow } from "enzyme";
 
-jest.mock("electron", () => ({
-    ipcRenderer: {
-        on: jest.fn(),
-        send: jest.fn(),
-    },
-}));
+// jest.mock("electron", () => ({
+//     ipcRenderer: {
+//         on: jest.fn(),
+//         send: jest.fn(),
+//     },
+// }));
 
 configure({
     adapter: new Adapter(),

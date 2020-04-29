@@ -11,5 +11,6 @@ Object.defineProperty(window, "require", {
             on: jest.fn(),
             send: jest.fn(),
         },
+        remote: { dialog: { showErrorBox: jest.fn() } },
     })),
 });
