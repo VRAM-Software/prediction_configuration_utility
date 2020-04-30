@@ -40,36 +40,14 @@ export default class Grid extends React.Component {
     render() {
         const coords = [];
         let multiplier = 1;
-        if (
-            this.props.constraints.maxX > 0 &&
-            this.props.constraints.minX > 0
-        ) {
-            if (
-                this.props.constraints.maxX - this.props.constraints.minX >
-                80
-            ) {
-                multiplier = 10;
-            }
-        } else if (
-            this.props.constraints.maxX < 0 &&
-            this.props.constraints.minX < 0
-        ) {
-            if (
-                Math.abs(this.props.constraints.minX) -
-                    Math.abs(this.props.constraints.maxX) >
-                80
-            ) {
-                multiplier = 10;
-            }
-        } else {
-            if (
-                this.props.constraints.maxX +
-                    Math.abs(this.props.constraints.minX) >
-                80
-            ) {
-                multiplier = 10;
-            }
+        if (this.props.constraints.maxX - this.props.constraints.minX >= 40) {
+            multiplier = 5;
         }
+
+        if (this.props.constraints.maxY - this.props.constraints.minY >= 40) {
+            multiplier = 5;
+        }
+
         if (this.props.result) {
             for (
                 let x = this.props.constraints.minX - 2;
