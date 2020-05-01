@@ -7,8 +7,9 @@ import RenderDataSvm from "../../../view/graphComponents/RenderDataSvm";
 import Grid from "../../../view/graphComponents/Grid";
 
 const data = [
-    { weight: 1, size: 1, label: 1 },
-    { weight: 2, size: 2, label: 2 },
+    { weight: "1", size: "1", label: "1" },
+    { weight: "2", size: "2", label: "2" },
+    { weight: "3", size: "1", label: "3" },
 ];
 const results = {
     result: {
