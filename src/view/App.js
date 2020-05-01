@@ -10,6 +10,7 @@ import {
 } from "./UI";
 import styles from "./App.module.css";
 const { ipcRenderer } = window.require("electron");
+const { dialog } = window.require("electron").remote;
 
 export default class App extends React.Component {
     constructor(props) {
@@ -53,6 +54,10 @@ export default class App extends React.Component {
         this.startTraining = this.startTraining.bind(this);
         this.trainReset = this.trainReset.bind(this);
         this.handleChangeFolder = this.handleChangeFolder.bind(this);
+        this.fileIsNull = this.fileIsNull.bind(this);
+        this.fileNotRecognised = this.fileNotRecognised.bind(this);
+        this.fileIsEmpty = this.fileIsEmpty.bind(this);
+        this.fileConfErrors = this.fileConfErrors.bind(this);
     }
 
     handleCloseParamModal(e) {
@@ -97,13 +102,22 @@ export default class App extends React.Component {
 
     handleSaveJson(e) {
         e.preventDefault();
-        ipcRenderer.send("write-file", {
-            name: this.state.fileName,
-            path: this.state.userFolder,
-            notes: this.state.userNotes,
-            trainedJson: this.state.trainedJson,
-        });
-        this.handleCloseModal(e);
+        console.log(this.state.fileName);
+        if (/([a-zA-Z0-9\s_\\.\-():])/.test(this.state.fileName)) {
+            ipcRenderer.send("write-file", {
+                name: this.state.fileName,
+                path: this.state.userFolder,
+                notes: this.state.userNotes,
+                trainedJson: this.state.trainedJson,
+            });
+            this.handleCloseModal(e);
+        } else {
+            console.log("Input Error");
+            dialog.showErrorBox(
+                "Input error",
+                "Il nome del file contiene caratteri non riconosciuti. Correggere e riprovare."
+            );
+        }
     }
 
     handleViewDataTraining(e) {
@@ -163,62 +177,112 @@ export default class App extends React.Component {
     }
 
     loadData(e) {
-        if (e.target.files[0]) {
-            const obj = this.getFileInfo(e.target.files[0]);
-            this.resetState();
-            this.setState({
-                csvFileInfo: obj,
-            });
-
-            ipcRenderer.send("read-file", {
-                path: obj.path,
-                extension: obj.extension,
-            });
-
-            ipcRenderer.on("finished-reading", (event, arg) => {
-                if (arg[0]) {
-                    let array = Object.keys(arg[0]);
-                    this.selectParams(array);
-                    this.setState({
-                        tempData: arg,
-                        paramLength: array.length,
-                    });
-                }
-            });
-        } else {
-            console.log("Il file è nullo");
+        if (!e.target.files[0]) {
+            this.fileIsNull();
+            return;
         }
+
+        const obj = this.getFileInfo(e.target.files[0]);
+
+        if (obj.extension !== "csv") {
+            this.fileNotRecognised();
+            return;
+        }
+
+        this.resetState();
+        this.setState({
+            csvFileInfo: obj,
+        });
+
+        ipcRenderer.send("read-file", {
+            path: obj.path,
+            extension: obj.extension,
+        });
+
+        ipcRenderer.on("finished-reading", (event, arg) => {
+            if (arg[0]) {
+                const array = Object.keys(arg[0]);
+                this.selectParams(array);
+                this.setState({
+                    tempData: arg,
+                    paramLength: array.length,
+                });
+            } else {
+                this.setState({
+                    csvFileInfo: null,
+                });
+                this.fileIsEmpty();
+            }
+        });
     }
 
     loadConf(e) {
-        if (e.target.files[0]) {
-            const obj = this.getFileInfo(e.target.files[0]);
-            this.setState({
-                jsonFileInfo: obj,
-            });
+        if (!e.target.files[0]) {
+            this.fileIsNull();
+            return;
+        }
 
-            ipcRenderer.send("read-file-conf", {
-                path: obj.path,
-                extension: obj.extension,
-            });
+        const obj = this.getFileInfo(e.target.files[0]);
 
-            ipcRenderer.on("finished-reading-conf", (event, arg) => {
+        if (obj.extension !== "json") {
+            this.fileNotRecognised();
+            return;
+        }
+
+        this.setState({
+            jsonFileInfo: obj,
+        });
+
+        ipcRenderer.send("read-file-conf", {
+            path: obj.path,
+            extension: obj.extension,
+        });
+
+        ipcRenderer.on("finished-reading-conf", (event, arg) => {
+            if (arg[0]) {
                 if (arg.notes) {
                     this.setState({
                         userNotes: arg.notes,
                     });
                 } else {
-                    console.error(
-                        "Il file json inserito non è conforme allo standard dell'applicazione"
-                    );
-                    this.setState({
-                        jsonFileInfo: null,
-                    });
+                    this.fileConfErrors();
                 }
-            });
-        } else {
-            console.log("Il file è nullo");
-        }
+            } else {
+                this.fileIsEmpty();
+            }
+        });
+    }
+
+    fileIsNull() {
+        console.log("Input Error");
+        dialog.showErrorBox(
+            "Input error",
+            "Il file inserito é nullo o corrotto. Riprovare."
+        );
+    }
+
+    fileNotRecognised() {
+        console.log("Input Error");
+        dialog.showErrorBox(
+            "Input error",
+            "Il file é in un formato non riconosciuto. Riprovare."
+        );
+    }
+
+    fileIsEmpty() {
+        console.log("Input Error");
+        dialog.showErrorBox(
+            "Input error",
+            "Il file inserito é vuoto. Riprovare."
+        );
+    }
+
+    fileConfErrors() {
+        console.log("Input Error");
+        dialog.showErrorBox(
+            "Input error",
+            "Il file json inserito non è conforme allo standard dell'applicazione. Riprovare."
+        );
     }
 
     getFileInfo(file) {
@@ -370,6 +434,7 @@ export default class App extends React.Component {
                         value={this.state.fileName}
                         setFolder={this.handleChangeFolder}
                         userFolder={this.state.userFolder}
+                        inputError={this.state.inputError}
                     />
                 ) : null}
             </div>

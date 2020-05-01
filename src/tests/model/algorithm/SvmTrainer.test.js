@@ -49,8 +49,10 @@ describe("test for training algorithm's wrapper class", () => {
 
     test("train method should call train method from ml-modules", () => {
         const data = [
-            { weight: 1, size: 1, label: 1 },
-            { weight: 2, size: 2, label: -1 },
+            { weight: "1", size: "1", label: "1" },
+            { weight: "2", size: "2", label: "-1" },
+            { weight: "3", size: "3", label: "1" },
+            { weight: "4", size: "4", label: "-1" },
         ];
         const res = trainer.train(data);
 
@@ -82,4 +84,8 @@ describe("test for training algorithm's wrapper class", () => {
     test("setParams should set params correctly on SvmTrainer", () => {
         expect(trainer.params).toEqual(["weight", "size", "label"]);
     });
+
+    test("getQualityIndex should return qualityIndex value", () => {
+        expect(trainer.getQualityIndex()).toEqual(trainer.qualityIndex);
+    })
 });

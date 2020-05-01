@@ -61,3 +61,26 @@
     flex-shrink: 1;
     flex-basis: 0;
 }
+.modal-frame {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 0;
+    height: 25px;
+    width: 100%;
+}
+
+.modal-frame div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 25px;
+    padding-bottom: 2px;
+}
+
+.modal-frame div:hover {
+    background-color: red;
+}

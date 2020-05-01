@@ -37,6 +37,7 @@ class SetDataCheckBoxes extends React.Component {
                 <div>
                     <div className={styles["checkbox-container"]}>
                         <div
+                            id="checkboxTrain"
                             className={`${styles["checkbox"]} ${
                                 this.props.viewDataTraining
                                     ? styles["checkbox-selected"]
@@ -49,11 +50,12 @@ class SetDataCheckBoxes extends React.Component {
                         >
                             Dati per l'addestramento
                         </span>
-                        <span id="circle"></span>
+                        <span className={styles["circle"]}></span>
                     </div>
 
                     <div className={styles["checkbox-container"]}>
                         <div
+                            id="checkboxTest"
                             className={`${styles["checkbox"]} ${
                                 this.props.viewDataTest
                                     ? styles["checkbox-selected"]
@@ -64,7 +66,7 @@ class SetDataCheckBoxes extends React.Component {
                         <span onClick={() => this.props.handleViewDataTest()}>
                             Dati per il calcolo degli indici di qualità
                         </span>
-                        <span id="rect"></span>
+                        <span className={styles["rect"]}></span>
                     </div>
                 </div>
             </div>

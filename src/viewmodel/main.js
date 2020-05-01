@@ -13,7 +13,6 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
         },
-        //resizable: false,
     });
 
     mainWindow.loadURL(
