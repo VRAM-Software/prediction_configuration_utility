@@ -10,11 +10,15 @@
     background-color: red;
 }
 
+.null {
+    background-color: lightgray;
+}
+
 .index-container {
     margin-top: 5px;
     margin-bottom: 0px;
-    height: 90px;
-    width: 90px;
+    height: 85px;
+    width: 85px;
     text-align: center;
     font-size: 19px;
     font-weight: bold;

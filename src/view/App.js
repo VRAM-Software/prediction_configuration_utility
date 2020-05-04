@@ -351,7 +351,6 @@ export default class App extends React.Component {
                 />
 
                 <ControlPanel
-                    handleCheckBox={this.handleChangeAlgorithm}
                     algorithm={this.state.algorithm}
                     selectParams={() => this.selectParams(this.state.params)}
                     buttonText="Scegli nuovi parametri"
@@ -393,7 +392,7 @@ export default class App extends React.Component {
 
         return (
             <div className={styles["container"]}>
-                <span id="metaText">VRAM Software Applicativo Esterno</span>
+                <span id="metaText">Prediction Configuration Utility</span>
                 <div className={styles["content-container"]}>
                     {this.state.userData !== null ? group : null}
                 </div>

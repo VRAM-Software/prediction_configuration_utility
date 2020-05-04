@@ -25,7 +25,7 @@ describe("Render tests for <App /> component", () => {
     test("should render component correctly", () => {
         expect(
             component.containsMatchingElement(
-                <span>VRAM Software Applicativo Esterno</span>
+                <span>Prediction Configuration Utility</span>
             )
         ).toBeTruthy();
         expect(

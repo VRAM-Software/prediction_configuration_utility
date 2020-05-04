@@ -13,6 +13,9 @@ export default class QualityIndex extends React.Component {
         if (this.props.index <= 0.4) {
             classname = styles["bad"];
         }
+        if (this.props.index === null) {
+            classname = styles["null"];
+        }
         return (
             <div className={`${classname} ${styles["index-container"]}`}>
                 <p>{this.props.text}</p>
