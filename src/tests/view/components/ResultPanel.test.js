@@ -27,20 +27,20 @@ describe("Tests for <ResultPanel /> component", () => {
         ).toBeTruthy();
     });
 
-    test("should render component correctly if quality indexes are null", () => {
-        const component = mount(
-            <ResultPanel isTrainingFinished={true} qualityIndex={null} />
-        );
-        expect(
-            component.containsMatchingElement(<h3>Indici di qualità</h3>)
-        ).toBeFalsy();
-        expect(
-            component.containsAllMatchingElements([
-                <QualityIndex />,
-                <QualityIndex />,
-            ])
-        ).toBeFalsy();
-    });
+    // test("should render component correctly if quality indexes are null", () => {
+    //     const component = mount(
+    //         <ResultPanel isTrainingFinished={true} qualityIndex={null} />
+    //     );
+    //     expect(
+    //         component.containsMatchingElement(<h3>Indici di qualità</h3>)
+    //     ).toBeFalsy();
+    //     expect(
+    //         component.containsAllMatchingElements([
+    //             <QualityIndex />,
+    //             <QualityIndex />,
+    //         ])
+    //     ).toBeFalsy();
+    // });
 
     test("should render component correctly if quality indexes of rl exists", () => {
         const component = mount(

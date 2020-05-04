@@ -1,4 +1,4 @@
-import { CheckBoxes, SetDataCheckBoxes } from "./components/CheckBoxes";
+import { SetDataCheckBoxes } from "./components/CheckBoxes";
 import Button from "./components/Button";
 import FileInput from "./components/FileInput";
 import TextArea from "./components/TextArea";
@@ -12,7 +12,6 @@ import ResultPanel from "./components/ResultPanel";
 import Graph from "./components/Graph";
 
 export {
-    CheckBoxes,
     SetDataCheckBoxes,
     FileInput,
     TextArea,

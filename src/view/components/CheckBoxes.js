@@ -1,34 +1,6 @@
 import React from "react";
 import styles from "./style/CheckBoxes.module.css";
 
-class CheckBoxes extends React.Component {
-    render() {
-        const list = this.props.algorithms.map((item, index) => (
-            <div key={index} className={styles["checkbox-container"]}>
-                <div
-                    className={`${styles["checkbox"]} ${
-                        styles["radio-button"]
-                    } ${
-                        item.name === this.props.algorithm
-                            ? styles["checkbox-selected"]
-                            : styles["checkbox-not-selected"]
-                    }`}
-                    onClick={() => this.props.handleCheckBox(item.name)}
-                ></div>
-                <span onClick={() => this.props.handleCheckBox(item.name)}>
-                    {item.desc}
-                </span>
-            </div>
-        ));
-        return (
-            <div className={styles["container"]}>
-                <h3>Seleziona un algoritmo di predizione</h3>
-                <div>{list}</div>
-            </div>
-        );
-    }
-}
-
 class SetDataCheckBoxes extends React.Component {
     render() {
         return (
@@ -74,4 +46,4 @@ class SetDataCheckBoxes extends React.Component {
     }
 }
 
-export { CheckBoxes, SetDataCheckBoxes };
+export { SetDataCheckBoxes };

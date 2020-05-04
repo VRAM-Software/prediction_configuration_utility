@@ -87,5 +87,5 @@ describe("test for training algorithm's wrapper class", () => {
 
     test("getQualityIndex should return qualityIndex value", () => {
         expect(trainer.getQualityIndex()).toEqual(trainer.qualityIndex);
-    })
+    });
 });

@@ -160,23 +160,23 @@ describe("Component's integration tests", () => {
         expect(mountedComponent.state("userNotes")).toEqual("test text");
     });
 
-    test("changing current algorithm in <CheckBoxes/> should trigger state change in <App/> component", () => {
-        mountedComponent.setState({
-            userData: [1, 2, 3, 4],
-            algorithm: "svm",
-        });
-        mountedComponent.find(".checkbox-not-selected").at(0).simulate("click");
-        expect(mountedComponent.state("algorithm")).toEqual("rl");
+    // test("changing current algorithm in <CheckBoxes/> should trigger state change in <App/> component", () => {
+    //     mountedComponent.setState({
+    //         userData: [1, 2, 3, 4],
+    //         algorithm: "svm",
+    //     });
+    //     mountedComponent.find(".checkbox-not-selected").at(0).simulate("click");
+    //     expect(mountedComponent.state("algorithm")).toEqual("rl");
 
-        mountedComponent = mount(<App />);
-        mountedComponent.setState({
-            userData: [1, 2, 3, 4],
-        });
-        mountedComponent
-            .find("span[children='Regressione Lineare']")
-            .simulate("click");
-        expect(mountedComponent.state("algorithm")).toEqual("rl");
-    });
+    //     mountedComponent = mount(<App />);
+    //     mountedComponent.setState({
+    //         userData: [1, 2, 3, 4],
+    //     });
+    //     mountedComponent
+    //         .find("span[children='Regressione Lineare']")
+    //         .simulate("click");
+    //     expect(mountedComponent.state("algorithm")).toEqual("rl");
+    // });
 
     test("onChange function should deal with json files properly", () => {
         const fileContents = { a: 1, b: 2, c: 3 };
@@ -250,17 +250,17 @@ describe("Component's integration tests", () => {
         expect(console.log).toHaveBeenCalled();
     });
 
-    test("handleChangeAlgorithm should output to console if algorithm chosen is already chosen", () => {
-        console.log = jest.fn();
-        mountedComponent.setState({
-            userData: [1, 2, 3, 4],
-        });
-        mountedComponent.find(".checkbox-selected").at(0).simulate("click");
+    // test("handleChangeAlgorithm should output to console if algorithm chosen is already chosen", () => {
+    //     console.log = jest.fn();
+    //     mountedComponent.setState({
+    //         userData: [1, 2, 3, 4],
+    //     });
+    //     mountedComponent.find(".checkbox-selected").at(0).simulate("click");
 
-        expect(console.log).toHaveBeenCalledWith(
-            "Algoritmo scelto è già inizializzato"
-        );
-    });
+    //     expect(console.log).toHaveBeenCalledWith(
+    //         "Algoritmo scelto è già inizializzato"
+    //     );
+    // });
 
     test("component <ChangeParamModal/> should be closed if handleCloseParamModal is called", () => {
         mountedComponent.setState({
