@@ -70,4 +70,8 @@ describe("test for training RL algorithm's wrapper class", () => {
     test("setOptions should set options correctly on RlTrainer", () => {
         expect(trainer.options).toEqual({ numX: 3, numY: 1 });
     });
+
+    test("getQualityIndex should return qualityIndex value", () => {
+        expect(trainer.getQualityIndex()).toEqual(trainer.qualityIndex);
+    });
 });

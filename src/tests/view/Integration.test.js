@@ -6,7 +6,6 @@ import App from "../../view/App";
 import { ChangeParamModal } from "../../view/UI";
 import { configure, mount } from "enzyme";
 
-
 configure({
     adapter: new Adapter(),
 });
