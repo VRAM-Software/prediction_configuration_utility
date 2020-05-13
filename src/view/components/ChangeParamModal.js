@@ -31,6 +31,9 @@ class ChangeParamModal extends React.Component {
             });
         } else {
             array[index] = null;
+            this.setState({
+                selected: array,
+            });
         }
     }
 
@@ -89,6 +92,12 @@ class ChangeParamModal extends React.Component {
                             Il primi due valori verrano usati rispettivamente
                             come X e Y mentre l'ultimo rappresenterà la
                             classificazione dei dati
+                        </span>
+                    ) : null}
+                    {this.state.algorithm === "rl" ? (
+                        <span>
+                            Il valori selezionati verrano usati rispettivamente
+                            come X, Y e Z
                         </span>
                     ) : null}
                     <div className={styles["modal-set-param-select-container"]}>
