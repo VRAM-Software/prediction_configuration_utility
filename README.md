@@ -12,7 +12,6 @@ Repository for the external configuration utility capable of training SVM and RL
 - `npm run electron`
 
 ## VRAM-Software
-<https://github.com/VRAM-Software>
 We are VRAM Software:
 -  Massimo Toffoletto
 -  Vittorio Corrizzato
@@ -21,6 +20,8 @@ We are VRAM Software:
 -  Alessandro Spreafico
 -  Marco Dalla Libera
 -  Marco Rampazzo
+
+<https://github.com/VRAM-Software>
 
 ## Useful links
 The full product can be found at this link: 
