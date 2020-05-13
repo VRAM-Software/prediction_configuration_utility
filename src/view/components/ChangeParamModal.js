@@ -31,6 +31,9 @@ class ChangeParamModal extends React.Component {
             });
         } else {
             array[index] = null;
+            this.setState({
+                selected: array,
+            });
         }
     }
 
@@ -58,10 +61,12 @@ class ChangeParamModal extends React.Component {
         ));
 
         const selects = this.props.data.map((item, index) => (
-            <select key={index} onChange={(e) => this.addValue(e, index)}>
-                <option value="null" selected={true}>
-                    Seleziona valore
-                </option>
+            <select
+                key={index}
+                onChange={(e) => this.addValue(e, index)}
+                defaultValue="null"
+            >
+                <option value="null">Seleziona valore</option>
                 {obj}
             </select>
         ));
@@ -75,7 +80,11 @@ class ChangeParamModal extends React.Component {
                     <h4>Seleziona l'algoritmo da utilizzare</h4>
                     <div>
                         <select onChange={this.changeAlg}>
-                            <option value={null} selected disabled>
+                            <option
+                                value={null}
+                                selected={true}
+                                disabled={true}
+                            >
                                 Seleziona un algoritmo
                             </option>
                             <option value="svm">SVM</option>
@@ -89,6 +98,12 @@ class ChangeParamModal extends React.Component {
                             Il primi due valori verrano usati rispettivamente
                             come X e Y mentre l'ultimo rappresenterà la
                             classificazione dei dati
+                        </span>
+                    ) : null}
+                    {this.state.algorithm === "rl" ? (
+                        <span>
+                            Il valori selezionati verrano usati rispettivamente
+                            come X, Y e Z
                         </span>
                     ) : null}
                     <div className={styles["modal-set-param-select-container"]}>
