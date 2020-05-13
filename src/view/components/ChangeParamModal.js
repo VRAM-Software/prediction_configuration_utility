@@ -61,10 +61,12 @@ class ChangeParamModal extends React.Component {
         ));
 
         const selects = this.props.data.map((item, index) => (
-            <select key={index} onChange={(e) => this.addValue(e, index)}>
-                <option value="null" selected={true}>
-                    Seleziona valore
-                </option>
+            <select
+                key={index}
+                onChange={(e) => this.addValue(e, index)}
+                defaultValue="null"
+            >
+                <option value="null">Seleziona valore</option>
                 {obj}
             </select>
         ));
@@ -78,7 +80,11 @@ class ChangeParamModal extends React.Component {
                     <h4>Seleziona l'algoritmo da utilizzare</h4>
                     <div>
                         <select onChange={this.changeAlg}>
-                            <option value={null} selected disabled>
+                            <option
+                                value={null}
+                                selected={true}
+                                disabled={true}
+                            >
                                 Seleziona un algoritmo
                             </option>
                             <option value="svm">SVM</option>

@@ -6,7 +6,6 @@ const Utils = require("../Utils");
 class SvmTrainer {
     svm = null;
     trainedJson = null;
-    data = null;
     dataForTrain = [];
     dataForQuality = [];
     params = [];

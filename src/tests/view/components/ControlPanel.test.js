@@ -1,7 +1,6 @@
 import React from "react";
 import {
     ControlPanel,
-    CheckBoxes,
     SetDataCheckBoxes,
     TextArea,
     ResultPanel,
@@ -24,7 +23,6 @@ describe("Tests for <ControlPanel /> component", () => {
         expect(component).toBeTruthy();
         expect(
             component.containsAllMatchingElements([
-                <CheckBoxes />,
                 <SetDataCheckBoxes />,
                 <TextArea />,
                 <ResultPanel />,

@@ -1,11 +1,11 @@
 const ProcessReading = require("./ProcessReading");
 const ProcessTraining = require("./ProcessTraining");
 const ProcessWriting = require("./ProcessWriting");
-
 const { app, BrowserWindow } = require("electron");
 const ipcMain = require("electron").ipcMain;
 const isDev = require("electron-is-dev");
 const dialog = require("electron").dialog;
+
 function createWindow() {
     let mainWindow = new BrowserWindow({
         minWidth: 1024,

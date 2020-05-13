@@ -3,7 +3,6 @@ const Utils = require("../Utils");
 
 class RlTrainer {
     trainedObj = null;
-    data = null;
     dataForTrain = [];
     dataForQuality = [];
     params = null;
