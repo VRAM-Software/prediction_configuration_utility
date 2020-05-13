@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/VRAM-Software/prediction_configuration_utility/badge.svg?branch=refs/heads/master)](https://coveralls.io/github/VRAM-Software/prediction_configuration_utility?branch=refs/heads/master)
+[![Coverage Status](https://coveralls.io/repos/github/VRAM-Software/prediction_configuration_utility/badge.svg?branch=master)](https://coveralls.io/github/VRAM-Software/prediction_configuration_utility?branch=master)
 ![CI](https://github.com/VRAM-Software/prediction_configuration_utility/workflows/CI/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=VRAM-Software_prediction_configuration_utility&metric=alert_status)](https://sonarcloud.io/dashboard?id=VRAM-Software_prediction_configuration_utility)
 
