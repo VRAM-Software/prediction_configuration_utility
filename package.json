@@ -86,6 +86,6 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "prettier": "2.0.5",
-    "spectron": "^10.0.1"
+    "spectron": "^19.0.0"
   }
 }
